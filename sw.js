@@ -1,4 +1,4 @@
-const VERSION = 'v2';
+const VERSION = 'v3';
 const STATIC_CACHE  = `esperanca-static-${VERSION}`;
 const RUNTIME_CACHE = `esperanca-runtime-${VERSION}`;
 const IMG_CACHE     = `esperanca-img-${VERSION}`;
@@ -28,6 +28,21 @@ self.addEventListener('fetch', e => {
   const url = new URL(request.url);
   if (!url.protocol.startsWith('http')) return;
 
+  /* dados.js: REDE PRIMEIRO — para publicações aparecerem rápido */
+  if (/dados\.js(\?.*)?$/.test(url.pathname)) {
+    e.respondWith((async () => {
+      const cache = await caches.open(STATIC_CACHE);
+      try {
+        const fresh = await fetch(request);
+        cache.put(request, fresh.clone());
+        return fresh;
+      } catch {
+        return (await cache.match(request)) || Response.error();
+      }
+    })());
+    return;
+  }
+
   if (request.mode === 'navigate') {
     e.respondWith((async () => {
       try {
@@ -43,7 +58,7 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  const isImg = request.destination === 'image' || /picsum\.photos/.test(url.hostname);
+  const isImg = request.destination === 'image';
   const cacheName = isImg ? IMG_CACHE : RUNTIME_CACHE;
 
   e.respondWith((async () => {
