@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 
-<!-- ===== SEO ===== -->
 <title>Sítio Esperança — Coelhos à venda em Miguel Burnier/MG</title>
 <meta name="description" content="Filhotes de coelhos à venda a partir de R$ 80: Mini Lop, Lion, Rex, Angorá e Holandês. Vacinados, vermifugados, garantia de saúde de 7 dias. Entrega em Miguel Burnier - MG e região até 100 km.">
 <meta name="keywords" content="coelhos à venda, filhotes de coelho, Mini Lop, Lion, Rex, Angorá, Miguel Burnier, Ouro Preto, Mariana, Minas Gerais">
@@ -21,89 +20,14 @@
 "telephone":"+55 31 98251-7147","openingHours":"Mo-Sa 08:00-18:00","priceRange":"R$80 - R$220"}
 </script>
 
-<!-- ===== PWA ===== -->
 <meta name="theme-color" content="#2E7D32">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Sítio Esperança">
 <link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232E7D32'/%3E%3Cellipse cx='24' cy='18' rx='6' ry='11' transform='rotate(-14 24 18)' fill='%23FFF8E1'/%3E%3Cellipse cx='40' cy='18' rx='6' ry='11' transform='rotate(14 40 18)' fill='%23FFF8E1'/%3E%3Ccircle cx='32' cy='41' r='15' fill='%23FFF8E1'/%3E%3Ccircle cx='26.5' cy='40' r='2' fill='%232E7D32'/%3E%3Ccircle cx='37.5' cy='40' r='2' fill='%232E7D32'/%3E%3Cpath d='M29 45.5h6l-3 3.5z' fill='%232E7D32'/%3E%3C/svg%3E">
-
-<script>
-/* ============================================================
-   MANIFEST DINÂMICO — gera a versão com ÍCONES PNG na hora
-   (compatibilidade máxima) e identidade nova ('esperanca-app-2026'),
-   para o Chrome esquecer instalações "fantasma" antigas.
-   ============================================================ */
-(function(){
-  function svgURI(maskable){
-    var s = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>"
-      + "<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>"
-      + "<stop offset='0' stop-color='#2E7D32'/><stop offset='1' stop-color='#1B5E20'/>"
-      + "</linearGradient></defs>"
-      + (maskable ? "<rect width='100' height='100' fill='url(#g)'/>"
-                  : "<rect width='100' height='100' rx='24' fill='url(#g)'/>")
-      + "<g transform='" + (maskable ? "translate(21 21.5) scale(0.9)" : "translate(10 11) scale(1.25)") + "'>"
-      + "<ellipse cx='24' cy='18' rx='6.2' ry='11.5' transform='rotate(-14 24 18)' fill='#FFF8E1'/>"
-      + "<ellipse cx='40' cy='18' rx='6.2' ry='11.5' transform='rotate(14 40 18)' fill='#FFF8E1'/>"
-      + "<ellipse cx='24.5' cy='19' rx='2.4' ry='6.5' transform='rotate(-14 24.5 19)' fill='#A5D6A7'/>"
-      + "<ellipse cx='39.5' cy='19' rx='2.4' ry='6.5' transform='rotate(14 39.5 19)' fill='#A5D6A7'/>"
-      + "<circle cx='32' cy='41.5' r='15.5' fill='#FFF8E1'/>"
-      + "<circle cx='26.5' cy='40' r='2.1' fill='#2E7D32'/>"
-      + "<circle cx='37.5' cy='40' r='2.1' fill='#2E7D32'/>"
-      + "<path d='M29.2 46h5.6L32 49.6z' fill='#2E7D32'/>"
-      + "</g></svg>";
-    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
-  }
-  function pngFrom(svg, size){
-    return new Promise(function(res){
-      var img = new Image();
-      img.onload = function(){
-        try {
-          var c = document.createElement('canvas');
-          c.width = c.height = size;
-          c.getContext('2d').drawImage(img, 0, 0, size, size);
-          res(c.toDataURL('image/png'));
-        } catch(e){ res(null); }
-      };
-      img.onerror = function(){ res(null); };
-      img.src = svg;
-    });
-  }
-  function abs(u){ try { return new URL(u, location.href).href; } catch(e){ return u; } }
-
-  var ANY  = svgURI(false), MASK = svgURI(true);
-  var man = {
-    name: 'Sítio Esperança — Coelhos em Miguel Burnier/MG',
-    short_name: 'Sítio Esperança',
-    description: 'Filhotes de coelhos à venda a partir de R$ 80. Vacinados, vermifugados e com garantia de saúde. Entrega em Miguel Burnier - MG e região até 100 km.',
-    id: 'esperanca-app-2026',
-    start_url: abs('./index.html?app=1'),
-    scope: abs('./'),
-    display: 'standalone',
-    orientation: 'portrait',
-    lang: 'pt-BR',
-    dir: 'ltr',
-    background_color: '#FFF8E1',
-    theme_color: '#2E7D32',
-    categories: ['shopping', 'lifestyle'],
-    icons: []
-  };
-  Promise.all([pngFrom(ANY,192), pngFrom(ANY,512), pngFrom(MASK,512)])
-    .then(function(arr){
-      if (arr[0]) man.icons.push({ src:arr[0], sizes:'192x192', type:'image/png', purpose:'any' });
-      if (arr[1]) man.icons.push({ src:arr[1], sizes:'512x512', type:'image/png', purpose:'any' });
-      if (arr[2]) man.icons.push({ src:arr[2], sizes:'512x512', type:'image/png', purpose:'maskable' });
-      man.icons.push({ src:ANY,  sizes:'any', type:'image/svg+xml', purpose:'any' });
-      man.icons.push({ src:MASK, sizes:'any', type:'image/svg+xml', purpose:'maskable' });
-      var blob = new Blob([JSON.stringify(man)], { type:'application/manifest+json' });
-      var link = document.querySelector('link[rel="manifest"]');
-      if (link) link.href = URL.createObjectURL(blob);
-    })
-    .catch(function(){ /* mantém o manifest.json estático */ });
-})();
-</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -193,7 +117,6 @@ tailwind.config = {
     font-size:12.5px; font-weight:500; max-width:85%; box-shadow:0 10px 26px rgba(0,0,0,.28); }
   #toast.show{ opacity:1; transform:translate(-50%,0); }
 
-  /* ===== Painel Admin ===== */
   #admin{ position:absolute; inset:0; z-index:80; display:none; flex-direction:column; background:#EFEAE0; }
   #admin.open{ display:flex; }
   .adm-inp{ width:100%; background:#fff; border:1px solid #E7DDC0; border-radius:12px; padding:10px 12px; font-size:13px; color:#1C1917; }
@@ -214,7 +137,6 @@ tailwind.config = {
     color:#78716C; display:grid; place-items:center; cursor:pointer; }
   .pwd-eye:active{ transform:translateY(-50%) scale(.88); }
 
-  /* ===== Banner de instalação ===== */
   #installBar{ position:absolute; left:12px; right:76px; z-index:65;
     bottom:calc(92px + env(safe-area-inset-bottom));
     opacity:0; transform:translateY(18px);
@@ -226,7 +148,6 @@ tailwind.config = {
 
 <body>
 
-<!-- ============ SPRITE DE ÍCONES ============ -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="bunny" viewBox="0 0 64 64">
     <ellipse cx="24" cy="18" rx="6.2" ry="11.5" transform="rotate(-14 24 18)" fill="currentColor"/>
@@ -290,7 +211,7 @@ tailwind.config = {
 
 <div id="app" class="relative mx-auto w-full max-w-[480px] flex flex-col select-none">
 
-  <!-- ================= HEADER ================= -->
+  <!-- ================= HEADER (sem WhatsApp no topo) ================= -->
   <header class="shrink-0 relative z-30 bg-verde text-white">
     <div class="absolute inset-0 pattern"></div>
     <div class="relative flex items-center gap-3 px-4 py-3">
@@ -304,17 +225,10 @@ tailwind.config = {
           <svg class="ic w-3 h-3"><use href="#i-pin"/></svg> <span id="cfg-cidade-hdr">Miguel Burnier • MG</span>
         </p>
       </div>
-      <div class="ml-auto flex items-center gap-2">
-        <button id="btnHdrInstall" type="button" style="display:none" aria-label="Instalar aplicativo"
-                class="w-9 h-9 grid place-items-center rounded-full bg-white/15 ring-1 ring-white/25 active:scale-90 transition">
-          <svg class="ic w-[18px] h-[18px]"><use href="#i-down"/></svg>
-        </button>
-        <a class="wa-link w-9 h-9 grid place-items-center rounded-full bg-white/15 ring-1 ring-white/25 active:scale-90 transition"
-           data-wamsg="Olá! Vim pelo site do Sítio Esperança e quero saber mais sobre os filhotes disponíveis."
-           target="_blank" rel="noopener" aria-label="Falar no WhatsApp" href="#">
-          <svg class="w-[18px] h-[18px]"><use href="#wa"/></svg>
-        </a>
-      </div>
+      <button id="btnHdrInstall" type="button" style="display:none" aria-label="Instalar aplicativo"
+              class="ml-auto inline-flex items-center gap-1.5 rounded-full bg-white text-verde-esc px-3.5 py-2 text-[11.5px] font-extrabold shadow active:scale-95 transition">
+        <svg class="ic w-4 h-4"><use href="#i-down"/></svg> Instalar app
+      </button>
     </div>
     <svg class="absolute -bottom-[1px] left-0 w-full h-3 text-areia" viewBox="0 0 120 10" preserveAspectRatio="none" aria-hidden="true">
       <path d="M0 10 V5 Q3.75 0 7.5 5 T15 5 T22.5 5 T30 5 T37.5 5 T45 5 T52.5 5 T60 5 T67.5 5 T75 5 T82.5 5 T90 5 T97.5 5 T105 5 T112.5 5 T120 5 V10 Z" fill="currentColor"/>
@@ -410,49 +324,10 @@ tailwind.config = {
         </ol>
       </div>
 
+      <!-- Depoimentos (editáveis no painel) -->
       <div class="mt-6">
         <h2 class="section-title px-4">Quem já levou um coelhinho</h2>
-        <div class="mt-4 flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 pb-2">
-          <figure class="snap-start shrink-0 w-[268px] bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-4">
-            <div class="flex items-center gap-2.5">
-              <span class="w-9 h-9 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs">JC</span>
-              <div class="leading-tight"><p class="text-[13px] font-bold text-stone-800">Juliana C.</p><p class="text-[10.5px] text-stone-400">Ouro Preto • MG</p></div>
-              <span class="ml-auto flex gap-0.5 text-amber-400"><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg></span>
-            </div>
-            <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"Levei a Mel há 3 semanas, veio super mansinha e já com o vermífugo em dia. Explicaram tudo com muita paciência."</blockquote>
-          </figure>
-          <figure class="snap-start shrink-0 w-[268px] bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-4">
-            <div class="flex items-center gap-2.5">
-              <span class="w-9 h-9 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs">MP</span>
-              <div class="leading-tight"><p class="text-[13px] font-bold text-stone-800">Marcos P.</p><p class="text-[10.5px] text-stone-400">Mariana • MG</p></div>
-              <span class="ml-auto flex gap-0.5 text-amber-400"><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg></span>
-            </div>
-            <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"Comprei um Mini Lop de presente pra minha filha. Lindo, saudável, e ainda ganharam um potinho de ração de brinde."</blockquote>
-          </figure>
-          <figure class="snap-start shrink-0 w-[268px] bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-4">
-            <div class="flex items-center gap-2.5">
-              <span class="w-9 h-9 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs">CM</span>
-              <div class="leading-tight"><p class="text-[13px] font-bold text-stone-800">Carla M.</p><p class="text-[10.5px] text-stone-400">Ouro Branco • MG</p></div>
-              <span class="ml-auto flex gap-0.5 text-amber-400"><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg></span>
-            </div>
-            <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"A entrega chegou no horário certinho, com a carteirinha de saúde e toda a orientação. Recomendo demais!"</blockquote>
-          </figure>
-          <figure class="snap-start shrink-0 w-[268px] bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-4">
-            <div class="flex items-center gap-2.5">
-              <span class="w-9 h-9 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs">RT</span>
-              <div class="leading-tight"><p class="text-[13px] font-bold text-stone-800">Rafael T.</p><p class="text-[10.5px] text-stone-400">Miguel Burnier</p></div>
-              <span class="ml-auto flex gap-0.5 text-amber-400"><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg></span>
-            </div>
-            <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"Terceiro coelho que compro no sítio. Dá pra ver o cuidado: cercado limpo, feno fresco, tudo no ponto."</blockquote>
-          </figure>
-          <button data-go="1" type="button" class="snap-start shrink-0 w-[150px] rounded-2xl bg-verde text-white p-4 flex flex-col justify-between gap-4 text-left active:scale-[.97] transition">
-            <svg style="width:26px;height:26px;color:#FFF8E1"><use href="#bunny"/></svg>
-            <div>
-              <p class="font-bold text-sm leading-tight">Quero conhecer os filhotes</p>
-              <p class="text-[11px] text-areia/85 mt-1 inline-flex items-center gap-1 font-semibold">Ver catálogo <svg class="ic w-3.5 h-3.5"><use href="#i-arrow"/></svg></p>
-            </div>
-          </button>
-        </div>
+        <div id="depoWrap" class="mt-4 flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 pb-2"></div>
       </div>
 
       <div class="px-4 mt-6 mb-8">
@@ -461,8 +336,8 @@ tailwind.config = {
           <div class="relative">
             <p class="font-extrabold text-lg tracking-tight">Bateu alguma dúvida?</p>
             <p class="text-areia/85 text-xs mt-1 font-medium">Respondemos rápido, de Seg a Sáb, 8h às 18h.</p>
-            <a class="wa-link" data-wamsg="Olá! Vim pelo site e tenho uma dúvida sobre os coelhinhos." target="_blank" rel="noopener" href="#"
-               class="mt-3.5 inline-flex items-center gap-2 bg-white text-verde font-bold text-sm rounded-full px-5 py-2.5 active:scale-95 transition">
+            <a class="wa-link mt-3.5 inline-flex items-center gap-2 bg-white text-verde font-bold text-sm rounded-full px-5 py-2.5 active:scale-95 transition"
+               data-wamsg="Olá! Vim pelo site e tenho uma dúvida sobre os coelhinhos." target="_blank" rel="noopener" href="#">
               <svg class="w-4 h-4"><use href="#wa"/></svg> Chamar no WhatsApp
             </a>
           </div>
@@ -511,7 +386,7 @@ tailwind.config = {
       </div>
     </section>
 
-    <!-- ========== 3 • CONTATO (textos editáveis no painel) ========== -->
+    <!-- ========== 3 • CONTATO ========== -->
     <section class="page" id="page-contato">
       <div class="px-4 pt-4">
         <h1 class="section-title">Fale com a gente</h1>
@@ -520,7 +395,7 @@ tailwind.config = {
           <span class="w-24 h-24 rounded-full bg-verde-claro grid place-items-center mx-auto ring-4 ring-verde-claro/40">
             <svg class="w-14 h-14 text-verde"><use href="#bunny"/></svg>
           </span>
-          <h2 class="mt-3 font-extrabold text-lg text-stone-900 tracking-tight" id="cfg-criador-nome">Antônio</h2>
+          <h2 class="mt-3 font-extrabold text-lg text-stone-900 tracking-tight" id="cfg-criador-nome">Elias</h2>
           <p class="text-[11.5px] text-stone-500 font-medium" id="cfg-criador-sub">Criador no Sítio Esperança há 10 anos • Miguel Burnier</p>
           <p class="mt-2.5 inline-flex items-center gap-1.5 bg-areia ring-1 ring-areia-borda text-stone-600 text-[11px] font-bold rounded-full px-3 py-1.5">
             <svg class="w-3.5 h-3.5 text-amber-400"><use href="#i-star"/></svg> <span id="cfg-criador-aval">4,9 • 127 conversas atendidas</span>
@@ -528,8 +403,8 @@ tailwind.config = {
           <div class="mt-2.5 flex justify-center">
             <span id="lojaStatus" class="inline-flex items-center gap-2 bg-verde-claro text-verde-esc text-[11px] font-bold rounded-full px-3.5 py-1.5"></span>
           </div>
-          <a class="wa-link pulsa" data-wamsg="Olá! Quero saber mais sobre os coelhinhos à venda." target="_blank" rel="noopener" href="#"
-             class="mt-4 w-full inline-flex items-center justify-center gap-2.5 rounded-2xl bg-verde hover:bg-verde-esc text-white font-extrabold text-[15px] tracking-wide py-4 active:scale-[.98] transition">
+          <a class="wa-link pulsa mt-4 w-full inline-flex items-center justify-center gap-2.5 rounded-2xl bg-verde hover:bg-verde-esc text-white font-extrabold text-[15px] tracking-wide py-4 active:scale-[.98] transition"
+             data-wamsg="Olá! Quero saber mais sobre os coelhinhos à venda." target="_blank" rel="noopener" href="#">
             <svg class="w-5 h-5"><use href="#wa"/></svg> FALAR NO WHATSAPP AGORA
           </a>
         </div>
@@ -600,7 +475,7 @@ tailwind.config = {
           <p class="relative mt-3 text-[13px] text-stone-600 leading-relaxed">
             Cada filhote nasce e cresce aqui dentro, com ração de primeira, feno de tifton e muito colo. Por isso chegam ao novo lar tão <b class="text-stone-800">mansos e acostumados com gente</b>.
           </p>
-          <p class="relative mt-3.5 text-xs font-bold text-verde">— Antônio, Sítio Esperança • desde 2015</p>
+          <p class="relative mt-3.5 text-xs font-bold text-verde">— <span id="cfg-criador-assina">Elias</span>, Sítio Esperança • desde 2015</p>
         </div>
 
         <div class="mt-7">
@@ -728,8 +603,7 @@ tailwind.config = {
         <p class="text-[12.5px] font-extrabold text-stone-800">Instalar o app</p>
         <p id="installSub" class="text-[10px] text-stone-500 leading-snug">Rápido, funciona até sem internet</p>
       </div>
-      <button id="installYes" type="button"
-              class="adm-btn bg-verde text-white !py-2.5 !px-4 text-[12px] shrink-0">Instalar</button>
+      <button id="installYes" type="button" class="adm-btn bg-verde text-white !py-2.5 !px-4 text-[12px] shrink-0">Instalar</button>
       <button id="installNo" type="button" aria-label="Agora não"
               class="w-8 h-8 rounded-full grid place-items-center text-stone-400 shrink-0 active:scale-90 transition">
         <svg class="ic w-4 h-4"><use href="#i-x"/></svg>
@@ -772,22 +646,23 @@ tailwind.config = {
 
 <script>
 /* =========================================================
-   SÍTIO ESPERANÇA • app + painel + instalação
+   SÍTIO ESPERANÇA • app + painel (Elias) + instalação
    ========================================================= */
 
-/* ---------- Helpers ---------- */
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 const clampN = (v,a,b) => Math.min(b, Math.max(a, v));
 const fmt = v => (v||0).toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+const b64 = s => btoa(unescape(encodeURIComponent(s)));
 function fmtFone(w){
   const n = String(w||'').replace(/\D/g,'').replace(/^55/,'');
   if (n.length === 11) return `(${n.slice(0,2)}) ${n.slice(2,7)}-${n.slice(7)}`;
   if (n.length === 10) return `(${n.slice(0,2)}) ${n.slice(2,6)}-${n.slice(6)}`;
   return w;
 }
-const b64 = s => btoa(unescape(encodeURIComponent(s)));
-
+function iniciais(nome){
+  return String(nome||'?').trim().split(/\s+/).map(p => p[0]).slice(0,2).join('').toUpperCase() || '?';
+}
 function ligarOlho(inpId, btnId){
   const inp = $(inpId), btn = $(btnId);
   if (!inp || !btn) return;
@@ -795,7 +670,6 @@ function ligarOlho(inpId, btnId){
     const ver = inp.type === 'password';
     inp.type = ver ? 'text' : 'password';
     btn.innerHTML = `<svg class="ic w-[18px] h-[18px]"><use href="#${ver ? 'i-eyeoff' : 'i-eye'}"/></svg>`;
-    btn.setAttribute('aria-label', ver ? 'Ocultar senha' : 'Mostrar senha');
   });
 }
 
@@ -811,7 +685,7 @@ const PADRAO = {
     horario: 'Seg a Sáb, 8h às 18h'
   },
   contato: {
-    nome: 'Antônio',
+    nome: 'Elias',
     sub: 'Criador no Sítio Esperança há 10 anos • Miguel Burnier',
     avaliacao: '4,9 • 127 conversas atendidas'
   },
@@ -837,32 +711,48 @@ const PADRAO = {
     { id:'s4', foto:'', paleta:3, kicker:'Saúde', titulo:'VACINADOS & VERMIFUGADOS',
       sub:'Carteirinha de saúde + garantia de 7 dias', ctaLabel:'FALE COM A GENTE', ctaAcao:'whatsapp', ativa:true },
   ],
+  depoimentos: [
+    { id:'d1', nome:'Juliana C.', cidade:'Ouro Preto • MG', nota:5, foto:'',
+      texto:'Levei a Mel há 3 semanas, veio super mansinha e já com o vermífugo em dia. Explicaram tudo com muita paciência.' },
+    { id:'d2', nome:'Marcos P.', cidade:'Mariana • MG', nota:5, foto:'',
+      texto:'Comprei um Mini Lop de presente pra minha filha. Lindo, saudável, e ainda ganharam um potinho de ração de brinde.' },
+    { id:'d3', nome:'Carla M.', cidade:'Ouro Branco • MG', nota:5, foto:'',
+      texto:'A entrega chegou no horário certinho, com a carteirinha de saúde e toda a orientação. Recomendo demais!' },
+    { id:'d4', nome:'Rafael T.', cidade:'Miguel Burnier', nota:5, foto:'',
+      texto:'Terceiro coelho que compro no sítio. Dá pra ver o cuidado: cercado limpo, feno fresco, tudo no ponto.' },
+  ],
 };
 
 function normalizar(o){
   o = o || {};
   const padC = { id:0, nome:'', raca:'', dias:45, sexo:'M', cor:'', preco:0, desconto:0, descricao:'', foto:'', disponivel:true };
   const padS = { id:'', foto:'', paleta:0, kicker:'', titulo:'', sub:'', ctaLabel:'VER CATÁLOGO', ctaAcao:'catalogo', ativa:true };
+  const padD = { id:'', nome:'', cidade:'', nota:5, foto:'', texto:'' };
+  const arr  = (v, pad, base) => (Array.isArray(v) && v.length ? v : base).map(x => ({ ...pad, ...x }));
   return {
     senha: String(o.senha || PADRAO.senha),
     atualizado: o.atualizado || '',
     config: { ...PADRAO.config, ...(o.config || {}) },
     contato: { ...PADRAO.contato, ...(o.contato || {}) },
-    coelhos: (Array.isArray(o.coelhos) && o.coelhos.length ? o.coelhos : PADRAO.coelhos).map(c => ({ ...padC, ...c })),
-    slides:  (Array.isArray(o.slides)  && o.slides.length  ? o.slides  : PADRAO.slides ).map(s => ({ ...padS, ...s })),
+    coelhos: arr(o.coelhos, padC, PADRAO.coelhos),
+    slides:  arr(o.slides,  padS, PADRAO.slides),
+    depoimentos: arr(o.depoimentos, padD, PADRAO.depoimentos),
   };
 }
 function fontePublica(){ return normalizar(window.DADOS); }
 
 let DADOS = null;
-try {
-  const d = JSON.parse(localStorage.getItem('se_draft') || 'null');
-  if (d){ window.DADOS = d; }
-} catch(e) {}
 const temRascunho = () => { try { return !!localStorage.getItem('se_draft'); } catch(e) { return false; } };
-const saveDraft = () => { try { localStorage.setItem('se_draft', JSON.stringify(DADOS)); } catch(e) { toast('Espaço cheio: use fotos menores', 'i-x'); } };
+function aplicarDraft(){
+  try {
+    const d = JSON.parse(localStorage.getItem('se_draft') || 'null');
+    if (d){ DADOS = normalizar(d); return true; }
+  } catch(e) {}
+  return false;
+}
+const saveDraft = () => { try { localStorage.setItem('se_draft', JSON.stringify(DADOS)); } catch(e) { toast('Memória cheia: use fotos menores', 'i-x'); } };
 
-/* ---------- Ilustrações vetoriais (fallback de foto) ---------- */
+/* ---------- Ilustrações vetoriais (fallback) ---------- */
 const PALETAS = [
   ['#E7F2E4','#2E7D32'], ['#FDEBD3','#8D6E63'], ['#E3EEF8','#54708C'],
   ['#FBE4E1','#B4574E'], ['#EFEAF8','#6B5B95'], ['#FFF4D6','#A98B2D'],
@@ -888,7 +778,7 @@ function arte(pi, w = 400, h = 400, ox = null){
 }
 const fotoCoelho = c => c.foto || arte((c.id - 1));
 
-/* ---------- Preço / promoção / WhatsApp ---------- */
+/* ---------- Preço / WhatsApp ---------- */
 const precoFinal = c => c.desconto > 0 ? Math.round(c.preco * (1 - c.desconto / 100)) : c.preco;
 const waLink = c => {
   const f = precoFinal(c);
@@ -903,7 +793,6 @@ let favs = [];
 try { favs = JSON.parse(localStorage.getItem('se_favs') || '[]'); } catch(e) {}
 const saveFavs = () => { try { localStorage.setItem('se_favs', JSON.stringify(favs)); } catch(e) {} };
 
-/* ---------- Estado ---------- */
 const state = { raca:'Todas', sort:'', favOnly:false, q:'' };
 let swipedAt = 0;
 
@@ -912,7 +801,6 @@ let toastT;
 function toast(msg, icon){
   const t = $('toast');
   t.innerHTML = `<svg class="ic w-4 h-4 shrink-0"><use href="#${icon || 'i-check'}"/></svg><span>${msg}</span>`;
-  t.style.bottom = $('installBar').style.display === 'block' ? '240px' : '170px';
   t.classList.add('show');
   clearTimeout(toastT);
   toastT = setTimeout(() => t.classList.remove('show'), 2200);
@@ -920,11 +808,10 @@ function toast(msg, icon){
 
 /* ---------- Navegação ---------- */
 const HASHES = ['#inicio', '#catalogo', '#contato', '#sobre'];
-const pages   = [...document.querySelectorAll('.page')];
-const navbtns = [...document.querySelectorAll('.navbtn')];
 let cur = 0;
-
 function go(i, fromHash){
+  const pages   = [...document.querySelectorAll('.page')];
+  const navbtns = [...document.querySelectorAll('.navbtn')];
   if (i === cur || i < 0 || i >= pages.length) return;
   const dir = i > cur ? 1 : -1, oldEl = pages[cur], newEl = pages[i];
   newEl.style.transition = 'none';
@@ -940,45 +827,102 @@ function go(i, fromHash){
   navbtns.forEach((b, j) => b.classList.toggle('active', j === i));
   try { if (!fromHash) history.replaceState(null, '', HASHES[i]); } catch(e) {}
 }
-navbtns.forEach(b => b.addEventListener('click', () => go(+b.dataset.page)));
+document.querySelectorAll('.navbtn').forEach(b => b.addEventListener('click', () => go(+b.dataset.page)));
 
 /* ---------- Carrossel ---------- */
 let carI = 0, carTimer = null;
-const slidesAtivas = () => { const l = DADOS.slides.filter(s => s.ativa); return l.length ? l : PADRAO.slides; };
+const slidesAtivas = () => {
+  const l = (DADOS.slides || []).filter(s => s.ativa);
+  return l.length ? l : PADRAO.slides;
+};
 function montarCarousel(){
-  const track = $('carTrack'), dots = $('carDots');
-  if (!track || !dots) return;
-  const lista = slidesAtivas();
-  track.innerHTML = lista.map((s) => `
-    <div class="relative w-full h-full shrink-0">
-      <img src="${s.foto || arte(s.paleta, 800, 500, 470)}" alt="${esc(s.titulo)}" draggable="false"
-           class="absolute inset-0 w-full h-full object-cover">
-      <div class="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/25 to-transparent pointer-events-none"></div>
-      <div class="absolute inset-x-0 bottom-0 p-5 text-white pointer-events-none">
-        <p class="text-[10px] font-bold uppercase tracking-[.14em] text-areia/90">${esc(s.kicker)}</p>
-        <h2 class="mt-1 font-extrabold text-[22px] leading-[1.12] tracking-tight">${esc(s.titulo)}</h2>
-        <p class="mt-1.5 text-[12px] text-white/85 font-medium max-w-[290px]">${esc(s.sub)}</p>
-        <button type="button" data-cta="${DADOS.slides.indexOf(s)}"
-                class="pointer-events-auto mt-3 inline-flex items-center gap-1.5 bg-white text-verde-esc font-extrabold text-[12px] rounded-full px-5 py-2.5 active:scale-95 transition">
-          ${esc(s.ctaLabel)} <svg class="ic w-3.5 h-3.5"><use href="#i-arrow"/></svg>
-        </button>
-      </div>
-    </div>`).join('');
-  dots.innerHTML = lista.map((_, i) =>
-    `<button type="button" data-dot="${i}" aria-label="Slide ${i + 1}" class="h-1.5 rounded-full transition-all duration-300"></button>`).join('');
-  carI = 0; carPaint();
+  try {
+    const track = $('carTrack'), dots = $('carDots');
+    if (!track || !dots) return;
+    const lista = slidesAtivas();
+    track.innerHTML = lista.map((s) => `
+      <div class="relative w-full h-full shrink-0">
+        <img src="${s.foto || arte(s.paleta, 800, 500, 470)}" alt="${esc(s.titulo)}" draggable="false"
+             class="absolute inset-0 w-full h-full object-cover">
+        <div class="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/25 to-transparent pointer-events-none"></div>
+        <div class="absolute inset-x-0 bottom-0 p-5 text-white pointer-events-none">
+          <p class="text-[10px] font-bold uppercase tracking-[.14em] text-areia/90">${esc(s.kicker)}</p>
+          <h2 class="mt-1 font-extrabold text-[22px] leading-[1.12] tracking-tight">${esc(s.titulo)}</h2>
+          <p class="mt-1.5 text-[12px] text-white/85 font-medium max-w-[290px]">${esc(s.sub)}</p>
+          <button type="button" data-cta="${DADOS.slides.indexOf(s)}"
+                  class="pointer-events-auto mt-3 inline-flex items-center gap-1.5 bg-white text-verde-esc font-extrabold text-[12px] rounded-full px-5 py-2.5 active:scale-95 transition">
+            ${esc(s.ctaLabel)} <svg class="ic w-3.5 h-3.5"><use href="#i-arrow"/></svg>
+          </button>
+        </div>
+      </div>`).join('');
+    dots.innerHTML = lista.map((_, i) =>
+      `<button type="button" data-dot="${i}" aria-label="Slide ${i + 1}" class="h-1.5 rounded-full transition-all duration-300"></button>`).join('');
+    carI = 0; carPaint(); carStart();
+
+    const wrap = $('carWrap');
+    if (wrap && !wrap.dataset.sw){
+      wrap.dataset.sw = '1';
+      let sw = null;
+      wrap.addEventListener('pointerdown', e => { sw = { x: e.clientX }; carStop(); });
+      wrap.addEventListener('pointerup', e => {
+        if (!sw) return;
+        const dx = e.clientX - sw.x;
+        if (Math.abs(dx) > 40){ swipedAt = Date.now(); carNav(carI + (dx < 0 ? 1 : -1), true); }
+        else carStart();
+        sw = null;
+      });
+      wrap.addEventListener('pointercancel', () => { sw = null; carStart(); });
+    }
+  } catch(e) { console.error(e); }
 }
 function carPaint(){
   const track = $('carTrack'), dots = $('carDots');
+  if (!track || !dots) return;
   track.style.transform = `translateX(-${carI * 100}%)`;
   [...dots.children].forEach((d, j) => {
     d.style.width = j === carI ? '20px' : '6px';
     d.style.background = j === carI ? '#fff' : 'rgba(255,255,255,.45)';
   });
 }
-function carNav(i, user){ const n = slidesAtivas().length; carI = ((i % n) + n) % n; carPaint(); if (user) carStart(); }
+function carNav(i, user){
+  const n = slidesAtivas().length;
+  carI = ((i % n) + n) % n;
+  carPaint();
+  if (user) carStart();
+}
 function carStop(){ if (carTimer) clearInterval(carTimer); carTimer = null; }
 function carStart(){ carStop(); carTimer = setInterval(() => carNav(carI + 1), 5000); }
+
+/* ---------- Depoimentos (render dinâmico) ---------- */
+function buildDepoimentos(){
+  try {
+    const wrap = $('depoWrap');
+    if (!wrap) return;
+    const lista = (DADOS.depoimentos && DADOS.depoimentos.length) ? DADOS.depoimentos : PADRAO.depoimentos;
+    const star = on => `<svg class="w-3.5 h-3.5 ${on ? 'text-amber-400' : 'text-stone-300'}"><use href="#i-star"/></svg>`;
+    wrap.innerHTML = lista.map(d => `
+      <figure class="snap-start shrink-0 w-[268px] bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-4">
+        <div class="flex items-center gap-2.5">
+          ${d.foto
+            ? `<img src="${d.foto}" alt="${esc(d.nome)}" class="w-9 h-9 rounded-full object-cover ring-2 ring-verde-claro">`
+            : `<span class="w-9 h-9 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs">${esc(iniciais(d.nome))}</span>`}
+          <div class="leading-tight min-w-0">
+            <p class="text-[13px] font-bold text-stone-800 truncate">${esc(d.nome)}</p>
+            <p class="text-[10.5px] text-stone-400 truncate">${esc(d.cidade)}</p>
+          </div>
+          <span class="ml-auto flex gap-0.5 shrink-0">${star((d.nota||5) >= 1)}${star((d.nota||5) >= 2)}${star((d.nota||5) >= 3)}${star((d.nota||5) >= 4)}${star((d.nota||5) >= 5)}</span>
+        </div>
+        <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"${esc(d.texto)}"</blockquote>
+      </figure>`).join('') + `
+      <button data-go="1" type="button" class="snap-start shrink-0 w-[150px] rounded-2xl bg-verde text-white p-4 flex flex-col justify-between gap-4 text-left active:scale-[.97] transition">
+        <svg style="width:26px;height:26px;color:#FFF8E1"><use href="#bunny"/></svg>
+        <div>
+          <p class="font-bold text-sm leading-tight">Quero conhecer os filhotes</p>
+          <p class="text-[11px] text-areia/85 mt-1 inline-flex items-center gap-1 font-semibold">Ver catálogo <svg class="ic w-3.5 h-3.5"><use href="#i-arrow"/></svg></p>
+        </div>
+      </button>`;
+  } catch(e) { console.error(e); }
+}
 
 /* ---------- Catálogo ---------- */
 function listaFiltrada(){
@@ -999,80 +943,82 @@ function listaFiltrada(){
 }
 
 function renderGrid(){
-  const grid = $('grid'), l = listaFiltrada();
-  $('count').textContent = `${l.length} filhote${l.length !== 1 ? 's' : ''}`;
+  try {
+    const grid = $('grid'), l = listaFiltrada();
+    $('count').textContent = `${l.length} filhote${l.length !== 1 ? 's' : ''}`;
 
-  if (!l.length){
-    grid.innerHTML = `
-      <div class="col-span-2 text-center py-14">
-        <span class="mx-auto w-14 h-14 rounded-full bg-verde-claro text-verde grid place-items-center">
-          <svg class="ic w-7 h-7"><use href="#${state.favOnly ? 'i-heartoff' : 'i-search'}"/></svg>
-        </span>
-        <p class="mt-3 font-bold text-sm text-stone-700">${state.favOnly ? 'Nenhum favorito ainda' : 'Nada encontrado'}</p>
-        <p class="mt-1 text-xs text-stone-500 max-w-[230px] mx-auto leading-relaxed">${
-          state.favOnly ? 'Toque no coraçãozinho dos filhotes para salvá-los aqui.' : 'Tente outra busca, raça ou ordenação.'
-        }</p>
-      </div>`;
-    return;
-  }
+    if (!l.length){
+      grid.innerHTML = `
+        <div class="col-span-2 text-center py-14">
+          <span class="mx-auto w-14 h-14 rounded-full bg-verde-claro text-verde grid place-items-center">
+            <svg class="ic w-7 h-7"><use href="#${state.favOnly ? 'i-heartoff' : 'i-search'}"/></svg>
+          </span>
+          <p class="mt-3 font-bold text-sm text-stone-700">${state.favOnly ? 'Nenhum favorito ainda' : 'Nada encontrado'}</p>
+          <p class="mt-1 text-xs text-stone-500 max-w-[230px] mx-auto leading-relaxed">${
+            state.favOnly ? 'Toque no coraçãozinho dos filhotes para salvá-los aqui.' : 'Tente outra busca, raça ou ordenação.'
+          }</p>
+        </div>`;
+      return;
+    }
 
-  grid.innerHTML = l.map((c, i) => {
-    const fin  = precoFinal(c), promo = c.desconto > 0;
-    const sub  = `${c.dias} dias • ${c.cor} • ${fmt(fin)}`;
-    const img  = fotoCoelho(c);
-    const disp = c.disponivel !== false;
-    return `
-    <article class="card-in bg-white rounded-2xl ring-1 ring-areia-borda shadow-card overflow-hidden flex flex-col" style="animation-delay:${i * 45}ms">
-      <div class="relative">
-        <img src="${img}" alt="Coelho ${esc(c.nome)}, raça ${esc(c.raca)}, ${c.dias} dias"
-             loading="lazy" draggable="false" data-zoom
-             data-src="${img}" data-title="${esc(c.nome)} • ${esc(c.raca)}" data-sub="${esc(sub)}"
-             data-desc="${esc(c.descricao)}" data-wa="${disp ? waLink(c) : ''}"
-             class="w-full aspect-square object-cover cursor-zoom-in">
-        <div class="absolute top-2 left-2 flex flex-col items-start gap-1">
-          <span class="inline-flex items-center gap-1.5 ${disp ? 'bg-white/95 text-verde-esc' : 'bg-stone-700 text-white'} text-[9px] font-bold uppercase tracking-wide pl-1.5 pr-2 py-1 rounded-full shadow-sm">
-            ${disp ? `<span class="relative flex h-1.5 w-1.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-verde opacity-60"></span><span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-verde"></span></span> Disponível` : 'Reservado'}
-          </span>
-          ${promo ? `<span class="inline-flex items-center gap-1 bg-promo text-white text-[9px] font-extrabold uppercase tracking-wide px-2 py-1 rounded-full shadow">
-            <svg class="ic w-2.5 h-2.5"><use href="#i-tag"/></svg> -${c.desconto}%
-          </span>` : ''}
+    grid.innerHTML = l.map((c, i) => {
+      const fin  = precoFinal(c), promo = c.desconto > 0;
+      const sub  = `${c.dias} dias • ${c.cor} • ${fmt(fin)}`;
+      const img  = fotoCoelho(c);
+      const disp = c.disponivel !== false;
+      return `
+      <article class="card-in bg-white rounded-2xl ring-1 ring-areia-borda shadow-card overflow-hidden flex flex-col" style="animation-delay:${i * 45}ms">
+        <div class="relative">
+          <img src="${img}" alt="Coelho ${esc(c.nome)}, raça ${esc(c.raca)}, ${c.dias} dias"
+               loading="lazy" draggable="false" data-zoom
+               data-src="${img}" data-title="${esc(c.nome)} • ${esc(c.raca)}" data-sub="${esc(sub)}"
+               data-desc="${esc(c.descricao)}" data-wa="${disp ? waLink(c) : ''}"
+               class="w-full aspect-square object-cover cursor-zoom-in">
+          <div class="absolute top-2 left-2 flex flex-col items-start gap-1">
+            <span class="inline-flex items-center gap-1.5 ${disp ? 'bg-white/95 text-verde-esc' : 'bg-stone-700 text-white'} text-[9px] font-bold uppercase tracking-wide pl-1.5 pr-2 py-1 rounded-full shadow-sm">
+              ${disp ? `<span class="relative flex h-1.5 w-1.5"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-verde opacity-60"></span><span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-verde"></span></span> Disponível` : 'Reservado'}
+            </span>
+            ${promo ? `<span class="inline-flex items-center gap-1 bg-promo text-white text-[9px] font-extrabold uppercase tracking-wide px-2 py-1 rounded-full shadow">
+              <svg class="ic w-2.5 h-2.5"><use href="#i-tag"/></svg> -${c.desconto}%
+            </span>` : ''}
+          </div>
+          <button type="button" data-fav="${c.id}" aria-label="Favoritar ${esc(c.nome)}"
+                  class="favbtn absolute top-1.5 right-1.5 w-8 h-8 rounded-full bg-white/95 shadow-sm grid place-items-center active:scale-90 transition ${favs.includes(c.id) ? 'fav-on' : ''}">
+            <svg class="ic w-4 h-4"><use href="#i-heart"/></svg>
+          </button>
+          <button type="button" data-zoom data-src="${img}" data-title="${esc(c.nome)} • ${esc(c.raca)}"
+                  data-sub="${esc(sub)}" data-desc="${esc(c.descricao)}" data-wa="${disp ? waLink(c) : ''}"
+                  aria-label="Ampliar foto de ${esc(c.nome)}"
+                  class="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white/90 shadow grid place-items-center text-verde-esc active:scale-90 transition">
+            <svg class="ic w-4 h-4"><use href="#i-zoom"/></svg>
+          </button>
         </div>
-        <button type="button" data-fav="${c.id}" aria-label="Favoritar ${esc(c.nome)}"
-                class="favbtn absolute top-1.5 right-1.5 w-8 h-8 rounded-full bg-white/95 shadow-sm grid place-items-center active:scale-90 transition ${favs.includes(c.id) ? 'fav-on' : ''}">
-          <svg class="ic w-4 h-4"><use href="#i-heart"/></svg>
-        </button>
-        <button type="button" data-zoom data-src="${img}" data-title="${esc(c.nome)} • ${esc(c.raca)}"
-                data-sub="${esc(sub)}" data-desc="${esc(c.descricao)}" data-wa="${disp ? waLink(c) : ''}"
-                aria-label="Ampliar foto de ${esc(c.nome)}"
-                class="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white/90 shadow grid place-items-center text-verde-esc active:scale-90 transition">
-          <svg class="ic w-4 h-4"><use href="#i-zoom"/></svg>
-        </button>
-      </div>
-      <div class="p-2.5 flex flex-col flex-1">
-        <div class="flex items-center gap-1.5">
-          <span class="text-[9px] font-bold uppercase tracking-wider text-verde bg-verde-claro rounded px-1.5 py-0.5">${esc(c.raca)}</span>
-          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-semibold text-stone-500">
-            <svg class="ic w-3 h-3"><use href="#${c.sexo === 'F' ? 'i-venus' : 'i-mars'}"/></svg>${c.sexo === 'F' ? 'Fêmea' : 'Macho'}
-          </span>
+        <div class="p-2.5 flex flex-col flex-1">
+          <div class="flex items-center gap-1.5">
+            <span class="text-[9px] font-bold uppercase tracking-wider text-verde bg-verde-claro rounded px-1.5 py-0.5">${esc(c.raca)}</span>
+            <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-semibold text-stone-500">
+              <svg class="ic w-3 h-3"><use href="#${c.sexo === 'F' ? 'i-venus' : 'i-mars'}"/></svg>${c.sexo === 'F' ? 'Fêmea' : 'Macho'}
+            </span>
+          </div>
+          <h3 class="mt-1.5 font-bold text-[15px] leading-none text-stone-900">${esc(c.nome)}</h3>
+          <p class="mt-1.5 text-[10.5px] text-stone-500 inline-flex items-center gap-1 leading-tight">
+            <svg class="ic w-3 h-3 shrink-0"><use href="#i-cal"/></svg>${c.dias} dias • ${esc(c.cor)}
+          </p>
+          ${c.descricao ? `<p class="mt-1 text-[10.5px] text-stone-500 leading-snug clamp2">${esc(c.descricao)}</p>` : ''}
+          <div class="mt-auto pt-2.5">
+            ${promo ? `<p class="text-[11px] text-stone-400 line-through tnum leading-none">${fmt(c.preco)}</p>` : ''}
+            <p class="text-lg font-extrabold ${promo ? 'text-promo' : 'text-verde'} tnum leading-none">${fmt(fin)}</p>
+            ${disp
+              ? `<a href="${waLink(c)}" target="_blank" rel="noopener"
+                   class="mt-2 w-full inline-flex flex-wrap items-center justify-center gap-1.5 bg-verde hover:bg-verde-esc text-white text-[11px] font-bold rounded-xl py-2.5 px-1 active:scale-95 transition text-center">
+                   <svg class="w-3.5 h-3.5"><use href="#wa"/></svg> Reservar no WhatsApp</a>`
+              : `<span class="mt-2 w-full inline-flex items-center justify-center bg-stone-300 text-stone-500 text-[11px] font-bold rounded-xl py-2.5 px-1 text-center">
+                   Já reservado</span>`}
+          </div>
         </div>
-        <h3 class="mt-1.5 font-bold text-[15px] leading-none text-stone-900">${esc(c.nome)}</h3>
-        <p class="mt-1.5 text-[10.5px] text-stone-500 inline-flex items-center gap-1 leading-tight">
-          <svg class="ic w-3 h-3 shrink-0"><use href="#i-cal"/></svg>${c.dias} dias • ${esc(c.cor)}
-        </p>
-        ${c.descricao ? `<p class="mt-1 text-[10.5px] text-stone-500 leading-snug clamp2">${esc(c.descricao)}</p>` : ''}
-        <div class="mt-auto pt-2.5">
-          ${promo ? `<p class="text-[11px] text-stone-400 line-through tnum leading-none">${fmt(c.preco)}</p>` : ''}
-          <p class="text-lg font-extrabold ${promo ? 'text-promo' : 'text-verde'} tnum leading-none">${fmt(fin)}</p>
-          ${disp
-            ? `<a href="${waLink(c)}" target="_blank" rel="noopener"
-                 class="mt-2 w-full inline-flex flex-wrap items-center justify-center gap-1.5 bg-verde hover:bg-verde-esc text-white text-[11px] font-bold rounded-xl py-2.5 px-1 active:scale-95 transition text-center">
-                 <svg class="w-3.5 h-3.5"><use href="#wa"/></svg> Reservar no WhatsApp</a>`
-            : `<span class="mt-2 w-full inline-flex items-center justify-center bg-stone-300 text-stone-500 text-[11px] font-bold rounded-xl py-2.5 px-1 text-center">
-                 Já reservado</span>`}
-        </div>
-      </div>
-    </article>`;
-  }).join('');
+      </article>`;
+    }).join('');
+  } catch(e) { console.error(e); }
 }
 
 /* ---------- Filtros ---------- */
@@ -1095,7 +1041,6 @@ function renderChips(){
   $('favFilter').setAttribute('aria-pressed', state.favOnly);
   renderGrid();
 });
-
 function updateFavBadge(){
   favs = favs.filter(id => DADOS.coelhos.some(c => c.id === id));
   const n = $('favN');
@@ -1103,7 +1048,6 @@ function updateFavBadge(){
   n.classList.toggle('hidden', favs.length === 0);
   n.classList.toggle('grid', favs.length > 0);
 }
-
  $('grid').addEventListener('click', e => {
   const f = e.target.closest('[data-fav]');
   if (!f) return;
@@ -1120,7 +1064,9 @@ const criadouroFotos = [
   { t:'Maternidade separada',  p:2 }, { t:'Sol da manhã e sombra', p:4 },
 ];
 function buildGaleria(){
-  $('galeria').innerHTML = criadouroFotos.map(f => `
+  const g = $('galeria');
+  if (!g) return;
+  g.innerHTML = criadouroFotos.map(f => `
     <figure class="relative rounded-2xl overflow-hidden ring-1 ring-areia-borda shadow-card">
       <img src="${arte(f.p, 400, 300, 60)}" alt="${f.t}" loading="lazy" draggable="false" data-zoom
            data-src="${arte(f.p, 400, 300, 60)}" data-title="${f.t}" data-sub="Sítio Esperança" data-desc=""
@@ -1165,15 +1111,13 @@ function openZoom(src, alt, title, sub, desc, waHref){
   $('zoomDesc').style.display = desc ? '' : 'none';
   const zw = $('zoomWa');
   if (waHref){ zw.href = waHref; zw.style.display = ''; } else zw.style.display = 'none';
-  $('zoomer').style.background = '';
   $('zoomer').classList.add('open');
   zReset(false);
   $('zoomHint').style.opacity = '1';
   clearTimeout(hintT);
   hintT = setTimeout(() => { $('zoomHint').style.opacity = '0'; }, 2600);
 }
-function closeZoom(){ $('zoomer').classList.remove('open'); $('zoomer').style.background = ''; zImg.style.opacity = '0'; }
-
+function closeZoom(){ $('zoomer').classList.remove('open'); zImg.style.opacity = '0'; }
 zStage.addEventListener('pointerdown', e => {
   e.preventDefault();
   zStage.setPointerCapture(e.pointerId);
@@ -1238,7 +1182,12 @@ zStage.addEventListener('pointerup', zUp);
 zStage.addEventListener('pointercancel', zUp);
 zStage.addEventListener('wheel', e => { e.preventDefault(); zAt(e.clientX, e.clientY, e.deltaY < 0 ? 1.25 : 0.8); }, { passive:false });
  $('zoomClose').addEventListener('click', closeZoom);
-document.addEventListener('keydown', e => { if (e.key === 'Escape'){ if ($('zoomer').classList.contains('open')) closeZoom(); if ($('admin').classList.contains('open')) fecharAdmin(); } });
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape'){
+    if ($('zoomer').classList.contains('open')) closeZoom();
+    if ($('admin').classList.contains('open')) fecharAdmin();
+  }
+});
 
 /* ---------- Delegação global ---------- */
 document.addEventListener('click', e => {
@@ -1260,7 +1209,6 @@ document.addEventListener('click', e => {
   if (g) go(+g.dataset.go);
 });
 
-/* ---------- Acordeões / PIX ---------- */
 document.querySelectorAll('.pol-h').forEach(h => h.addEventListener('click', () => {
   const pol = h.parentElement, wasOpen = pol.classList.contains('open');
   document.querySelectorAll('.pol.open').forEach(p => p.classList.remove('open'));
@@ -1280,49 +1228,35 @@ document.querySelectorAll('.pol-h').forEach(h => h.addEventListener('click', () 
 });
 
 /* =========================================================
-   INSTALAÇÃO DO APP — banner com X + guias por sistema
+   INSTALAÇÃO — botão sempre no header + banner com X
    ========================================================= */
 const isIOSDev = () => /iphone|ipad|ipod/i.test(navigator.userAgent)
   || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
-
 function rodandoNoApp(){
   return window.matchMedia('(display-mode: standalone)').matches
     || window.navigator.standalone === true;
 }
 const snoozeDays = d => { try { localStorage.setItem('se_snooze_v2', String(Date.now() + d * 24 * 60 * 60 * 1000)); } catch(e) {} };
 
-let deferredPrompt = null;
-let bannerAtivo = false;
+let deferredPrompt = null, bannerAtivo = false;
 
 function bannerJaPode(){
   if (rodandoNoApp()) return false;
   try {
-    const snooze = +(localStorage.getItem('se_snooze_v2') || 0);
-    if (Date.now() < snooze) return false;
+    if (+(localStorage.getItem('se_snooze_v2') || 0) > Date.now()) return false;
   } catch(e) {}
   return true;
 }
-
 function atualizarBotaoHeader(){
-  $('btnHdrInstall').style.display = bannerJaPode() ? 'inline-flex' : 'none';
+  $('btnHdrInstall').style.display = rodandoNoApp() ? 'none' : 'inline-flex';
 }
-
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  deferredPrompt = e;
-});
-
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt = e; });
 window.addEventListener('appinstalled', () => {
   esconderBanner();
   atualizarBotaoHeader();
   toast('App instalado! Procure o coelhinho na tela inicial', 'i-check');
 });
-
-function agendarBanner(){
-  if (!bannerJaPode()) return;
-  setTimeout(() => mostrarBanner(), 1400);
-}
-
+function agendarBanner(){ if (bannerJaPode()) setTimeout(mostrarBanner, 1400); }
 function mostrarBanner(){
   if (!bannerJaPode() || bannerAtivo) return;
   bannerAtivo = true;
@@ -1340,7 +1274,6 @@ function mostrarBanner(){
     bar.style.transform = 'translateY(0)';
   }));
 }
-
 function esconderBanner(){
   const bar = $('installBar');
   if (bar.style.display !== 'block') return;
@@ -1349,60 +1282,40 @@ function esconderBanner(){
   bar.style.transform = 'translateY(18px)';
   setTimeout(() => { bar.style.display = 'none'; }, 280);
 }
-
- $('installNo').addEventListener('click', () => {
-  snoozeDays(3);
-  esconderBanner();
-});
-
+ $('installNo').addEventListener('click', () => { snoozeDays(3); esconderBanner(); });
 async function instalarAgora(){
   if (rodandoNoApp()) return;
-
   if (deferredPrompt){
     try {
       deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
       deferredPrompt = null;
-      if (outcome === 'accepted'){
-        esconderBanner();
-        atualizarBotaoHeader();
-        toast('Instalando… o ícone aparece na tela inicial', 'i-check');
-      } else {
-        snoozeDays(1);
-        esconderBanner();
-      }
-    } catch(e){
-      abrirGuiaAndroid();
-    }
+      if (outcome === 'accepted'){ esconderBanner(); toast('Instalando… o ícone aparece na tela inicial', 'i-check'); }
+      else { snoozeDays(1); esconderBanner(); }
+    } catch(e){ abrirGuiaAndroid(); }
     return;
   }
-
   if (isIOSDev()){ abrirGuiaIOS(); return; }
   abrirGuiaAndroid();
 }
-
  $('installYes').addEventListener('click', instalarAgora);
  $('btnHdrInstall').addEventListener('click', instalarAgora);
 
-/* Guia Android — inclui solução para o "fantasma" de app já instalado */
 function abrirGuiaAndroid(){
   const ov = document.createElement('div');
-  ov.id = 'androidGuide';
   ov.style.cssText = 'position:absolute;inset:0;z-index:95;display:flex;align-items:flex-end;background:rgba(28,25,23,.55)';
   ov.innerHTML = `
     <div class="guide-sheet" style="background:#fff;border-radius:24px 24px 0 0;width:100%;padding:22px 20px calc(24px + env(safe-area-inset-bottom))">
       <div style="width:40px;height:4px;border-radius:2px;background:#E7DDC0;margin:0 auto 14px"></div>
       <h3 style="font-size:17px;font-weight:800;color:#1C1917;text-align:center">Instalar no Android 📱</h3>
-
       <div style="margin-top:14px;background:#FFF8E1;border:1px solid #E7DDC0;border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start">
         <svg class="ic" style="width:20px;height:20px;color:#B4574E;flex-shrink:0;margin-top:1px"><use href="#i-trashhome"/></svg>
-        <p style="font-size:12px;color:#57534E;line-height:1.5">Se aparecer <b>“app já está instalado”</b> ou se sobrou um ícone antigo na tela inicial: <b>toque e segure no ícone → Remover</b>. Depois o Chrome volta a oferecer a instalação.</p>
+        <p style="font-size:12px;color:#57534E;line-height:1.5">Se aparecer <b>“app já está instalado”</b>: <b>remova o ícone antigo</b> da tela inicial (toque e segure → Remover). Depois o Chrome volta a oferecer a instalação.</p>
       </div>
-
       <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;gap:12px;align-items:center">
           <span style="width:34px;height:34px;border-radius:50%;background:#E8F1E4;color:#2E7D32;display:grid;place-items:center;font-weight:800;font-size:14px;flex-shrink:0">1</span>
-          <p style="font-size:13px;color:#44403C">Abra o site no <b>Chrome</b> e toque no menu <b>⋮</b> <svg class="ic" style="width:17px;height:17px;display:inline-block;vertical-align:-3px;color:#2E7D32"><use href="#i-menu3"/></svg> (canto superior direito)</p>
+          <p style="font-size:13px;color:#44403C">No Chrome, toque no menu <b>⋮</b> <svg class="ic" style="width:17px;height:17px;display:inline-block;vertical-align:-3px;color:#2E7D32"><use href="#i-menu3"/></svg></p>
         </div>
         <div style="display:flex;gap:12px;align-items:center">
           <span style="width:34px;height:34px;border-radius:50%;background:#E8F1E4;color:#2E7D32;display:grid;place-items:center;font-weight:800;font-size:14px;flex-shrink:0">2</span>
@@ -1413,27 +1326,20 @@ function abrirGuiaAndroid(){
           <p style="font-size:13px;color:#44403C">Confirme em <b>“Instalar”</b>. O coelhinho aparece na sua tela inicial! 🐰</p>
         </div>
       </div>
-
       <button id="andTry" class="adm-btn bg-verde text-white" style="width:100%;margin-top:18px;padding:13px">TENTAR INSTALAR AGORA</button>
       <button id="andOk" class="adm-btn" style="width:100%;margin-top:8px;padding:13px;background:#FFF8E1;color:#57534E;border:1px solid #E7DDC0">FECHAR</button>
     </div>`;
-  document.getElementById('app').appendChild(ov);
+  $('app').appendChild(ov);
   ov.addEventListener('click', e => { if (e.target === ov) ov.remove(); });
   ov.querySelector('#andOk').onclick = () => ov.remove();
   ov.querySelector('#andTry').onclick = () => {
     ov.remove();
-    if (deferredPrompt){
-      instalarAgora();
-    } else {
-      toast('Se não abrir, remova o ícone antigo e tente de novo', 'i-trashhome');
-    }
+    if (deferredPrompt) instalarAgora();
+    else toast('Se não abrir, remova o ícone antigo e tente de novo', 'i-trashhome');
   };
 }
-
-/* Guia visual para iPhone */
 function abrirGuiaIOS(){
   const ov = document.createElement('div');
-  ov.id = 'iosGuide';
   ov.style.cssText = 'position:absolute;inset:0;z-index:95;display:flex;align-items:flex-end;background:rgba(28,25,23,.55)';
   ov.innerHTML = `
     <div class="guide-sheet" style="background:#fff;border-radius:24px 24px 0 0;width:100%;padding:22px 20px calc(24px + env(safe-area-inset-bottom))">
@@ -1443,25 +1349,24 @@ function abrirGuiaIOS(){
       <div style="margin-top:16px;display:flex;flex-direction:column;gap:12px">
         <div style="display:flex;gap:12px;align-items:center">
           <span style="width:34px;height:34px;border-radius:50%;background:#E8F1E4;color:#2E7D32;display:grid;place-items:center;font-weight:800;font-size:14px;flex-shrink:0">1</span>
-          <p style="font-size:13px;color:#44403C">Toque no botão <b>Compartilhar</b> <svg class="ic" style="width:17px;height:17px;display:inline-block;vertical-align:-3px;color:#2E7D32"><use href="#i-share"/></svg> (na barra de baixo do Safari)</p>
+          <p style="font-size:13px;color:#44403C">Toque no botão <b>Compartilhar</b> <svg class="ic" style="width:17px;height:17px;display:inline-block;vertical-align:-3px;color:#2E7D32"><use href="#i-share"/></svg></p>
         </div>
         <div style="display:flex;gap:12px;align-items:center">
           <span style="width:34px;height:34px;border-radius:50%;background:#E8F1E4;color:#2E7D32;display:grid;place-items:center;font-weight:800;font-size:14px;flex-shrink:0">2</span>
-          <p style="font-size:13px;color:#44403C">Role a lista e toque em <b>“Adicionar à Tela de Início”</b> <svg class="ic" style="width:17px;height:17px;display:inline-block;vertical-align:-3px;color:#2E7D32"><use href="#i-plusbox"/></svg></p>
+          <p style="font-size:13px;color:#44403C">Role e toque em <b>“Adicionar à Tela de Início”</b> <svg class="ic" style="width:17px;height:17px;display:inline-block;vertical-align:-3px;color:#2E7D32"><use href="#i-plusbox"/></svg></p>
         </div>
         <div style="display:flex;gap:12px;align-items:center">
           <span style="width:34px;height:34px;border-radius:50%;background:#E8F1E4;color:#2E7D32;display:grid;place-items:center;font-weight:800;font-size:14px;flex-shrink:0">3</span>
-          <p style="font-size:13px;color:#44403C">Confirme tocando em <b>“Adicionar”</b>. O ícone do coelhinho aparece na sua tela!</p>
+          <p style="font-size:13px;color:#44403C">Confirme em <b>“Adicionar”</b>. Pronto!</p>
         </div>
       </div>
       <button id="iosOk" class="adm-btn bg-verde text-white" style="width:100%;margin-top:18px;padding:13px">ENTENDI, FECHAR</button>
     </div>`;
-  document.getElementById('app').appendChild(ov);
+  $('app').appendChild(ov);
   ov.addEventListener('click', e => { if (e.target === ov) ov.remove(); });
   ov.querySelector('#iosOk').onclick = () => ov.remove();
 }
 
-/* ---------- Service Worker ---------- */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
   window.addEventListener('load', () =>
     navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).catch(() => {})
@@ -1471,10 +1376,10 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 /* =========================================================
    PAINEL ADMINISTRATIVO
    ========================================================= */
-const adm = { tela:'login', editId:null };
+const adm = { tela:'login', editId:null, editIdx:null };
 const admBody = $('admBody');
 
-function comprimirImagem(file, maxLado = 900, qualidade = 0.82){
+function comprimirImagem(file, maxLado = 760, qualidade = 0.8){
   return new Promise((resolve, reject) => {
     const img = new Image();
     const url = URL.createObjectURL(file);
@@ -1500,7 +1405,6 @@ function fecharAdmin(){
   $('admin').classList.remove('open');
   aplicarDados();
 }
-
 let lgTaps = 0, lgT;
  $('logoMarca').addEventListener('click', () => {
   lgTaps++; clearTimeout(lgT); lgT = setTimeout(() => lgTaps = 0, 1600);
@@ -1517,11 +1421,8 @@ function admRender(){
           <h2 class="mt-3 font-extrabold text-stone-900">Área do Administrador</h2>
           <p class="text-xs text-stone-500 mt-1">Digite a senha para gerenciar o site</p>
           <div class="pwd-wrap mt-4">
-            <input id="admSenha" type="password" placeholder="Senha" maxlength="24" autocomplete="current-password"
-                   class="adm-inp text-center font-bold">
-            <button id="admEye" type="button" class="pwd-eye" aria-label="Mostrar senha">
-              <svg class="ic w-[18px] h-[18px]"><use href="#i-eye"/></svg>
-            </button>
+            <input id="admSenha" type="password" placeholder="Senha" maxlength="24" autocomplete="current-password" class="adm-inp text-center font-bold">
+            <button id="admEye" type="button" class="pwd-eye" aria-label="Mostrar senha"><svg class="ic w-[18px] h-[18px]"><use href="#i-eye"/></svg></button>
           </div>
           <p id="admSenhaErr" class="text-[11px] text-promo font-bold mt-1.5 hidden">Senha incorreta, tente de novo</p>
           <button id="admEntrar" type="button" class="adm-btn bg-verde text-white w-full mt-3 !py-3">ENTRAR</button>
@@ -1543,8 +1444,8 @@ function admRender(){
 
   if (adm.tela === 'formCoelho') return admFormCoelho();
   if (adm.tela === 'formSlide')  return admFormSlide();
+  if (adm.tela === 'formDepo')   return admFormDepo();
   if (adm.tela === 'token')      return admToken();
-  if (adm.tela === 'manual')     return admComoPublicar();
   if (adm.tela === 'publicado')  return admPublicado();
 
   const rasc = temRascunho();
@@ -1555,9 +1456,7 @@ function admRender(){
     ${rasc ? `
     <div class="rounded-2xl bg-amber-50 border border-amber-200 p-3.5 flex items-start gap-2.5">
       <svg class="ic w-4 h-4 text-amber-600 mt-0.5"><use href="#i-clock"/></svg>
-      <div class="flex-1 text-[12px] text-amber-800 leading-snug">
-        <b>Alterações não publicadas.</b> Use o botão <b>Publicar</b> abaixo para enviá-las ao site.
-      </div>
+      <div class="flex-1 text-[12px] text-amber-800 leading-snug"><b>Alterações não publicadas.</b> Use o botão <b>Publicar</b> abaixo para enviá-las ao site.</div>
     </div>` : `
     <div class="rounded-2xl bg-verde-claro border border-verde/15 p-3.5 text-[12px] text-verde-esc font-semibold flex items-center gap-2.5">
       <svg class="ic w-4 h-4"><use href="#i-check"/></svg> Tudo sincronizado com o site publicado.
@@ -1572,22 +1471,19 @@ function admRender(){
             <p class="text-[12px] font-bold text-stone-800 truncate">${gh ? esc(gh.owner + '/' + gh.repo) : 'Repositório não detectado'}</p>
             <p class="text-[10.5px] ${temToken ? 'text-verde font-bold' : 'text-stone-400'}">${temToken ? '● Conectado — publicação automática ativa' : '○ Não conectado'}</p>
           </div>
-          <button id="btnToken" type="button" class="adm-btn ${temToken ? 'bg-areia text-stone-600 border border-areia-borda' : 'bg-verde text-white'} !py-2 !px-3 text-[11px]">
-            ${temToken ? 'Gerenciar' : 'Conectar'}
-          </button>
+          <button id="btnToken" type="button" class="adm-btn ${temToken ? 'bg-areia text-stone-600 border border-areia-borda' : 'bg-verde text-white'} !py-2 !px-3 text-[11px]">${temToken ? 'Gerenciar' : 'Conectar'}</button>
         </div>
         <button id="pubBtn" type="button" class="adm-btn bg-verde text-white w-full !py-3.5 !text-[14px]">
           <svg class="ic" style="width:18px;height:18px"><use href="#i-up"/></svg> PUBLICAR ALTERAÇÕES
         </button>
         <p id="pubStatus" class="text-[11px] text-stone-500 leading-snug px-1 hidden"></p>
+        <p class="text-[11px] text-stone-500 leading-snug px-1">Publica o conteúdo (<b>dados.js</b>) e também o <b>manifest + ícones</b> do app — necessários para o botão “Instalar” funcionar.</p>
         <p class="text-[11px] text-stone-500 leading-snug px-1">${DADOS.atualizado ? `Última publicação: <b>${new Date(DADOS.atualizado).toLocaleString('pt-BR')}</b>.` : 'Ainda não há publicação.'}</p>
         <details class="px-1">
           <summary class="text-[11px] font-bold text-stone-500 cursor-pointer">Opções manuais (backup)</summary>
           <div class="grid grid-cols-2 gap-2.5 mt-2.5">
-            <button id="dlBtn" type="button" class="adm-btn bg-areia text-stone-700 border border-areia-borda">
-              <svg class="ic w-4 h-4"><use href="#i-down"/></svg> Baixar dados.js</button>
-            <button id="impBtn" type="button" class="adm-btn bg-areia text-stone-700 border border-areia-borda">
-              <svg class="ic w-4 h-4"><use href="#i-up"/></svg> Importar dados.js</button>
+            <button id="dlBtn" type="button" class="adm-btn bg-areia text-stone-700 border border-areia-borda"><svg class="ic w-4 h-4"><use href="#i-down"/></svg> Baixar dados.js</button>
+            <button id="impBtn" type="button" class="adm-btn bg-areia text-stone-700 border border-areia-borda"><svg class="ic w-4 h-4"><use href="#i-up"/></svg> Importar dados.js</button>
           </div>
           <input id="impFile" type="file" accept=".js,.json,.txt" class="hidden">
         </details>
@@ -1612,16 +1508,12 @@ function admRender(){
           <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Horário</span>
             <input id="cf-hor" class="adm-inp mt-1" value="${esc(DADOS.config.horario)}"></label>
         </div>
-        <label class="block">
-          <span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Senha do painel</span>
+        <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Senha do painel</span>
           <div class="pwd-wrap mt-1">
             <input id="cf-senha" type="password" maxlength="24" class="adm-inp">
-            <button id="cfSenhaEye" type="button" class="pwd-eye" aria-label="Mostrar senha">
-              <svg class="ic w-[18px] h-[18px]"><use href="#i-eye"/></svg>
-            </button>
+            <button id="cfSenhaEye" type="button" class="pwd-eye" aria-label="Mostrar senha"><svg class="ic w-[18px] h-[18px]"><use href="#i-eye"/></svg></button>
           </div>
         </label>
-        <p class="text-[10.5px] text-stone-400 leading-snug -mt-1 px-1">⚠️ A senha fica salva no código do site — use uma senha exclusiva do painel, não reutilize senhas pessoais importantes.</p>
       </div>
     </section>
 
@@ -1629,20 +1521,19 @@ function admRender(){
       <h3 class="text-[11px] uppercase tracking-wider text-stone-400 font-extrabold px-1">Página Contato</h3>
       <div class="adm-card p-4 mt-2 space-y-3">
         <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Nome do criador</span>
-          <input id="ct-nome" class="adm-inp mt-1" value="${esc(DADOS.contato.nome)}"></label>
+          <input id="ct-nome" class="adm-inp mt-1" value="${esc(DADOS.contato.nome)}" placeholder="Ex.: Elias"></label>
         <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Descrição do criador</span>
           <input id="ct-sub" class="adm-inp mt-1" value="${esc(DADOS.contato.sub)}"></label>
         <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Selo de avaliação</span>
           <input id="ct-aval" class="adm-inp mt-1" value="${esc(DADOS.contato.avaliacao)}"></label>
-        <p class="text-[10.5px] text-stone-400 leading-snug -mt-1 px-1">WhatsApp, PIX, endereço e horário são editados em <b>Configurações do site</b>, acima.</p>
+        <p class="text-[10.5px] text-stone-400 leading-snug -mt-1 px-1">O nome também atualiza a assinatura da história em “O Sítio”.</p>
       </div>
     </section>
 
     <section class="mt-6">
       <div class="flex items-center justify-between px-1">
         <h3 class="text-[11px] uppercase tracking-wider text-stone-400 font-extrabold">Carrossel (topo)</h3>
-        <button id="addSlide" type="button" class="adm-btn bg-verde-claro text-verde !py-1.5 !px-3 text-[11px]">
-          <svg class="ic w-3.5 h-3.5"><use href="#i-plus"/></svg> Novo slide</button>
+        <button id="addSlide" type="button" class="adm-btn bg-verde-claro text-verde !py-1.5 !px-3 text-[11px]"><svg class="ic w-3.5 h-3.5"><use href="#i-plus"/></svg> Novo slide</button>
       </div>
       <div class="mt-2 space-y-2.5">
         ${DADOS.slides.map((s, i) => `
@@ -1653,10 +1544,29 @@ function admRender(){
             <p class="text-[10.5px] text-stone-400 truncate">${esc(s.kicker)}${s.ativa ? '' : ' • oculto'}</p>
           </div>
           <button type="button" data-tgl-slide="${i}" class="tgl ${s.ativa ? 'on' : ''}" aria-label="Mostrar/ocultar"></button>
-          <button type="button" data-ed-slide="${i}" class="adm-btn bg-areia text-verde-esc border border-areia-borda !p-2.5" aria-label="Editar">
-            <svg class="ic w-4 h-4"><use href="#i-edit"/></svg></button>
-          <button type="button" data-del-slide="${i}" class="adm-btn bg-red-50 text-promo !p-2.5" aria-label="Excluir">
-            <svg class="ic w-4 h-4"><use href="#i-trash"/></svg></button>
+          <button type="button" data-ed-slide="${i}" class="adm-btn bg-areia text-verde-esc border border-areia-borda !p-2.5" aria-label="Editar"><svg class="ic w-4 h-4"><use href="#i-edit"/></svg></button>
+          <button type="button" data-del-slide="${i}" class="adm-btn bg-red-50 text-promo !p-2.5" aria-label="Excluir"><svg class="ic w-4 h-4"><use href="#i-trash"/></svg></button>
+        </div>`).join('')}
+      </div>
+    </section>
+
+    <section class="mt-6">
+      <div class="flex items-center justify-between px-1">
+        <h3 class="text-[11px] uppercase tracking-wider text-stone-400 font-extrabold">Depoimentos (${DADOS.depoimentos.length})</h3>
+        <button id="addDepo" type="button" class="adm-btn bg-verde-claro text-verde !py-1.5 !px-3 text-[11px]"><svg class="ic w-3.5 h-3.5"><use href="#i-plus"/></svg> Novo</button>
+      </div>
+      <div class="mt-2 space-y-2.5">
+        ${DADOS.depoimentos.map((d, i) => `
+        <div class="adm-card p-3 flex items-center gap-3">
+          ${d.foto
+            ? `<img src="${d.foto}" alt="" class="w-12 h-12 rounded-full object-cover shrink-0">`
+            : `<span class="w-12 h-12 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs shrink-0">${esc(iniciais(d.nome))}</span>`}
+          <div class="min-w-0 flex-1">
+            <p class="text-[13px] font-bold text-stone-800 truncate">${esc(d.nome)} <span class="text-stone-400 font-normal">• ${esc(d.cidade)}</span></p>
+            <p class="text-[10.5px] text-stone-400 truncate">${esc(d.texto)}</p>
+          </div>
+          <button type="button" data-ed-depo="${i}" class="adm-btn bg-areia text-verde-esc border border-areia-borda !p-2.5" aria-label="Editar"><svg class="ic w-4 h-4"><use href="#i-edit"/></svg></button>
+          <button type="button" data-del-depo="${i}" class="adm-btn bg-red-50 text-promo !p-2.5" aria-label="Excluir"><svg class="ic w-4 h-4"><use href="#i-trash"/></svg></button>
         </div>`).join('')}
       </div>
     </section>
@@ -1664,8 +1574,7 @@ function admRender(){
     <section class="mt-6">
       <div class="flex items-center justify-between px-1">
         <h3 class="text-[11px] uppercase tracking-wider text-stone-400 font-extrabold">Produtos (${DADOS.coelhos.length})</h3>
-        <button id="addCoelho" type="button" class="adm-btn bg-verde-claro text-verde !py-1.5 !px-3 text-[11px]">
-          <svg class="ic w-3.5 h-3.5"><use href="#i-plus"/></svg> Novo coelho</button>
+        <button id="addCoelho" type="button" class="adm-btn bg-verde-claro text-verde !py-1.5 !px-3 text-[11px]"><svg class="ic w-3.5 h-3.5"><use href="#i-plus"/></svg> Novo coelho</button>
       </div>
       <div class="mt-2 space-y-2.5">
         ${DADOS.coelhos.map((c, i) => `
@@ -1678,10 +1587,8 @@ function admRender(){
             <p class="text-[10.5px] text-stone-400 truncate">${esc(c.raca)} • ${fmt(precoFinal(c))}${c.foto ? ' • 📷' : ''}</p>
           </div>
           <button type="button" data-tgl-coelho="${i}" class="tgl ${c.disponivel !== false ? 'on' : ''}" aria-label="Disponível/reservado"></button>
-          <button type="button" data-ed-coelho="${i}" class="adm-btn bg-areia text-verde-esc border border-areia-borda !p-2.5" aria-label="Editar">
-            <svg class="ic w-4 h-4"><use href="#i-edit"/></svg></button>
-          <button type="button" data-del-coelho="${i}" class="adm-btn bg-red-50 text-promo !p-2.5" aria-label="Excluir">
-            <svg class="ic w-4 h-4"><use href="#i-trash"/></svg></button>
+          <button type="button" data-ed-coelho="${i}" class="adm-btn bg-areia text-verde-esc border border-areia-borda !p-2.5" aria-label="Editar"><svg class="ic w-4 h-4"><use href="#i-edit"/></svg></button>
+          <button type="button" data-del-coelho="${i}" class="adm-btn bg-red-50 text-promo !p-2.5" aria-label="Excluir"><svg class="ic w-4 h-4"><use href="#i-trash"/></svg></button>
         </div>`).join('')}
       </div>
     </section>
@@ -1698,7 +1605,14 @@ function admRender(){
 
   const ct = { 'ct-nome':'nome', 'ct-sub':'sub', 'ct-aval':'avaliacao' };
   Object.entries(ct).forEach(([id, k]) => {
-    $(id).addEventListener('input', e => { DADOS.contato[k] = e.target.value.trim(); saveDraft(); });
+    $(id).addEventListener('input', e => {
+      DADOS.contato[k] = e.target.value.trim();
+      saveDraft();
+      if (k === 'nome') $('cfg-criador-assina').textContent = DADOS.contato.nome || PADRAO.contato.nome;
+      if (k === 'nome') $('cfg-criador-nome').textContent = DADOS.contato.nome || PADRAO.contato.nome;
+      if (k === 'sub')  $('cfg-criador-sub').textContent  = DADOS.contato.sub;
+      if (k === 'avaliacao') $('cfg-criador-aval').textContent = DADOS.contato.avaliacao;
+    });
   });
 
   $('btnToken').onclick = () => { adm.tela = 'token'; admRender(); };
@@ -1712,8 +1626,18 @@ function admRender(){
     admRender(); aplicarDados(); toast('Rascunho descartado', 'i-check');
   });
 
-  $('addSlide').onclick  = () => { DADOS.slides.push({ id:'s' + Date.now(), foto:'', paleta:DADOS.slides.length, kicker:'', titulo:'', sub:'', ctaLabel:'VER CATÁLOGO', ctaAcao:'catalogo', ativa:true }); saveDraft(); adm.editId = DADOS.slides[DADOS.slides.length - 1].id; adm.tela = 'formSlide'; admRender(); };
-  $('addCoelho').onclick = () => { DADOS.coelhos.push({ id:Date.now(), nome:'', raca:'Mini Lop', dias:45, sexo:'M', cor:'', preco:100, desconto:0, descricao:'', foto:'', disponivel:true }); saveDraft(); adm.editId = DADOS.coelhos[DADOS.coelhos.length - 1].id; adm.tela = 'formCoelho'; admRender(); };
+  $('addSlide').onclick = () => {
+    DADOS.slides.push({ id:'s' + Date.now(), foto:'', paleta:DADOS.slides.length, kicker:'', titulo:'', sub:'', ctaLabel:'VER CATÁLOGO', ctaAcao:'catalogo', ativa:true });
+    saveDraft(); adm.editId = DADOS.slides[DADOS.slides.length - 1].id; adm.tela = 'formSlide'; admRender();
+  };
+  $('addDepo').onclick = () => {
+    DADOS.depoimentos.push({ id:'d' + Date.now(), nome:'', cidade:'', nota:5, foto:'', texto:'' });
+    saveDraft(); adm.editIdx = DADOS.depoimentos.length - 1; adm.tela = 'formDepo'; admRender();
+  };
+  $('addCoelho').onclick = () => {
+    DADOS.coelhos.push({ id:Date.now(), nome:'', raca:'Mini Lop', dias:45, sexo:'M', cor:'', preco:100, desconto:0, descricao:'', foto:'', disponivel:true });
+    saveDraft(); adm.editId = DADOS.coelhos[DADOS.coelhos.length - 1].id; adm.tela = 'formCoelho'; admRender();
+  };
 
   b.querySelectorAll('[data-tgl-slide]').forEach(btn => btn.onclick = () => {
     const s = DADOS.slides[+btn.dataset.tglSlide]; s.ativa = !s.ativa; saveDraft(); admRender();
@@ -1722,13 +1646,17 @@ function admRender(){
     const c = DADOS.coelhos[+btn.dataset.tglCoelho]; c.disponivel = c.disponivel === false ? true : false; saveDraft(); admRender();
   });
   b.querySelectorAll('[data-ed-slide]').forEach(btn => btn.onclick = () => { adm.editId = DADOS.slides[+btn.dataset.edSlide].id; adm.tela = 'formSlide'; admRender(); });
+  b.querySelectorAll('[data-ed-depo]').forEach(btn => btn.onclick = () => { adm.editIdx = +btn.dataset.edDepo; adm.tela = 'formDepo'; admRender(); });
   b.querySelectorAll('[data-ed-coelho]').forEach(btn => btn.onclick = () => { adm.editId = DADOS.coelhos[+btn.dataset.edCoelho].id; adm.tela = 'formCoelho'; admRender(); });
 
   b.querySelectorAll('[data-del-slide]').forEach(btn => btn.onclick = () => excluirConfirm(btn, () => {
-    DADOS.slides.splice(+btn.dataset.delSlide, 1); saveDraft(); admRender(); toast('Slide excluído', 'i-trash');
+    DADOS.slides.splice(+btn.dataset.delSlide, 1); saveDraft(); admRender(); aplicarDados(); toast('Slide excluído', 'i-trash');
+  }));
+  b.querySelectorAll('[data-del-depo]').forEach(btn => btn.onclick = () => excluirConfirm(btn, () => {
+    DADOS.depoimentos.splice(+btn.dataset.delDepo, 1); saveDraft(); admRender(); aplicarDados(); toast('Depoimento excluído', 'i-trash');
   }));
   b.querySelectorAll('[data-del-coelho]').forEach(btn => btn.onclick = () => excluirConfirm(btn, () => {
-    DADOS.coelhos.splice(+btn.dataset.delCoelho, 1); saveDraft(); admRender(); toast('Produto excluído', 'i-trash');
+    DADOS.coelhos.splice(+btn.dataset.delCoelho, 1); saveDraft(); admRender(); aplicarDados(); toast('Produto excluído', 'i-trash');
   }));
 }
 
@@ -1757,7 +1685,6 @@ function admFormCoelho(){
         </div>
       </div>
       <p class="text-[10.5px] text-stone-400 mt-1.5">A foto é comprimida automaticamente. Sem foto, o app mostra a ilustração.</p>
-
       <div class="mt-3 space-y-3">
         <div class="grid grid-cols-2 gap-3">
           <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Nome</span>
@@ -1789,18 +1716,16 @@ function admFormCoelho(){
           <button id="fc-disp" type="button" class="tgl ${c.disponivel !== false ? 'on' : ''}"></button>
         </div>
       </div>
-
       <div class="mt-4 grid grid-cols-2 gap-2.5">
         <button id="fc-cancel" type="button" class="adm-btn bg-areia text-stone-600 border border-areia-borda">Cancelar</button>
         <button id="fc-save" type="button" class="adm-btn bg-verde text-white">Salvar</button>
       </div>
     </div>
     <div class="h-6"></div>`;
-
   $('fc-file').onchange = async e => {
     const f = e.target.files[0]; if (!f) return;
     toast('Processando foto…', 'i-cam');
-    try { c.foto = await comprimirImagem(f, 900, .82); saveDraft(); admFormCoelho(); toast('Foto atualizada!', 'i-check'); }
+    try { c.foto = await comprimirImagem(f, 760, .8); saveDraft(); admFormCoelho(); toast('Foto atualizada!', 'i-check'); }
     catch(err){ toast('Não deu para ler a foto', 'i-x'); }
   };
   const rm = $('fc-rm');
@@ -1808,13 +1733,13 @@ function admFormCoelho(){
   $('fc-disp').onclick = e => { c.disponivel = c.disponivel === false; e.currentTarget.classList.toggle('on', c.disponivel !== false); saveDraft(); };
   $('fc-cancel').onclick = () => { adm.tela = 'painel'; admRender(); };
   $('fc-save').onclick = () => {
-    c.nome      = $('fc-nome').value.trim() || 'Sem nome';
-    c.raca      = $('fc-raca').value.trim() || 'Mestiço';
-    c.dias      = clampN(parseInt($('fc-dias').value) || 45, 30, 365);
-    c.sexo      = $('fc-sexo').value;
-    c.cor       = $('fc-cor').value.trim();
-    c.preco     = Math.max(0, parseFloat($('fc-preco').value) || 0);
-    c.desconto  = clampN(parseInt($('fc-desc').value) || 0, 0, 90);
+    c.nome = $('fc-nome').value.trim() || 'Sem nome';
+    c.raca = $('fc-raca').value.trim() || 'Mestiço';
+    c.dias = clampN(parseInt($('fc-dias').value) || 45, 30, 365);
+    c.sexo = $('fc-sexo').value;
+    c.cor = $('fc-cor').value.trim();
+    c.preco = Math.max(0, parseFloat($('fc-preco').value) || 0);
+    c.desconto = clampN(parseInt($('fc-desc').value) || 0, 0, 90);
     c.descricao = $('fc-descr').value.trim();
     saveDraft();
     adm.tela = 'painel'; admRender(); aplicarDados();
@@ -1837,7 +1762,6 @@ function admFormSlide(){
           ${s.foto ? `<button id="fs-rm" type="button" class="adm-btn bg-red-50 text-promo w-full">Remover foto</button>` : ''}
         </div>
       </div>
-
       <div class="mt-3 space-y-3">
         <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Rótulo pequeno (kicker)</span>
           <input id="fs-kick" class="adm-inp mt-1" value="${esc(s.kicker)}" placeholder="Ex.: PROMOÇÃO DA SEMANA"></label>
@@ -1861,18 +1785,16 @@ function admFormSlide(){
           <button id="fs-ativa" type="button" class="tgl ${s.ativa ? 'on' : ''}"></button>
         </div>
       </div>
-
       <div class="mt-4 grid grid-cols-2 gap-2.5">
         <button id="fs-cancel" type="button" class="adm-btn bg-areia text-stone-600 border border-areia-borda">Cancelar</button>
         <button id="fs-save" type="button" class="adm-btn bg-verde text-white">Salvar</button>
       </div>
     </div>
     <div class="h-6"></div>`;
-
   $('fs-file').onchange = async e => {
     const f = e.target.files[0]; if (!f) return;
     toast('Processando foto…', 'i-cam');
-    try { s.foto = await comprimirImagem(f, 1000, .82); saveDraft(); admFormSlide(); toast('Foto atualizada!', 'i-check'); }
+    try { s.foto = await comprimirImagem(f, 900, .8); saveDraft(); admFormSlide(); toast('Foto atualizada!', 'i-check'); }
     catch(err){ toast('Não deu para ler a foto', 'i-x'); }
   };
   const rm = $('fs-rm');
@@ -1880,14 +1802,71 @@ function admFormSlide(){
   $('fs-ativa').onclick = e => { s.ativa = !s.ativa; e.currentTarget.classList.toggle('on', s.ativa); saveDraft(); };
   $('fs-cancel').onclick = () => { adm.tela = 'painel'; admRender(); };
   $('fs-save').onclick = () => {
-    s.kicker   = $('fs-kick').value.trim();
-    s.titulo   = $('fs-tit').value.trim() || 'Sítio Esperança';
-    s.sub      = $('fs-sub').value.trim();
+    s.kicker = $('fs-kick').value.trim();
+    s.titulo = $('fs-tit').value.trim() || 'Sítio Esperança';
+    s.sub = $('fs-sub').value.trim();
     s.ctaLabel = $('fs-btn').value.trim() || 'VER MAIS';
-    s.ctaAcao  = $('fs-acao').value;
+    s.ctaAcao = $('fs-acao').value;
     saveDraft();
     adm.tela = 'painel'; admRender(); aplicarDados();
     toast('Slide salvo!', 'i-check');
+  };
+}
+
+function admFormDepo(){
+  const d = DADOS.depoimentos[adm.editIdx];
+  if (!d){ adm.tela = 'painel'; admRender(); return; }
+  admBody.innerHTML = `
+    <div class="adm-card p-4">
+      <h3 class="font-extrabold text-stone-900 text-[15px]">Depoimento de cliente</h3>
+      <div class="mt-3 flex items-center gap-3">
+        ${d.foto
+          ? `<img id="dp-prev" src="${d.foto}" alt="" class="w-20 h-20 rounded-full object-cover ring-1 ring-areia-borda">`
+          : `<span id="dp-prev" class="w-20 h-20 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-lg">${esc(iniciais(d.nome))}</span>`}
+        <div class="flex-1 space-y-1.5">
+          <label class="adm-btn bg-verde-claro text-verde w-full cursor-pointer">
+            <svg class="ic w-4 h-4"><use href="#i-cam"/></svg> ${d.foto ? 'Trocar foto do cliente' : 'Enviar foto do cliente'}
+            <input id="dp-file" type="file" accept="image/*" class="hidden"></label>
+          ${d.foto ? `<button id="dp-rm" type="button" class="adm-btn bg-red-50 text-promo w-full">Remover foto</button>` : ''}
+        </div>
+      </div>
+      <div class="mt-3 space-y-3">
+        <div class="grid grid-cols-2 gap-3">
+          <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Nome do cliente</span>
+            <input id="dp-nome" class="adm-inp mt-1" value="${esc(d.nome)}" placeholder="Ex.: Maria S."></label>
+          <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Cidade</span>
+            <input id="dp-cidade" class="adm-inp mt-1" value="${esc(d.cidade)}" placeholder="Ex.: Mariana • MG"></label>
+        </div>
+        <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Nota (estrelas)</span>
+          <select id="dp-nota" class="adm-inp mt-1">
+            ${[5,4,3,2,1].map(n => `<option value="${n}" ${d.nota === n ? 'selected' : ''}>${'★'.repeat(n)}${'☆'.repeat(5-n)} (${n})</option>`).join('')}
+          </select></label>
+        <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Depoimento</span>
+          <textarea id="dp-texto" class="adm-inp mt-1" maxlength="280" placeholder="O que o cliente falou…">${esc(d.texto)}</textarea></label>
+      </div>
+      <div class="mt-4 grid grid-cols-2 gap-2.5">
+        <button id="dp-cancel" type="button" class="adm-btn bg-areia text-stone-600 border border-areia-borda">Cancelar</button>
+        <button id="dp-save" type="button" class="adm-btn bg-verde text-white">Salvar</button>
+      </div>
+    </div>
+    <div class="h-6"></div>`;
+  $('dp-file').onchange = async e => {
+    const f = e.target.files[0]; if (!f) return;
+    toast('Processando foto…', 'i-cam');
+    try { d.foto = await comprimirImagem(f, 240, .82); saveDraft(); admFormDepo(); toast('Foto do cliente salva!', 'i-check'); }
+    catch(err){ toast('Não deu para ler a foto', 'i-x'); }
+  };
+  const rm = $('dp-rm');
+  if (rm) rm.onclick = () => { d.foto = ''; saveDraft(); admFormDepo(); };
+  $('dp-cancel').onclick = () => { adm.tela = 'painel'; admRender(); };
+  $('dp-save').onclick = () => {
+    d.nome = $('dp-nome').value.trim() || 'Cliente';
+    d.cidade = $('dp-cidade').value.trim();
+    d.nota = clampN(parseInt($('dp-nota').value) || 5, 1, 5);
+    d.texto = $('dp-texto').value.trim() || 'Recomendo!';
+    saveDraft();
+    adm.tela = 'painel'; admRender(); aplicarDados();
+    toast('Depoimento salvo!', 'i-check');
   };
 }
 
@@ -1919,6 +1898,64 @@ async function ghApi(path, opts){
   return res.json();
 }
 
+function iconSVG(maskable){
+  const s = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>"
+    + "<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>"
+    + "<stop offset='0' stop-color='#2E7D32'/><stop offset='1' stop-color='#1B5E20'/></linearGradient></defs>"
+    + (maskable ? "<rect width='100' height='100' fill='url(#g)'/>" : "<rect width='100' height='100' rx='24' fill='url(#g)'/>")
+    + "<g transform='" + (maskable ? "translate(21 21.5) scale(0.9)" : "translate(10 11) scale(1.25)") + "'>"
+    + "<ellipse cx='24' cy='18' rx='6.2' ry='11.5' transform='rotate(-14 24 18)' fill='#FFF8E1'/>"
+    + "<ellipse cx='40' cy='18' rx='6.2' ry='11.5' transform='rotate(14 40 18)' fill='#FFF8E1'/>"
+    + "<ellipse cx='24.5' cy='19' rx='2.4' ry='6.5' transform='rotate(-14 24.5 19)' fill='#A5D6A7'/>"
+    + "<ellipse cx='39.5' cy='19' rx='2.4' ry='6.5' transform='rotate(14 39.5 19)' fill='#A5D6A7'/>"
+    + "<circle cx='32' cy='41.5' r='15.5' fill='#FFF8E1'/>"
+    + "<circle cx='26.5' cy='40' r='2.1' fill='#2E7D32'/>"
+    + "<circle cx='37.5' cy='40' r='2.1' fill='#2E7D32'/>"
+    + "<path d='M29.2 46h5.6L32 49.6z' fill='#2E7D32'/></g></svg>";
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
+}
+function pngBase64(size, maskable){
+  return new Promise(res => {
+    const img = new Image();
+    img.onload = () => {
+      try {
+        const c = document.createElement('canvas');
+        c.width = c.height = size;
+        c.getContext('2d').drawImage(img, 0, 0, size, size);
+        res(c.toDataURL('image/png').split(',')[1]);
+      } catch(e){ res(null); }
+    };
+    img.onerror = () => res(null);
+    img.src = iconSVG(maskable);
+  });
+}
+function gerarManifest(){
+  return JSON.stringify({
+    name: 'Sítio Esperança — Coelhos em Miguel Burnier/MG',
+    short_name: 'Sítio Esperança',
+    description: 'Filhotes de coelhos à venda a partir de R$ 80. Vacinados, vermifugados e com garantia de saúde. Entrega em Miguel Burnier - MG e região até 100 km.',
+    id: 'esperanca-app-2026',
+    start_url: './index.html',
+    scope: './',
+    display: 'standalone',
+    orientation: 'portrait',
+    lang: 'pt-BR',
+    dir: 'ltr',
+    background_color: '#FFF8E1',
+    theme_color: '#2E7D32',
+    categories: ['shopping', 'lifestyle'],
+    icons: [
+      { src: 'icons/icon-192.png',          sizes: '192x192', type: 'image/png', purpose: 'any' },
+      { src: 'icons/icon-512.png',          sizes: '512x512', type: 'image/png', purpose: 'any' },
+      { src: 'icons/icon-maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' }
+    ],
+    shortcuts: [
+      { name: 'Ver catálogo',      url: './index.html#catalogo' },
+      { name: 'Falar no WhatsApp', url: './index.html#contato' }
+    ]
+  }, null, 2);
+}
+
 function gerarDadosJS(){
   DADOS.atualizado = new Date().toISOString();
   saveDraft();
@@ -1936,46 +1973,58 @@ function setPubStatus(txt, spin){
 
 async function publicar(){
   const btn = $('pubBtn');
-  const conteudo = gerarDadosJS();
   const gh = githubInfo();
 
   if (!gh){ setPubStatus('Não estou rodando no GitHub Pages — use o backup manual (baixar dados.js).'); return; }
   if (!ghToken()){ adm.tela = 'token'; admRender(); return; }
 
-  btn.disabled = true;
-  btn.style.opacity = '.6';
+  btn.disabled = true; btn.style.opacity = '.6';
   btn.innerHTML = `<svg class="ic w-4 h-4 animate-spin"><use href="#i-load"/></svg> PUBLICANDO…`;
+
+  const put = async (path, contentB64, msg) => {
+    let sha;
+    try {
+      const f = await ghApi(`/repos/${gh.owner}/${gh.repo}/contents/${path}`);
+      sha = f.sha;
+    } catch(e) {}
+    await ghApi(`/repos/${gh.owner}/${gh.repo}/contents/${path}`, {
+      method: 'PUT',
+      body: JSON.stringify({ message: msg, content: contentB64, ...(sha ? { sha } : {}) })
+    });
+  };
+  const ensureIcon = async (path, size, maskable) => {
+    try {
+      await ghApi(`/repos/${gh.owner}/${gh.repo}/contents/${path}`);
+      return; // já existe
+    } catch(e) {}
+    const png = await pngBase64(size, maskable);
+    if (png) await put(path, png, 'Ícone do app (' + path + ')');
+  };
 
   try {
     setPubStatus('Conectando ao GitHub…', true);
     const repo = await ghApi(`/repos/${gh.owner}/${gh.repo}`);
     const branch = repo.default_branch || 'main';
 
-    setPubStatus('Verificando arquivo atual…', true);
-    let sha;
-    try {
-      const f = await ghApi(`/repos/${gh.owner}/${gh.repo}/contents/dados.js?ref=${branch}`);
-      sha = f.sha;
-    } catch(e) { /* 1ª publicação — arquivo ainda não existe */ }
-
-    setPubStatus('Enviando alterações…', true);
-    await ghApi(`/repos/${gh.owner}/${gh.repo}/contents/dados.js`, {
-      method: 'PUT',
-      body: JSON.stringify({
-        message: 'Atualização do site pelo painel — ' + new Date().toLocaleString('pt-BR'),
-        content: b64(conteudo),
-        branch,
-        ...(sha ? { sha } : {})
-      })
+    setPubStatus('Publicando conteúdo (dados.js)…', true);
+    await put('dados.js' + '?ref=' + branch, b64(gerarDadosJS()), 'Conteúdo do site — painel').catch(async () => {
+      await put('dados.js', b64(gerarDadosJS()), 'Conteúdo do site — painel');
     });
+
+    setPubStatus('Publicando manifest do app…', true);
+    await put('manifest.json', b64(gerarManifest()), 'Manifest PWA — painel');
+
+    setPubStatus('Garantindo ícones do app…', true);
+    await ensureIcon('icons/icon-192.png', 192, false);
+    await ensureIcon('icons/icon-512.png', 512, false);
+    await ensureIcon('icons/icon-maskable-512.png', 512, true);
 
     adm.tela = 'publicado'; admRender();
   } catch(err){
     setPubStatus(`❌ Não deu certo: ${esc(err.message)}. Se o token expirou, toque em <b>Gerenciar</b> e conecte de novo. Ou use o backup manual.`);
     toast('Falha ao publicar', 'i-x');
   } finally {
-    btn.disabled = false;
-    btn.style.opacity = '';
+    btn.disabled = false; btn.style.opacity = '';
     btn.innerHTML = `<svg class="ic" style="width:18px;height:18px"><use href="#i-up"/></svg> PUBLICAR ALTERAÇÕES`;
   }
 }
@@ -1987,7 +2036,6 @@ function admToken(){
     <div class="adm-card p-5">
       <h3 class="font-extrabold text-stone-900">Conexão com o GitHub</h3>
       <p class="text-xs text-stone-500 mt-1">Repositório detectado: <b>${gh ? esc(gh.owner + '/' + gh.repo) : '— (abra o site hospedado no GitHub Pages)'}</b></p>
-
       ${tem ? `
       <div class="mt-4 flex items-center gap-2.5 bg-verde-claro rounded-xl px-3.5 py-3">
         <svg class="ic w-4 h-4 text-verde"><use href="#i-check"/></svg>
@@ -2009,18 +2057,14 @@ function admToken(){
         <span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Cole o token aqui</span>
         <div class="pwd-wrap mt-1">
           <input id="tokInp" type="password" class="adm-inp tnum" placeholder="github_pat_…" autocomplete="off">
-          <button id="tokEye" type="button" class="pwd-eye" aria-label="Mostrar token">
-            <svg class="ic w-[18px] h-[18px]"><use href="#i-eye"/></svg>
-          </button>
+          <button id="tokEye" type="button" class="pwd-eye" aria-label="Mostrar token"><svg class="ic w-[18px] h-[18px]"><use href="#i-eye"/></svg></button>
         </div>
       </label>
-      <p class="text-[10.5px] text-stone-400 mt-1.5 leading-snug">O token fica salvo <b>somente neste aparelho</b> e serve só para publicar as suas alterações.</p>
+      <p class="text-[10.5px] text-stone-400 mt-1.5 leading-snug">O token fica salvo <b>somente neste aparelho</b>.</p>
       <button id="tokSave" type="button" class="adm-btn bg-verde text-white w-full mt-3 !py-3">CONECTAR</button>
       `}
-
       <button id="tokBack" type="button" class="adm-btn bg-areia text-stone-600 w-full mt-2 border border-areia-borda">Voltar</button>
     </div>`;
-
   ligarOlho('tokInp', 'tokEye');
   const sv = $('tokSave');
   if (sv) sv.onclick = () => {
@@ -2046,7 +2090,8 @@ function admPublicado(){
         <svg class="ic w-8 h-8"><use href="#i-check"/></svg></span>
       <h3 class="mt-3 font-extrabold text-stone-900 text-lg">Enviado ao GitHub! 🎉</h3>
       <p class="mt-1.5 text-[12.5px] text-stone-600 leading-relaxed">
-        As alterações já estão no repositório. O GitHub Pages leva<br><b>~1 minuto</b> para atualizar o site para todos.
+        Conteúdo, manifest e ícones publicados.<br>O site atualiza para todos em <b>~1 minuto</b>.<br>
+        Se o botão “Instalar” ainda não aparecer no Chrome,<br>remova o ícone antigo da tela inicial e tente de novo.
       </p>
       <a href="${esc(location.origin + location.pathname)}" target="_blank" rel="noopener"
          class="adm-btn bg-verde text-white w-full mt-4 !py-3">ABRIR O SITE</a>
@@ -2065,27 +2110,6 @@ function baixarDados(){
   toast('dados.js baixado (backup)', 'i-down');
 }
 
-function admComoPublicar(){
-  admBody.innerHTML = `
-    <div class="adm-card p-5">
-      <h3 class="text-center font-extrabold text-stone-900">Publicação manual (backup)</h3>
-      <p class="mt-1 text-center text-xs text-stone-500">O arquivo <b>dados.js</b> foi baixado. Suba no GitHub:</p>
-      <ol class="mt-4 space-y-3">
-        <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-verde text-white grid place-items-center text-[11px] font-bold shrink-0">1</span>
-          <p class="text-[12.5px] text-stone-600 leading-snug">Abra o repositório no GitHub e faça login.</p></li>
-        <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-verde text-white grid place-items-center text-[11px] font-bold shrink-0">2</span>
-          <p class="text-[12.5px] text-stone-600 leading-snug"><b>Add file → Upload files</b>.</p></li>
-        <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-verde text-white grid place-items-center text-[11px] font-bold shrink-0">3</span>
-          <p class="text-[12.5px] text-stone-600 leading-snug">Arraste o <b>dados.js</b> da pasta Downloads (substitui o existente).</p></li>
-        <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-verde text-white grid place-items-center text-[11px] font-bold shrink-0">4</span>
-          <p class="text-[12.5px] text-stone-600 leading-snug"><b>Commit changes</b>. Em 1 minuto o site atualiza.</p></li>
-      </ol>
-      <p class="mt-3 text-[11px] text-stone-400 text-center">Dica: conecte o token na opção <b>Conectar</b> para nunca mais precisar disso.</p>
-      <button id="howOk" type="button" class="adm-btn bg-verde text-white w-full mt-4 !py-3">ENTENDI</button>
-    </div>`;
-  $('howOk').onclick = () => { adm.tela = 'painel'; admRender(); };
-}
-
 async function importar(e){
   const f = e.target.files[0]; if (!f) return;
   try {
@@ -2093,9 +2117,10 @@ async function importar(e){
     let j;
     try { j = JSON.parse(txt); }
     catch(err){
-      const m = txt.match(/window\.DADOS\s*=\s*([\s\S]+?);?\s*$/);
-      if (!m) throw new Error();
-      j = JSON.parse(m[1]);
+      const idx = txt.indexOf('window.DADOS');
+      if (idx < 0) throw new Error();
+      const start = txt.indexOf('=', idx) + 1;
+      j = JSON.parse(txt.slice(start).trim().replace(/;$/, '').trim());
     }
     DADOS = normalizar(j);
     saveDraft();
@@ -2108,76 +2133,79 @@ async function importar(e){
  $('admVerSite').addEventListener('click', fecharAdmin);
 
 /* =========================================================
-   APLICAR DADOS + INIT
+   APLICAR DADOS + INIT (resiliente — nunca fica vazio)
    ========================================================= */
 function aplicarDados(){
-  const c = DADOS.config;
+  try {
+    const c = DADOS.config;
 
-  document.querySelectorAll('.wa-link').forEach(a => {
-    a.href = `https://wa.me/${c.whatsapp}?text=${encodeURIComponent(a.dataset.wamsg || 'Olá! Vim pelo site do Sítio Esperança.')}`;
-  });
+    document.querySelectorAll('.wa-link').forEach(a => {
+      a.href = `https://wa.me/${c.whatsapp}?text=${encodeURIComponent(a.dataset.wamsg || 'Olá! Vim pelo site do Sítio Esperança.')}`;
+    });
 
-  $('cfg-wa').textContent          = fmtFone(c.whatsapp);
-  $('cfg-pix').textContent         = c.pix;
-  $('cfg-pix2').textContent        = c.pix;
-  $('cfg-endereco').textContent    = c.endereco;
-  $('cfg-cidade').textContent      = c.cidade;
-  $('cfg-cidade2').textContent     = c.cidade.replace(' – MG', '');
-  $('cfg-cidade-foot').textContent = c.cidade;
-  $('cfg-cidade-hdr').textContent  = c.cidade.replace(' – ', ' • ');
-  $('cfg-cidade-car').textContent  = c.cidade.replace(' – ', ' • ');
-  $('cfg-horario').textContent     = c.horario;
+    $('cfg-wa').textContent          = fmtFone(c.whatsapp);
+    $('cfg-pix').textContent         = c.pix;
+    $('cfg-pix2').textContent        = c.pix;
+    $('cfg-endereco').textContent    = c.endereco;
+    $('cfg-cidade').textContent      = c.cidade;
+    $('cfg-cidade2').textContent     = c.cidade.replace(' – MG', '');
+    $('cfg-cidade-foot').textContent = c.cidade;
+    $('cfg-cidade-hdr').textContent  = c.cidade.replace(' – ', ' • ');
+    $('cfg-cidade-car').textContent  = c.cidade.replace(' – ', ' • ');
+    $('cfg-horario').textContent     = c.horario;
 
-  $('cfg-criador-nome').textContent = DADOS.contato.nome;
-  $('cfg-criador-sub').textContent  = DADOS.contato.sub;
-  $('cfg-criador-aval').textContent = DADOS.contato.avaliacao;
+    $('cfg-criador-nome').textContent  = DADOS.contato.nome || PADRAO.contato.nome;
+    $('cfg-criador-sub').textContent   = DADOS.contato.sub;
+    $('cfg-criador-aval').textContent  = DADOS.contato.avaliacao;
+    $('cfg-criador-assina').textContent = DADOS.contato.nome || PADRAO.contato.nome;
 
-  const qMap = encodeURIComponent(c.cidade + ', Brasil');
-  $('mapFrame').src = `https://maps.google.com/maps?q=${qMap}&z=13&output=embed`;
-  $('mapLink').href = `https://www.google.com/maps/search/?api=1&query=${qMap}`;
+    const qMap = encodeURIComponent(c.cidade + ', Brasil');
+    $('mapFrame').src = `https://maps.google.com/maps?q=${qMap}&z=13&output=embed`;
+    $('mapLink').href = `https://www.google.com/maps/search/?api=1&query=${qMap}`;
 
-  const disp = DADOS.coelhos.filter(x => x.disponivel !== false).length;
-  $('qtd').textContent = `${disp} filhote${disp !== 1 ? 's' : ''}`;
+    const disp = DADOS.coelhos.filter(x => x.disponivel !== false).length;
+    $('qtd').textContent = `${disp} filhote${disp !== 1 ? 's' : ''}`;
 
-  const st = $('lojaStatus');
-  if (st){
+    const st = $('lojaStatus');
     const n = new Date(), dia = n.getDay(), h = n.getHours();
     const aberto = dia >= 1 && dia <= 6 && h >= 8 && h < 18;
     st.innerHTML = aberto
       ? `<span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-verde opacity-60"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-verde"></span></span> Aberto agora · até 18h`
       : `Fechado agora · ${esc(c.horario)}`;
-  }
 
-  state.raca = 'Todas';
-  renderChips();
-  renderGrid();
-  updateFavBadge();
-  montarCarousel();
-  carStart();
+    state.raca = 'Todas';
+    renderChips();
+    renderGrid();
+    updateFavBadge();
+    buildDepoimentos();
+    montarCarousel();
+  } catch(e) { console.error(e); }
 }
 
  $('logoMarca').style.cursor = 'default';
 
-(async function init(){
+async function carregarPublicado(){
   try {
-    const r = await fetch('./dados.js', { cache: 'no-store' });
+    const ctrl = new AbortController();
+    const t = setTimeout(() => ctrl.abort(), 2500);
+    const r = await fetch('./dados.js?v=' + Date.now(), { cache: 'no-store', signal: ctrl.signal });
+    clearTimeout(t);
     if (r.ok){
-      const t = await r.text();
-      const m = t.match(/window\.DADOS\s*=\s*([\s\S]+?);?\s*$/);
-      if (m) window.DADOS = JSON.parse(m[1]);
+      const txt = await r.text();
+      const idx = txt.indexOf('window.DADOS');
+      if (idx > -1){
+        const start = txt.indexOf('=', idx) + 1;
+        window.DADOS = JSON.parse(txt.slice(start).trim().replace(/;$/, '').trim());
+      }
     }
-  } catch(e) {}
+  } catch(e) { /* sem dados.js ainda — usa o padrão */ }
+}
 
-  DADOS = fontePublica();
-  try {
-    const d = JSON.parse(localStorage.getItem('se_draft') || 'null');
-    if (d) DADOS = normalizar(d);
-  } catch(e) {}
-
-  try {
-    localStorage.removeItem('se_installed');
-    localStorage.removeItem('se_install_snooze');
-  } catch(e) {}
+(async function init(){
+  // 1. Rascunho local tem prioridade; senão, padrão imediato
+  if (!aplicarDraft()){
+    DADOS = PADRAO;
+  }
 
   $('ano').textContent = new Date().getFullYear();
   buildGaleria();
@@ -2188,6 +2216,13 @@ function aplicarDados(){
   const hi = HASHES.indexOf(location.hash);
   if (hi > 0) go(hi, true);
   if (location.hash === '#admin') abrirAdmin();
+
+  // 2. Depois busca a versão publicada e atualiza (se não houver rascunho)
+  if (!temRascunho()){
+    await carregarPublicado();
+    DADOS = normalizar(window.DADOS);
+    aplicarDados();
+  }
 })();
 </script>
 </body>
