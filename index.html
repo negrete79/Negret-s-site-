@@ -30,6 +30,81 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232E7D32'/%3E%3Cellipse cx='24' cy='18' rx='6' ry='11' transform='rotate(-14 24 18)' fill='%23FFF8E1'/%3E%3Cellipse cx='40' cy='18' rx='6' ry='11' transform='rotate(14 40 18)' fill='%23FFF8E1'/%3E%3Ccircle cx='32' cy='41' r='15' fill='%23FFF8E1'/%3E%3Ccircle cx='26.5' cy='40' r='2' fill='%232E7D32'/%3E%3Ccircle cx='37.5' cy='40' r='2' fill='%232E7D32'/%3E%3Cpath d='M29 45.5h6l-3 3.5z' fill='%232E7D32'/%3E%3C/svg%3E">
 
+<script>
+/* ============================================================
+   MANIFEST DINÂMICO — gera a versão com ÍCONES PNG na hora
+   (compatibilidade máxima) e identidade nova ('esperanca-app-2026'),
+   para o Chrome esquecer instalações "fantasma" antigas.
+   ============================================================ */
+(function(){
+  function svgURI(maskable){
+    var s = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'>"
+      + "<defs><linearGradient id='g' x1='0' y1='0' x2='1' y2='1'>"
+      + "<stop offset='0' stop-color='#2E7D32'/><stop offset='1' stop-color='#1B5E20'/>"
+      + "</linearGradient></defs>"
+      + (maskable ? "<rect width='100' height='100' fill='url(#g)'/>"
+                  : "<rect width='100' height='100' rx='24' fill='url(#g)'/>")
+      + "<g transform='" + (maskable ? "translate(21 21.5) scale(0.9)" : "translate(10 11) scale(1.25)") + "'>"
+      + "<ellipse cx='24' cy='18' rx='6.2' ry='11.5' transform='rotate(-14 24 18)' fill='#FFF8E1'/>"
+      + "<ellipse cx='40' cy='18' rx='6.2' ry='11.5' transform='rotate(14 40 18)' fill='#FFF8E1'/>"
+      + "<ellipse cx='24.5' cy='19' rx='2.4' ry='6.5' transform='rotate(-14 24.5 19)' fill='#A5D6A7'/>"
+      + "<ellipse cx='39.5' cy='19' rx='2.4' ry='6.5' transform='rotate(14 39.5 19)' fill='#A5D6A7'/>"
+      + "<circle cx='32' cy='41.5' r='15.5' fill='#FFF8E1'/>"
+      + "<circle cx='26.5' cy='40' r='2.1' fill='#2E7D32'/>"
+      + "<circle cx='37.5' cy='40' r='2.1' fill='#2E7D32'/>"
+      + "<path d='M29.2 46h5.6L32 49.6z' fill='#2E7D32'/>"
+      + "</g></svg>";
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(s);
+  }
+  function pngFrom(svg, size){
+    return new Promise(function(res){
+      var img = new Image();
+      img.onload = function(){
+        try {
+          var c = document.createElement('canvas');
+          c.width = c.height = size;
+          c.getContext('2d').drawImage(img, 0, 0, size, size);
+          res(c.toDataURL('image/png'));
+        } catch(e){ res(null); }
+      };
+      img.onerror = function(){ res(null); };
+      img.src = svg;
+    });
+  }
+  function abs(u){ try { return new URL(u, location.href).href; } catch(e){ return u; } }
+
+  var ANY  = svgURI(false), MASK = svgURI(true);
+  var man = {
+    name: 'Sítio Esperança — Coelhos em Miguel Burnier/MG',
+    short_name: 'Sítio Esperança',
+    description: 'Filhotes de coelhos à venda a partir de R$ 80. Vacinados, vermifugados e com garantia de saúde. Entrega em Miguel Burnier - MG e região até 100 km.',
+    id: 'esperanca-app-2026',
+    start_url: abs('./index.html?app=1'),
+    scope: abs('./'),
+    display: 'standalone',
+    orientation: 'portrait',
+    lang: 'pt-BR',
+    dir: 'ltr',
+    background_color: '#FFF8E1',
+    theme_color: '#2E7D32',
+    categories: ['shopping', 'lifestyle'],
+    icons: []
+  };
+  Promise.all([pngFrom(ANY,192), pngFrom(ANY,512), pngFrom(MASK,512)])
+    .then(function(arr){
+      if (arr[0]) man.icons.push({ src:arr[0], sizes:'192x192', type:'image/png', purpose:'any' });
+      if (arr[1]) man.icons.push({ src:arr[1], sizes:'512x512', type:'image/png', purpose:'any' });
+      if (arr[2]) man.icons.push({ src:arr[2], sizes:'512x512', type:'image/png', purpose:'maskable' });
+      man.icons.push({ src:ANY,  sizes:'any', type:'image/svg+xml', purpose:'any' });
+      man.icons.push({ src:MASK, sizes:'any', type:'image/svg+xml', purpose:'maskable' });
+      var blob = new Blob([JSON.stringify(man)], { type:'application/manifest+json' });
+      var link = document.querySelector('link[rel="manifest"]');
+      if (link) link.href = URL.createObjectURL(blob);
+    })
+    .catch(function(){ /* mantém o manifest.json estático */ });
+})();
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -112,7 +187,7 @@ tailwind.config = {
   #zoomImg.anim{ transition:transform .28s cubic-bezier(.22,.9,.3,1), opacity .3s ease; }
   #zoomHint{ transition:opacity .6s ease; }
 
-  #toast{ position:absolute; left:50%; bottom:170px; z-index:90;
+  #toast{ position:absolute; left:50%; bottom:170px; z-index:96;
     transform:translate(-50%,16px); opacity:0; pointer-events:none; transition:opacity .3s, transform .3s;
     display:flex; align-items:center; gap:8px; background:#1B5E20; color:#fff; padding:10px 16px; border-radius:999px;
     font-size:12.5px; font-weight:500; max-width:85%; box-shadow:0 10px 26px rgba(0,0,0,.28); }
@@ -145,7 +220,7 @@ tailwind.config = {
     opacity:0; transform:translateY(18px);
     transition:opacity .35s ease, transform .35s cubic-bezier(.22,.9,.3,1); }
   @keyframes sheetUp{ from{ transform:translateY(100%);} to{ transform:translateY(0);} }
-  #iosGuide .sheet{ animation:sheetUp .32s cubic-bezier(.22,.9,.3,1); }
+  .guide-sheet{ animation:sheetUp .32s cubic-bezier(.22,.9,.3,1); }
 </style>
 </head>
 
@@ -167,7 +242,6 @@ tailwind.config = {
     <path fill="currentColor" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
   </symbol>
   <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10.5 9-7.5 9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/><path d="M9 21v-6h6v6"/></symbol>
-  <symbol id="i-paw" viewBox="0 0 24 24"><circle cx="7.5" cy="6.5" r="1.8"/><circle cx="16.5" cy="6.5" r="1.8"/><circle cx="3.8" cy="11.5" r="1.7"/><circle cx="20.2" cy="11.5" r="1.7"/><path d="M12 10.5c-3.2 0-5.8 2.5-5.8 5.2 0 1.9 1.5 3.3 3.3 3.3.9 0 1.7-.4 2.5-.4s1.6.4 2.5.4c1.8 0 3.3-1.4 3.3-3.3 0-2.7-2.6-5.2-5.8-5.2z"/></symbol>
   <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.4 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></symbol>
   <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M7 20h10"/><path d="M12 20v-7.5"/><path d="M12 12.5C12 8 8.5 5.5 4 5.5c0 4.5 3 7 8 7z"/><path d="M12 12.5c0-3.5 2.5-5.5 8-5.5 0 4-3 5.5-8 5.5z"/></symbol>
   <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
@@ -210,6 +284,8 @@ tailwind.config = {
   <symbol id="i-gh" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.24 2.77.12 3.06.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.04.77 2.1v3.12c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></symbol>
   <symbol id="i-share" viewBox="0 0 24 24"><path d="M12 3.5v12"/><path d="m8 7 4-3.5L16 7"/><rect x="5" y="10" width="14" height="11" rx="2"/></symbol>
   <symbol id="i-plusbox" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M12 8.5v7M8.5 12h7"/></symbol>
+  <symbol id="i-menu3" viewBox="0 0 24 24"><circle cx="12" cy="5.5" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.6" fill="currentColor" stroke="none"/><circle cx="12" cy="18.5" r="1.6" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-trashhome" viewBox="0 0 24 24"><rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M10.5 6.5h3"/><path d="M12 17.5h.01"/></symbol>
 </svg>
 
 <div id="app" class="relative mx-auto w-full max-w-[480px] flex flex-col select-none">
@@ -228,11 +304,17 @@ tailwind.config = {
           <svg class="ic w-3 h-3"><use href="#i-pin"/></svg> <span id="cfg-cidade-hdr">Miguel Burnier • MG</span>
         </p>
       </div>
-      <a class="wa-link ml-auto" data-wamsg="Olá! Vim pelo site do Sítio Esperança e quero saber mais sobre os filhotes disponíveis."
-         target="_blank" rel="noopener" aria-label="Falar no WhatsApp" href="#"
-         class="w-9 h-9 grid place-items-center rounded-full bg-white/15 ring-1 ring-white/25 active:scale-90 transition">
-        <svg class="w-[18px] h-[18px]"><use href="#wa"/></svg>
-      </a>
+      <div class="ml-auto flex items-center gap-2">
+        <button id="btnHdrInstall" type="button" style="display:none" aria-label="Instalar aplicativo"
+                class="w-9 h-9 grid place-items-center rounded-full bg-white/15 ring-1 ring-white/25 active:scale-90 transition">
+          <svg class="ic w-[18px] h-[18px]"><use href="#i-down"/></svg>
+        </button>
+        <a class="wa-link w-9 h-9 grid place-items-center rounded-full bg-white/15 ring-1 ring-white/25 active:scale-90 transition"
+           data-wamsg="Olá! Vim pelo site do Sítio Esperança e quero saber mais sobre os filhotes disponíveis."
+           target="_blank" rel="noopener" aria-label="Falar no WhatsApp" href="#">
+          <svg class="w-[18px] h-[18px]"><use href="#wa"/></svg>
+        </a>
+      </div>
     </div>
     <svg class="absolute -bottom-[1px] left-0 w-full h-3 text-areia" viewBox="0 0 120 10" preserveAspectRatio="none" aria-hidden="true">
       <path d="M0 10 V5 Q3.75 0 7.5 5 T15 5 T22.5 5 T30 5 T37.5 5 T45 5 T52.5 5 T60 5 T67.5 5 T75 5 T82.5 5 T90 5 T97.5 5 T105 5 T112.5 5 T120 5 V10 Z" fill="currentColor"/>
@@ -364,7 +446,7 @@ tailwind.config = {
             <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"Terceiro coelho que compro no sítio. Dá pra ver o cuidado: cercado limpo, feno fresco, tudo no ponto."</blockquote>
           </figure>
           <button data-go="1" type="button" class="snap-start shrink-0 w-[150px] rounded-2xl bg-verde text-white p-4 flex flex-col justify-between gap-4 text-left active:scale-[.97] transition">
-            <svg class="ic w-6 h-6 text-areia"><use href="#i-paw"/></svg>
+            <svg style="width:26px;height:26px;color:#FFF8E1"><use href="#bunny"/></svg>
             <div>
               <p class="font-bold text-sm leading-tight">Quero conhecer os filhotes</p>
               <p class="text-[11px] text-areia/85 mt-1 inline-flex items-center gap-1 font-semibold">Ver catálogo <svg class="ic w-3.5 h-3.5"><use href="#i-arrow"/></svg></p>
@@ -429,7 +511,7 @@ tailwind.config = {
       </div>
     </section>
 
-    <!-- ========== 3 • CONTATO ========== -->
+    <!-- ========== 3 • CONTATO (textos editáveis no painel) ========== -->
     <section class="page" id="page-contato">
       <div class="px-4 pt-4">
         <h1 class="section-title">Fale com a gente</h1>
@@ -438,15 +520,15 @@ tailwind.config = {
           <span class="w-24 h-24 rounded-full bg-verde-claro grid place-items-center mx-auto ring-4 ring-verde-claro/40">
             <svg class="w-14 h-14 text-verde"><use href="#bunny"/></svg>
           </span>
-          <h2 class="mt-3 font-extrabold text-lg text-stone-900 tracking-tight">Antônio</h2>
-          <p class="text-[11.5px] text-stone-500 font-medium">Criador no Sítio Esperança há 10 anos • <span id="cfg-cidade2">Miguel Burnier</span></p>
+          <h2 class="mt-3 font-extrabold text-lg text-stone-900 tracking-tight" id="cfg-criador-nome">Antônio</h2>
+          <p class="text-[11.5px] text-stone-500 font-medium" id="cfg-criador-sub">Criador no Sítio Esperança há 10 anos • Miguel Burnier</p>
           <p class="mt-2.5 inline-flex items-center gap-1.5 bg-areia ring-1 ring-areia-borda text-stone-600 text-[11px] font-bold rounded-full px-3 py-1.5">
-            <svg class="w-3.5 h-3.5 text-amber-400"><use href="#i-star"/></svg> 4,9 • 127 conversas atendidas
+            <svg class="w-3.5 h-3.5 text-amber-400"><use href="#i-star"/></svg> <span id="cfg-criador-aval">4,9 • 127 conversas atendidas</span>
           </p>
           <div class="mt-2.5 flex justify-center">
             <span id="lojaStatus" class="inline-flex items-center gap-2 bg-verde-claro text-verde-esc text-[11px] font-bold rounded-full px-3.5 py-1.5"></span>
           </div>
-          <a class="wa-link pulsa" data-wamsg="Olá, Antônio! Quero saber mais sobre os coelhinhos à venda." target="_blank" rel="noopener" href="#"
+          <a class="wa-link pulsa" data-wamsg="Olá! Quero saber mais sobre os coelhinhos à venda." target="_blank" rel="noopener" href="#"
              class="mt-4 w-full inline-flex items-center justify-center gap-2.5 rounded-2xl bg-verde hover:bg-verde-esc text-white font-extrabold text-[15px] tracking-wide py-4 active:scale-[.98] transition">
             <svg class="w-5 h-5"><use href="#wa"/></svg> FALAR NO WHATSAPP AGORA
           </a>
@@ -659,7 +741,7 @@ tailwind.config = {
   <nav class="shrink-0 relative z-40 px-3" style="padding-bottom:calc(10px + env(safe-area-inset-bottom))" aria-label="Navegação principal">
     <div class="grid grid-cols-4 bg-white/90 backdrop-blur-md border border-areia-borda rounded-[22px] shadow-[0_6px_24px_rgba(27,94,32,.14)] overflow-hidden">
       <button type="button" data-page="0" class="navbtn active"><span class="pill"><svg class="ic w-5 h-5"><use href="#i-home"/></svg></span>Início</button>
-      <button type="button" data-page="1" class="navbtn"><span class="pill"><svg class="ic w-5 h-5"><use href="#i-paw"/></svg></span>Catálogo</button>
+      <button type="button" data-page="1" class="navbtn"><span class="pill"><svg style="width:22px;height:22px;color:#2E7D32"><use href="#bunny"/></svg></span>Catálogo</button>
       <button type="button" data-page="2" class="navbtn"><span class="pill"><svg class="ic w-5 h-5"><use href="#i-phone"/></svg></span>Contato</button>
       <button type="button" data-page="3" class="navbtn"><span class="pill"><svg class="ic w-5 h-5"><use href="#i-sprout"/></svg></span>O Sítio</button>
     </div>
@@ -690,7 +772,7 @@ tailwind.config = {
 
 <script>
 /* =========================================================
-   SÍTIO ESPERANÇA • app + painel + banner de instalação
+   SÍTIO ESPERANÇA • app + painel + instalação
    ========================================================= */
 
 /* ---------- Helpers ---------- */
@@ -728,6 +810,11 @@ const PADRAO = {
     cidade: 'Miguel Burnier – MG',
     horario: 'Seg a Sáb, 8h às 18h'
   },
+  contato: {
+    nome: 'Antônio',
+    sub: 'Criador no Sítio Esperança há 10 anos • Miguel Burnier',
+    avaliacao: '4,9 • 127 conversas atendidas'
+  },
   coelhos: [
     { id:1,  nome:'Pingo',   raca:'Holandês',  dias:60, sexo:'M', cor:'Preto e branco', preco:80,  desconto:0, descricao:'', foto:'', disponivel:true },
     { id:2,  nome:'Tico',    raca:'Fuzzy Lop', dias:55, sexo:'M', cor:'Creme',          preco:90,  desconto:0, descricao:'', foto:'', disponivel:true },
@@ -760,6 +847,7 @@ function normalizar(o){
     senha: String(o.senha || PADRAO.senha),
     atualizado: o.atualizado || '',
     config: { ...PADRAO.config, ...(o.config || {}) },
+    contato: { ...PADRAO.contato, ...(o.contato || {}) },
     coelhos: (Array.isArray(o.coelhos) && o.coelhos.length ? o.coelhos : PADRAO.coelhos).map(c => ({ ...padC, ...c })),
     slides:  (Array.isArray(o.slides)  && o.slides.length  ? o.slides  : PADRAO.slides ).map(s => ({ ...padS, ...s })),
   };
@@ -1192,7 +1280,7 @@ document.querySelectorAll('.pol-h').forEach(h => h.addEventListener('click', () 
 });
 
 /* =========================================================
-   BANNER DE INSTALAÇÃO (Android + iPhone) — com X
+   INSTALAÇÃO DO APP — banner com X + guias por sistema
    ========================================================= */
 const isIOSDev = () => /iphone|ipad|ipod/i.test(navigator.userAgent)
   || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
@@ -1201,38 +1289,38 @@ function rodandoNoApp(){
   return window.matchMedia('(display-mode: standalone)').matches
     || window.navigator.standalone === true;
 }
+const snoozeDays = d => { try { localStorage.setItem('se_snooze_v2', String(Date.now() + d * 24 * 60 * 60 * 1000)); } catch(e) {} };
 
 let deferredPrompt = null;
 let bannerAtivo = false;
 
+function bannerJaPode(){
+  if (rodandoNoApp()) return false;
+  try {
+    const snooze = +(localStorage.getItem('se_snooze_v2') || 0);
+    if (Date.now() < snooze) return false;
+  } catch(e) {}
+  return true;
+}
+
+function atualizarBotaoHeader(){
+  $('btnHdrInstall').style.display = bannerJaPode() ? 'inline-flex' : 'none';
+}
+
 window.addEventListener('beforeinstallprompt', e => {
   e.preventDefault();
   deferredPrompt = e;
-  agendarBanner();
 });
 
 window.addEventListener('appinstalled', () => {
-  try {
-    localStorage.setItem('se_installed', '1');
-    localStorage.removeItem('se_install_snooze');
-  } catch(e) {}
   esconderBanner();
-  toast('App instalado! Procure o ícone na tela inicial', 'i-check');
+  atualizarBotaoHeader();
+  toast('App instalado! Procure o coelhinho na tela inicial', 'i-check');
 });
 
 function agendarBanner(){
-  if (bannerJaPode()) return;
+  if (!bannerJaPode()) return;
   setTimeout(() => mostrarBanner(), 1400);
-}
-
-function bannerJaPode(){
-  if (rodandoNoApp()) return false;                              // já está instalado/aberto como app
-  try {
-    if (localStorage.getItem('se_installed') === '1') return false; // instalado antes → nunca mais
-    const snooze = +(localStorage.getItem('se_install_snooze') || 0);
-    if (Date.now() < snooze) return false;                         // X pressionado → espera 3 dias
-  } catch(e) {}
-  return true;
 }
 
 function mostrarBanner(){
@@ -1241,8 +1329,10 @@ function mostrarBanner(){
   const bar = $('installBar');
   if (isIOSDev()){
     $('installSub').innerHTML = 'iPhone: toque no <b>Compartilhar</b> e depois em <b>“Adicionar à Tela de Início”</b>';
-  } else {
+  } else if (deferredPrompt){
     $('installSub').textContent = 'Rápido, funciona até sem internet';
+  } else {
+    $('installSub').textContent = 'Pelo menu do Chrome — mostramos como';
   }
   bar.style.display = 'block';
   requestAnimationFrame(() => requestAnimationFrame(() => {
@@ -1261,30 +1351,84 @@ function esconderBanner(){
 }
 
  $('installNo').addEventListener('click', () => {
-  try { localStorage.setItem('se_install_snooze', String(Date.now() + 3 * 24 * 60 * 60 * 1000)); } catch(e) {}
+  snoozeDays(3);
   esconderBanner();
 });
 
- $('installYes').addEventListener('click', async () => {
+async function instalarAgora(){
+  if (rodandoNoApp()) return;
+
   if (deferredPrompt){
-    deferredPrompt.prompt();
     try {
+      deferredPrompt.prompt();
       const { outcome } = await deferredPrompt.userChoice;
       deferredPrompt = null;
-      if (outcome === 'accepted') {
-        try { localStorage.setItem('se_installed', '1'); } catch(e) {}
+      if (outcome === 'accepted'){
+        esconderBanner();
+        atualizarBotaoHeader();
+        toast('Instalando… o ícone aparece na tela inicial', 'i-check');
       } else {
-        try { localStorage.setItem('se_install_snooze', String(Date.now() + 3 * 24 * 60 * 60 * 1000)); } catch(e) {}
+        snoozeDays(1);
+        esconderBanner();
       }
-    } catch(e) {}
-    esconderBanner();
-  } else if (isIOSDev()){
-    abrirGuiaIOS();
-  } else {
-    toast('Use o menu do navegador → “Instalar app”', 'i-down');
-    esconderBanner();
+    } catch(e){
+      abrirGuiaAndroid();
+    }
+    return;
   }
-});
+
+  if (isIOSDev()){ abrirGuiaIOS(); return; }
+  abrirGuiaAndroid();
+}
+
+ $('installYes').addEventListener('click', instalarAgora);
+ $('btnHdrInstall').addEventListener('click', instalarAgora);
+
+/* Guia Android — inclui solução para o "fantasma" de app já instalado */
+function abrirGuiaAndroid(){
+  const ov = document.createElement('div');
+  ov.id = 'androidGuide';
+  ov.style.cssText = 'position:absolute;inset:0;z-index:95;display:flex;align-items:flex-end;background:rgba(28,25,23,.55)';
+  ov.innerHTML = `
+    <div class="guide-sheet" style="background:#fff;border-radius:24px 24px 0 0;width:100%;padding:22px 20px calc(24px + env(safe-area-inset-bottom))">
+      <div style="width:40px;height:4px;border-radius:2px;background:#E7DDC0;margin:0 auto 14px"></div>
+      <h3 style="font-size:17px;font-weight:800;color:#1C1917;text-align:center">Instalar no Android 📱</h3>
+
+      <div style="margin-top:14px;background:#FFF8E1;border:1px solid #E7DDC0;border-radius:14px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start">
+        <svg class="ic" style="width:20px;height:20px;color:#B4574E;flex-shrink:0;margin-top:1px"><use href="#i-trashhome"/></svg>
+        <p style="font-size:12px;color:#57534E;line-height:1.5">Se aparecer <b>“app já está instalado”</b> ou se sobrou um ícone antigo na tela inicial: <b>toque e segure no ícone → Remover</b>. Depois o Chrome volta a oferecer a instalação.</p>
+      </div>
+
+      <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">
+        <div style="display:flex;gap:12px;align-items:center">
+          <span style="width:34px;height:34px;border-radius:50%;background:#E8F1E4;color:#2E7D32;display:grid;place-items:center;font-weight:800;font-size:14px;flex-shrink:0">1</span>
+          <p style="font-size:13px;color:#44403C">Abra o site no <b>Chrome</b> e toque no menu <b>⋮</b> <svg class="ic" style="width:17px;height:17px;display:inline-block;vertical-align:-3px;color:#2E7D32"><use href="#i-menu3"/></svg> (canto superior direito)</p>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <span style="width:34px;height:34px;border-radius:50%;background:#E8F1E4;color:#2E7D32;display:grid;place-items:center;font-weight:800;font-size:14px;flex-shrink:0">2</span>
+          <p style="font-size:13px;color:#44403C">Toque em <b>“Instalar aplicativo”</b> ou <b>“Adicionar à tela inicial”</b></p>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center">
+          <span style="width:34px;height:34px;border-radius:50%;background:#E8F1E4;color:#2E7D32;display:grid;place-items:center;font-weight:800;font-size:14px;flex-shrink:0">3</span>
+          <p style="font-size:13px;color:#44403C">Confirme em <b>“Instalar”</b>. O coelhinho aparece na sua tela inicial! 🐰</p>
+        </div>
+      </div>
+
+      <button id="andTry" class="adm-btn bg-verde text-white" style="width:100%;margin-top:18px;padding:13px">TENTAR INSTALAR AGORA</button>
+      <button id="andOk" class="adm-btn" style="width:100%;margin-top:8px;padding:13px;background:#FFF8E1;color:#57534E;border:1px solid #E7DDC0">FECHAR</button>
+    </div>`;
+  document.getElementById('app').appendChild(ov);
+  ov.addEventListener('click', e => { if (e.target === ov) ov.remove(); });
+  ov.querySelector('#andOk').onclick = () => ov.remove();
+  ov.querySelector('#andTry').onclick = () => {
+    ov.remove();
+    if (deferredPrompt){
+      instalarAgora();
+    } else {
+      toast('Se não abrir, remova o ícone antigo e tente de novo', 'i-trashhome');
+    }
+  };
+}
 
 /* Guia visual para iPhone */
 function abrirGuiaIOS(){
@@ -1292,7 +1436,7 @@ function abrirGuiaIOS(){
   ov.id = 'iosGuide';
   ov.style.cssText = 'position:absolute;inset:0;z-index:95;display:flex;align-items:flex-end;background:rgba(28,25,23,.55)';
   ov.innerHTML = `
-    <div class="sheet" style="background:#fff;border-radius:24px 24px 0 0;width:100%;padding:22px 20px calc(24px + env(safe-area-inset-bottom))">
+    <div class="guide-sheet" style="background:#fff;border-radius:24px 24px 0 0;width:100%;padding:22px 20px calc(24px + env(safe-area-inset-bottom))">
       <div style="width:40px;height:4px;border-radius:2px;background:#E7DDC0;margin:0 auto 14px"></div>
       <h3 style="font-size:17px;font-weight:800;color:#1C1917;text-align:center">Instalar no iPhone 📱</h3>
       <p style="font-size:12px;color:#78716C;text-align:center;margin-top:3px">3 passinhos no Safari:</p>
@@ -1317,7 +1461,7 @@ function abrirGuiaIOS(){
   ov.querySelector('#iosOk').onclick = () => ov.remove();
 }
 
-/* ---------- PWA: registro do Service Worker ---------- */
+/* ---------- Service Worker ---------- */
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
   window.addEventListener('load', () =>
     navigator.serviceWorker.register('./sw.js', { updateViaCache: 'none' }).catch(() => {})
@@ -1482,6 +1626,19 @@ function admRender(){
     </section>
 
     <section class="mt-6">
+      <h3 class="text-[11px] uppercase tracking-wider text-stone-400 font-extrabold px-1">Página Contato</h3>
+      <div class="adm-card p-4 mt-2 space-y-3">
+        <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Nome do criador</span>
+          <input id="ct-nome" class="adm-inp mt-1" value="${esc(DADOS.contato.nome)}"></label>
+        <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Descrição do criador</span>
+          <input id="ct-sub" class="adm-inp mt-1" value="${esc(DADOS.contato.sub)}"></label>
+        <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Selo de avaliação</span>
+          <input id="ct-aval" class="adm-inp mt-1" value="${esc(DADOS.contato.avaliacao)}"></label>
+        <p class="text-[10.5px] text-stone-400 leading-snug -mt-1 px-1">WhatsApp, PIX, endereço e horário são editados em <b>Configurações do site</b>, acima.</p>
+      </div>
+    </section>
+
+    <section class="mt-6">
       <div class="flex items-center justify-between px-1">
         <h3 class="text-[11px] uppercase tracking-wider text-stone-400 font-extrabold">Carrossel (topo)</h3>
         <button id="addSlide" type="button" class="adm-btn bg-verde-claro text-verde !py-1.5 !px-3 text-[11px]">
@@ -1538,6 +1695,11 @@ function admRender(){
     $(id).addEventListener('input', e => { DADOS.config[k] = e.target.value.trim(); saveDraft(); });
   });
   $('cf-senha').addEventListener('input', e => { DADOS.senha = e.target.value.trim() || PADRAO.senha; saveDraft(); });
+
+  const ct = { 'ct-nome':'nome', 'ct-sub':'sub', 'ct-aval':'avaliacao' };
+  Object.entries(ct).forEach(([id, k]) => {
+    $(id).addEventListener('input', e => { DADOS.contato[k] = e.target.value.trim(); saveDraft(); });
+  });
 
   $('btnToken').onclick = () => { adm.tela = 'token'; admRender(); };
   $('pubBtn').onclick   = publicar;
@@ -1955,16 +2117,20 @@ function aplicarDados(){
     a.href = `https://wa.me/${c.whatsapp}?text=${encodeURIComponent(a.dataset.wamsg || 'Olá! Vim pelo site do Sítio Esperança.')}`;
   });
 
-  $('cfg-wa').textContent       = fmtFone(c.whatsapp);
-  $('cfg-pix').textContent      = c.pix;
-  $('cfg-pix2').textContent     = c.pix;
-  $('cfg-endereco').textContent = c.endereco;
-  $('cfg-cidade').textContent   = c.cidade;
-  $('cfg-cidade2').textContent  = c.cidade.replace(' – MG', '');
+  $('cfg-wa').textContent          = fmtFone(c.whatsapp);
+  $('cfg-pix').textContent         = c.pix;
+  $('cfg-pix2').textContent        = c.pix;
+  $('cfg-endereco').textContent    = c.endereco;
+  $('cfg-cidade').textContent      = c.cidade;
+  $('cfg-cidade2').textContent     = c.cidade.replace(' – MG', '');
   $('cfg-cidade-foot').textContent = c.cidade;
   $('cfg-cidade-hdr').textContent  = c.cidade.replace(' – ', ' • ');
   $('cfg-cidade-car').textContent  = c.cidade.replace(' – ', ' • ');
-  $('cfg-horario').textContent  = c.horario;
+  $('cfg-horario').textContent     = c.horario;
+
+  $('cfg-criador-nome').textContent = DADOS.contato.nome;
+  $('cfg-criador-sub').textContent  = DADOS.contato.sub;
+  $('cfg-criador-aval').textContent = DADOS.contato.avaliacao;
 
   const qMap = encodeURIComponent(c.cidade + ', Brasil');
   $('mapFrame').src = `https://maps.google.com/maps?q=${qMap}&z=13&output=embed`;
@@ -1993,7 +2159,6 @@ function aplicarDados(){
  $('logoMarca').style.cursor = 'default';
 
 (async function init(){
-  /* Carrega dados publicados sem 404 no console */
   try {
     const r = await fetch('./dados.js', { cache: 'no-store' });
     if (r.ok){
@@ -2009,14 +2174,15 @@ function aplicarDados(){
     if (d) DADOS = normalizar(d);
   } catch(e) {}
 
-  /* Se já está rodando como app instalado, marca como instalado (banner nunca mais) */
-  if (rodandoNoApp()){
-    try { localStorage.setItem('se_installed', '1'); } catch(e) {}
-  }
+  try {
+    localStorage.removeItem('se_installed');
+    localStorage.removeItem('se_install_snooze');
+  } catch(e) {}
 
   $('ano').textContent = new Date().getFullYear();
   buildGaleria();
   aplicarDados();
+  atualizarBotaoHeader();
   agendarBanner();
 
   const hi = HASHES.indexOf(location.hash);
