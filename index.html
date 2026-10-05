@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+
+<!-- ===== SEO ===== -->
+<title>Sítio Esperança — Coelhos à venda em Miguel Burnier/MG</title>
+<meta name="description" content="Filhotes de coelhos à venda a partir de R$ 80: Mini Lop, Lion, Rex, Angorá e Holandês. Vacinados, vermifugados, garantia de saúde de 7 dias. Entrega em Miguel Burnier - MG e região até 100 km.">
+<meta name="keywords" content="coelhos à venda, filhotes de coelho, Mini Lop, Lion, Rex, Angorá, Miguel Burnier, Ouro Preto, Mariana, Minas Gerais">
+<meta name="author" content="Sítio Esperança">
+<meta name="robots" content="index, follow">
+<meta property="og:title" content="Sítio Esperança — Coelhos à venda a partir de R$ 80">
+<meta property="og:description" content="Filhotes saudáveis, vacinados e mansos. Entrega em Miguel Burnier - MG e região até 100 km.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="pt_BR">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"LocalBusiness","name":"Sítio Esperança",
+"description":"Criação e venda de filhotes de coelhos em Miguel Burnier - MG.",
+"address":{"@type":"PostalAddress","addressLocality":"Miguel Burnier","addressRegion":"MG","addressCountry":"BR"},
+"telephone":"+55 31 98251-7147","openingHours":"Mo-Sa 08:00-18:00","priceRange":"R$80 - R$220"}
+</script>
+
+<!-- ===== PWA ===== -->
+<meta name="theme-color" content="#2E7D32">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sítio Esperança">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232E7D32'/%3E%3Cellipse cx='24' cy='18' rx='6' ry='11' transform='rotate(-14 24 18)' fill='%23FFF8E1'/%3E%3Cellipse cx='40' cy='18' rx='6' ry='11' transform='rotate(14 40 18)' fill='%23FFF8E1'/%3E%3Ccircle cx='32' cy='41' r='15' fill='%23FFF8E1'/%3E%3Ccircle cx='26.5' cy='40' r='2' fill='%232E7D32'/%3E%3Ccircle cx='37.5' cy='40' r='2' fill='%232E7D32'/%3E%3Cpath d='M29 45.5h6l-3 3.5z' fill='%232E7D32'/%3E%3C/svg%3E">
+
+<!-- ===== FONTES / TAILWIND / LUCIDE / APP ===== -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = {
+  theme: { extend: {
+    colors: {
+      verde:  { DEFAULT:'#2E7D32', esc:'#1B5E20', claro:'#E8F1E4' },
+      areia:  { DEFAULT:'#FFF8E1', esc:'#F1E7C8', borda:'#E7DDC0' }
+    },
+    fontFamily: { sans: ['Poppins','ui-sans-serif','system-ui','sans-serif'] },
+    boxShadow: { card: '0 2px 10px rgba(46,125,50,.07), 0 1px 3px rgba(46,125,50,.06)' }
+  }}
+}
+</script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="app.js" defer></script>
+
+<style>
+  *{ -webkit-tap-highlight-color: transparent; }
+  html,body{ height:100%; }
+  body{ font-family:'Poppins',sans-serif; background:#E9E4D6; overflow:hidden; }
+  ::selection{ background:#2E7D32; color:#FFF8E1; }
+  :focus-visible{ outline:2px solid #2E7D32; outline-offset:2px; border-radius:4px; }
+  .tnum{ font-variant-numeric: tabular-nums; }
+  .no-scrollbar::-webkit-scrollbar{ display:none; }
+  .no-scrollbar{ scrollbar-width:none; }
+
+  #app{
+    height:100vh; height:100dvh;
+    background-color:#FFF8E1;
+    background-image:repeating-linear-gradient(45deg, rgba(46,125,50,.028) 0 1px, transparent 1px 14px);
+  }
+  @media (min-width:520px){ #app{ box-shadow:0 0 60px rgba(27,94,32,.28); } }
+  .pattern{ background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.06) 0 2px, transparent 2px 16px); }
+
+  /* ===== Páginas (slide) ===== */
+  .page{
+    position:absolute; inset:0;
+    overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
+    opacity:0; pointer-events:none;
+    transform:translateX(28px);
+    transition:transform .34s cubic-bezier(.22,.9,.3,1), opacity .34s ease;
+    will-change:transform,opacity;
+  }
+  .page.active{ opacity:1; pointer-events:auto; transform:translateX(0); }
+
+  /* ===== Bottom nav flutuante (pill) ===== */
+  .navbtn{ display:flex; flex-direction:column; align-items:center; gap:3px; padding:9px 0 10px;
+    font-size:10.5px; font-weight:600; color:#78716C; transition:color .2s; width:100%; }
+  .navbtn .ic{ display:grid; place-items:center; width:48px; height:28px; border-radius:999px; transition:background .25s, transform .25s; }
+  .navbtn.active{ color:#2E7D32; }
+  .navbtn.active .ic{ background:#E8F1E4; transform:translateY(-1px); }
+
+  /* ===== Chips ===== */
+  .chip{ white-space:nowrap; display:inline-flex; align-items:center; gap:6px;
+    padding:7px 14px; border-radius:999px; font-size:12px; font-weight:600;
+    background:#fff; border:1px solid #E7DDC0; color:#57534E; transition:.2s; }
+  .chip:active{ transform:scale(.95); }
+  .chip-on{ background:#2E7D32; border-color:#2E7D32; color:#fff; }
+
+  /* ===== Favoritos ===== */
+  .favbtn{ color:#A8A29E; transition:color .2s; }
+  .favbtn.fav-on{ color:#2E7D32; }
+  .fav-on svg{ fill:currentColor; }
+  @keyframes pop{ 0%{transform:scale(1)} 40%{transform:scale(1.35)} 100%{transform:scale(1)} }
+  .pop{ animation:pop .35s ease; }
+
+  @keyframes pulsa{ 0%{box-shadow:0 0 0 0 rgba(46,125,50,.45)} 70%{box-shadow:0 0 0 18px rgba(46,125,50,0)} 100%{box-shadow:0 0 0 0 rgba(46,125,50,0)} }
+  .pulsa{ animation:pulsa 1.9s infinite; }
+
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .spin-slow{ animation:spin 16s linear infinite; }
+
+  @keyframes cardIn{ from{ opacity:0; transform:translateY(12px) scale(.98); } to{ opacity:1; transform:none; } }
+  .card-in{ animation:cardIn .45s both; }
+
+  .section-title{ position:relative; font-weight:800; font-size:1.05rem; color:#1C1917; line-height:1.2; }
+  .section-title::after{ content:""; display:block; width:34px; height:3px; border-radius:2px; background:#2E7D32; margin-top:5px; }
+
+  /* ===== Acordeões ===== */
+  .pol .body{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .35s ease; }
+  .pol.open .body{ grid-template-rows:1fr; }
+  .pol .body>div{ overflow:hidden; }
+  .pol .chev{ transition:transform .35s; }
+  .pol.open .chev{ transform:rotate(180deg); }
+
+  /* ===== Zoom ===== */
+  @keyframes fadeZoom{ from{opacity:0} to{opacity:1} }
+  #zoomer{ position:absolute; inset:0; z-index:70; display:none; flex-direction:column; background:rgba(28,25,23,.96); }
+  #zoomer.open{ display:flex; animation:fadeZoom .22s ease; }
+  #zoomStage{ flex:1; position:relative; overflow:hidden; display:flex; align-items:center; justify-content:center; touch-action:none; cursor:grab; }
+  #zoomStage:active{ cursor:grabbing; }
+  #zoomImg{ max-width:92%; max-height:76%; object-fit:contain; border-radius:14px; user-select:none; -webkit-user-drag:none; will-change:transform; transition:opacity .3s ease; box-shadow:0 24px 60px rgba(0,0,0,.5); }
+  #zoomImg.anim{ transition:transform .28s cubic-bezier(.22,.9,.3,1), opacity .3s ease; }
+  #zoomHint{ transition:opacity .6s ease; }
+
+  /* ===== Toast ===== */
+  #toast{ position:absolute; left:50%; bottom:158px; z-index:60;
+    transform:translate(-50%,16px); opacity:0; pointer-events:none;
+    transition:opacity .3s, transform .3s;
+    display:flex; align-items:center; gap:8px;
+    background:#1B5E20; color:#fff; padding:10px 16px; border-radius:999px;
+    font-size:12.5px; font-weight:500; max-width:85%;
+    box-shadow:0 10px 26px rgba(0,0,0,.28); }
+  #toast.show{ opacity:1; transform:translate(-50%,0); }
+</style>
+</head>
+
+<body>
+
+<!-- Símbolos SVG reutilizáveis -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="bunny" viewBox="0 0 64 64">
+    <ellipse cx="24" cy="18" rx="6.2" ry="11.5" transform="rotate(-14 24 18)" fill="currentColor"/>
+    <ellipse cx="40" cy="18" rx="6.2" ry="11.5" transform="rotate(14 40 18)" fill="currentColor"/>
+    <ellipse cx="24.5" cy="19" rx="2.4" ry="6.5" transform="rotate(-14 24.5 19)" fill="#FFF8E1"/>
+    <ellipse cx="39.5" cy="19" rx="2.4" ry="6.5" transform="rotate(14 39.5 19)" fill="#FFF8E1"/>
+    <circle cx="32" cy="41.5" r="15.5" fill="currentColor"/>
+    <circle cx="26.5" cy="40" r="2.1" fill="#FFF8E1"/>
+    <circle cx="37.5" cy="40" r="2.1" fill="#FFF8E1"/>
+    <path d="M29.2 46h5.6L32 49.6z" fill="#FFF8E1"/>
+  </symbol>
+  <symbol id="wa" viewBox="0 0 448 512">
+    <path fill="currentColor" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+  </symbol>
+</svg>
+
+<div id="app" class="relative mx-auto w-full max-w-[480px] flex flex-col select-none">
+
+  <!-- ================= HEADER ================= -->
+  <header class="shrink-0 relative z-30 bg-verde text-white">
+    <div class="absolute inset-0 pattern"></div>
+    <div class="relative flex items-center gap-3 px-4 py-3">
+      <span class="grid place-items-center w-10 h-10 rounded-full bg-areia shadow-inner">
+        <svg class="w-7 h-7 text-verde-esc"><use href="#bunny"/></svg>
+      </span>
+      <div class="leading-tight">
+        <p class="font-extrabold text-[15px] tracking-tight">Sítio Esperança</p>
+        <p class="text-[11px] text-areia/85 flex items-center gap-1 font-medium">
+          <i data-lucide="map-pin" class="w-3 h-3"></i> Miguel Burnier • MG
+        </p>
+      </div>
+      <a href="https://wa.me/5531982517147?text=Ol%C3%A1!%20Vim%20pelo%20site%20do%20S%C3%ADtio%20Esperan%C3%A7a%20e%20quero%20saber%20mais%20sobre%20os%20filhotes%20dispon%C3%ADveis."
+         target="_blank" rel="noopener" aria-label="Falar no WhatsApp"
+         class="ml-auto w-9 h-9 grid place-items-center rounded-full bg-white/15 ring-1 ring-white/25 active:scale-90 transition">
+        <svg class="w-[18px] h-[18px] fill-current"><use href="#wa"/></svg>
+      </a>
+    </div>
+    <svg class="absolute -bottom-[1px] left-0 w-full h-3 text-areia" viewBox="0 0 120 10" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 10 V5 Q3.75 0 7.5 5 T15 5 T22.5 5 T30 5 T37.5 5 T45 5 T52.5 5 T60 5 T67.5 5 T75 5 T82.5 5 T90 5 T97.5 5 T105 5 T112.5 5 T120 5 V10 Z" fill="currentColor"/>
+    </svg>
+  </header>
+
+  <!-- ================= PÁGINAS ================= -->
+  <main class="flex-1 relative overflow-hidden">
+
+    <!-- ========== PÁGINA 1 • INÍCIO ========== -->
+    <section class="page active" id="page-home">
+      <div class="px-4 pt-4">
+
+        <!-- ===== CARROSSEL HERO ===== -->
+        <div id="carWrap" class="relative rounded-3xl overflow-hidden shadow-card ring-1 ring-verde/10">
+          <div id="carTrack" class="flex h-64 will-change-transform transition-transform duration-500 ease-[cubic-bezier(.22,.9,.3,1)]"></div>
+
+          <span class="absolute top-3 left-3 inline-flex items-center gap-1.5 bg-areia text-verde-esc text-[10px] font-bold uppercase tracking-wider px-2.5 py-1.5 rounded-full shadow z-10">
+            <i data-lucide="map-pin" class="w-3 h-3"></i> Miguel Burnier • MG
+          </span>
+
+          <!-- Selo girante -->
+          <div class="absolute top-3 right-3 w-[80px] h-[80px] pointer-events-none z-10">
+            <div class="absolute inset-0 rounded-full bg-areia shadow-lg ring-1 ring-verde/20"></div>
+            <svg class="absolute inset-0 w-full h-full spin-slow" viewBox="0 0 100 100" aria-hidden="true">
+              <defs><path id="ringpath" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+              <text fill="#1B5E20" font-size="8.5" font-weight="600" letter-spacing="0.9" font-family="Poppins,sans-serif">
+                <textPath href="#ringpath">SÍTIO ESPERANÇA • DESDE 2015 • </textPath>
+              </text>
+            </svg>
+            <svg class="absolute inset-0 m-auto w-8 h-8 text-verde"><use href="#bunny"/></svg>
+          </div>
+
+          <!-- Dots -->
+          <div id="carDots" class="absolute bottom-2.5 inset-x-0 flex justify-center items-center gap-1.5 z-10"></div>
+        </div>
+
+        <!-- CTA principal -->
+        <button data-go="1" type="button"
+                class="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-verde hover:bg-verde-esc text-white font-extrabold text-[15px] tracking-wide py-4 shadow-lg shadow-verde/30 active:scale-[.98] transition">
+          VER CATÁLOGO COMPLETO <i data-lucide="arrow-right" class="w-5 h-5"></i>
+        </button>
+
+        <!-- Contador vivo -->
+        <p class="mt-3 flex items-center justify-center gap-2 text-xs text-stone-500">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-verde opacity-60"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-verde"></span>
+          </span>
+          <span><b id="qtd" class="text-verde font-bold tnum"></b> disponíveis no criadouro agora</span>
+        </p>
+      </div>
+
+      <!-- Selos -->
+      <div class="px-4 mt-6">
+        <div class="grid grid-cols-3 gap-2.5">
+          <div class="bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3 text-center">
+            <span class="mx-auto w-10 h-10 rounded-full bg-verde-claro text-verde grid place-items-center"><i data-lucide="shield-check" class="w-5 h-5"></i></span>
+            <p class="mt-2 text-[11px] font-bold leading-tight text-stone-700">Vacinado</p>
+          </div>
+          <div class="bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3 text-center">
+            <span class="mx-auto w-10 h-10 rounded-full bg-verde-claro text-verde grid place-items-center"><i data-lucide="pill" class="w-5 h-5"></i></span>
+            <p class="mt-2 text-[11px] font-bold leading-tight text-stone-700">Vermifugado</p>
+          </div>
+          <div class="bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3 text-center">
+            <span class="mx-auto w-10 h-10 rounded-full bg-verde-claro text-verde grid place-items-center"><i data-lucide="heart-handshake" class="w-5 h-5"></i></span>
+            <p class="mt-2 text-[11px] font-bold leading-tight text-stone-700">Garantia 7 dias</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Como funciona -->
+      <div class="px-4 mt-8">
+        <h2 class="section-title">Como funciona</h2>
+        <ol class="mt-5">
+          <li class="flex gap-3.5">
+            <div class="flex flex-col items-center">
+              <span class="w-8 h-8 rounded-full bg-verde text-white grid place-items-center text-sm font-bold shrink-0">1</span>
+              <span class="flex-1 border-l-2 border-dashed border-verde/25 my-1.5"></span>
+            </div>
+            <div class="pb-6">
+              <h3 class="font-bold text-sm text-stone-800">Escolheu seu filhote?</h3>
+              <p class="text-xs text-stone-500 mt-0.5 leading-relaxed">Chama no WhatsApp: mandamos fotos e vídeos ao vivo e tiramos todas as dúvidas.</p>
+            </div>
+          </li>
+          <li class="flex gap-3.5">
+            <div class="flex flex-col items-center">
+              <span class="w-8 h-8 rounded-full bg-verde text-white grid place-items-center text-sm font-bold shrink-0">2</span>
+              <span class="flex-1 border-l-2 border-dashed border-verde/25 my-1.5"></span>
+            </div>
+            <div class="pb-6">
+              <h3 class="font-bold text-sm text-stone-800">Reserva com 30% de sinal</h3>
+              <p class="text-xs text-stone-500 mt-0.5 leading-relaxed">Via PIX (a chave é o próprio WhatsApp): o filhote fica com o seu nome e o restante na entrega.</p>
+            </div>
+          </li>
+          <li class="flex gap-3.5">
+            <span class="w-8 h-8 rounded-full bg-verde text-white grid place-items-center text-sm font-bold shrink-0">3</span>
+            <div>
+              <h3 class="font-bold text-sm text-stone-800">Entrega ou retirada</h3>
+              <p class="text-xs text-stone-500 mt-0.5 leading-relaxed">Receba em casa (até 100 km) ou retire no sítio, com orientação completa.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Depoimentos -->
+      <div class="mt-6">
+        <h2 class="section-title px-4">Quem já levou um coelhinho</h2>
+        <div class="mt-4 flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 pb-2">
+
+          <figure class="snap-start shrink-0 w-[268px] bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-4">
+            <div class="flex items-center gap-2.5">
+              <span class="w-9 h-9 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs">JC</span>
+              <div class="leading-tight">
+                <p class="text-[13px] font-bold text-stone-800">Juliana C.</p>
+                <p class="text-[10.5px] text-stone-400">Ouro Preto • MG</p>
+              </div>
+              <span class="ml-auto flex gap-0.5 text-amber-400">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+              </span>
+            </div>
+            <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"Levei a Mel há 3 semanas, veio super mansinha e já com o vermífugo em dia. Explicaram tudo com muita paciência."</blockquote>
+          </figure>
+
+          <figure class="snap-start shrink-0 w-[268px] bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-4">
+            <div class="flex items-center gap-2.5">
+              <span class="w-9 h-9 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs">MP</span>
+              <div class="leading-tight">
+                <p class="text-[13px] font-bold text-stone-800">Marcos P.</p>
+                <p class="text-[10.5px] text-stone-400">Mariana • MG</p>
+              </div>
+              <span class="ml-auto flex gap-0.5 text-amber-400">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+              </span>
+            </div>
+            <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"Comprei um Mini Lop de presente pra minha filha. Lindo, saudável, e ainda ganharam um potinho de ração de brinde."</blockquote>
+          </figure>
+
+          <figure class="snap-start shrink-0 w-[268px] bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-4">
+            <div class="flex items-center gap-2.5">
+              <span class="w-9 h-9 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs">CM</span>
+              <div class="leading-tight">
+                <p class="text-[13px] font-bold text-stone-800">Carla M.</p>
+                <p class="text-[10.5px] text-stone-400">Ouro Branco • MG</p>
+              </div>
+              <span class="ml-auto flex gap-0.5 text-amber-400">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+              </span>
+            </div>
+            <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"A entrega chegou no horário certinho, com a carteirinha de saúde e toda a orientação. Recomendo demais!"</blockquote>
+          </figure>
+
+          <figure class="snap-start shrink-0 w-[268px] bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-4">
+            <div class="flex items-center gap-2.5">
+              <span class="w-9 h-9 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs">RT</span>
+              <div class="leading-tight">
+                <p class="text-[13px] font-bold text-stone-800">Rafael T.</p>
+                <p class="text-[10.5px] text-stone-400">Miguel Burnier</p>
+              </div>
+              <span class="ml-auto flex gap-0.5 text-amber-400">
+                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+              </span>
+            </div>
+            <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"Terceiro coelho que compro no sítio. Dá pra ver o cuidado: cercado limpo, feno fresco, tudo no ponto."</blockquote>
+          </figure>
+
+          <button data-go="1" type="button"
+                  class="snap-start shrink-0 w-[150px] rounded-2xl bg-verde text-white p-4 flex flex-col justify-between gap-4 text-left active:scale-[.97] transition">
+            <i data-lucide="paw-print" class="w-6 h-6 text-areia"></i>
+            <div>
+              <p class="font-bold text-sm leading-tight">Quero conhecer os filhotes</p>
+              <p class="text-[11px] text-areia/85 mt-1 inline-flex items-center gap-1 font-semibold">Ver catálogo <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></p>
+            </div>
+          </button>
+        </div>
+      </div>
+
+      <!-- Faixa final -->
+      <div class="px-4 mt-6 mb-8">
+        <div class="relative overflow-hidden rounded-3xl bg-verde text-white p-5 text-center ring-1 ring-verde-esc">
+          <div class="absolute inset-0 pattern"></div>
+          <div class="relative">
+            <p class="font-extrabold text-lg tracking-tight">Bateu alguma dúvida?</p>
+            <p class="text-areia/85 text-xs mt-1 font-medium">Respondemos rápido, de Seg a Sáb, 8h às 18h.</p>
+            <a href="https://wa.me/5531982517147?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20tenho%20uma%20d%C3%BAvida%20sobre%20os%20coelhinhos."
+               target="_blank" rel="noopener"
+               class="mt-3.5 inline-flex items-center gap-2 bg-white text-verde font-bold text-sm rounded-full px-5 py-2.5 active:scale-95 transition">
+              <svg class="w-4 h-4 fill-current"><use href="#wa"/></svg> Chamar no WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PÁGINA 2 • CATÁLOGO ========== -->
+    <section class="page" id="page-catalogo">
+      <div class="px-4 pt-4">
+        <div class="flex items-end justify-between gap-3">
+          <div>
+            <h1 class="section-title">Catálogo</h1>
+            <p class="text-[11px] text-stone-500 mt-1.5">Toque na foto para ampliar e ver os detalhes</p>
+          </div>
+          <span id="count" class="shrink-0 text-xs font-bold text-verde bg-verde-claro rounded-full px-3 py-1.5 tnum"></span>
+        </div>
+
+        <!-- Busca -->
+        <div class="mt-4 relative">
+          <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none"></i>
+          <input id="searchInput" type="search" placeholder="Buscar por nome, raça ou cor…"
+                 class="w-full bg-white border border-areia-borda rounded-full py-2.5 pl-10 pr-4 text-xs font-medium text-stone-700 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-verde/30">
+        </div>
+
+        <!-- Filtro por raça -->
+        <div id="raceChips" class="mt-2.5 flex gap-2 overflow-x-auto no-scrollbar -mx-4 px-4 pb-1"></div>
+
+        <!-- Ordenação + favoritos -->
+        <div class="mt-2.5 flex gap-2 items-center">
+          <label class="relative flex-1 min-w-0">
+            <select id="sortSel" aria-label="Ordenar catálogo"
+                    class="w-full appearance-none bg-white border border-areia-borda rounded-full py-2.5 pl-4 pr-9 text-xs font-semibold text-stone-600 focus:outline-none">
+              <option value="">Ordenar por…</option>
+              <option value="price-asc">Preço: menor → maior</option>
+              <option value="price-desc">Preço: maior → menor</option>
+              <option value="age-asc">Idade: filhotes mais novos</option>
+              <option value="age-desc">Idade: filhotes mais velhos</option>
+            </select>
+            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none"></i>
+          </label>
+          <button id="favFilter" type="button" class="chip" aria-pressed="false">
+            <i data-lucide="heart" class="w-3.5 h-3.5"></i> Favoritos
+            <span id="favN" class="hidden min-w-[18px] h-[18px] grid place-items-center rounded-full bg-verde text-white text-[10px] font-bold px-1 tnum">0</span>
+          </button>
+        </div>
+
+        <div id="grid" class="mt-4 grid grid-cols-2 gap-3 mb-10"></div>
+      </div>
+    </section>
+
+    <!-- ========== PÁGINA 3 • CONTATO ========== -->
+    <section class="page" id="page-contato">
+      <div class="px-4 pt-4">
+        <h1 class="section-title">Fale com a gente</h1>
+
+        <div class="mt-4 bg-white rounded-3xl ring-1 ring-areia-borda shadow-card p-5 text-center">
+          <img src="https://picsum.photos/seed/criador-antonio/300/300.jpg" alt="Antônio, criador do Sítio Esperança"
+               draggable="false" data-zoom
+               data-src="https://picsum.photos/seed/criador-antonio/900/900.jpg"
+               data-title="Antônio" data-sub="Criador • Sítio Esperança"
+               class="w-24 h-24 rounded-full object-cover mx-auto ring-4 ring-verde-claro cursor-zoom-in">
+          <h2 class="mt-3 font-extrabold text-lg text-stone-900 tracking-tight">Antônio</h2>
+          <p class="text-[11.5px] text-stone-500 font-medium">Criador no Sítio Esperança há 10 anos • Miguel Burnier</p>
+          <p class="mt-2.5 inline-flex items-center gap-1.5 bg-areia ring-1 ring-areia-borda text-stone-600 text-[11px] font-bold rounded-full px-3 py-1.5">
+            <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-current"></i> 4,9 • 127 conversas atendidas
+          </p>
+          <div class="mt-2.5 flex justify-center">
+            <span id="lojaStatus" class="inline-flex items-center gap-2 bg-verde-claro text-verde-esc text-[11px] font-bold rounded-full px-3.5 py-1.5"></span>
+          </div>
+
+          <a href="https://wa.me/5531982517147?text=Ol%C3%A1%2C%20Ant%C3%B4nio!%20Quero%20saber%20mais%20sobre%20os%20coelhinhos%20%C3%A0%20venda."
+             target="_blank" rel="noopener"
+             class="pulsa mt-4 w-full inline-flex items-center justify-center gap-2.5 rounded-2xl bg-verde hover:bg-verde-esc text-white font-extrabold text-[15px] tracking-wide py-4 active:scale-[.98] transition">
+            <svg class="w-5 h-5 fill-current"><use href="#wa"/></svg> FALAR NO WHATSAPP AGORA
+          </a>
+        </div>
+
+        <div class="mt-5 space-y-2.5">
+          <a href="https://wa.me/5531982517147" target="_blank" rel="noopener"
+             class="flex items-center gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5 active:scale-[.98] transition">
+            <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="phone" class="w-5 h-5"></i></span>
+            <div class="min-w-0">
+              <p class="text-[10.5px] uppercase tracking-wider text-stone-400 font-bold">WhatsApp</p>
+              <p class="text-sm font-bold text-stone-800 tnum">(31) 98251-7147</p>
+            </div>
+            <i data-lucide="chevron-right" class="w-4 h-4 text-stone-300 ml-auto"></i>
+          </a>
+
+          <div class="flex items-center gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
+            <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="qr-code" class="w-5 h-5"></i></span>
+            <div class="min-w-0">
+              <p class="text-[10.5px] uppercase tracking-wider text-stone-400 font-bold">Chave PIX (telefone) • igual ao WhatsApp</p>
+              <p class="text-sm font-bold text-stone-800 tnum">31982517147</p>
+            </div>
+            <button id="copyPix" type="button" aria-label="Copiar chave PIX"
+                    class="ml-auto shrink-0 inline-flex items-center gap-1.5 bg-verde text-white text-[11px] font-bold rounded-full px-3.5 py-2 active:scale-90 transition">
+              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar
+            </button>
+          </div>
+
+          <div class="flex items-center gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
+            <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="map-pin" class="w-5 h-5"></i></span>
+            <div class="min-w-0">
+              <p class="text-[10.5px] uppercase tracking-wider text-stone-400 font-bold">Endereço</p>
+              <p class="text-sm font-bold text-stone-800 leading-snug">Sítio Esperança, Zona Rural<br>Miguel Burnier – MG</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
+            <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="clock" class="w-5 h-5"></i></span>
+            <div class="min-w-0">
+              <p class="text-[10.5px] uppercase tracking-wider text-stone-400 font-bold">Horário</p>
+              <p class="text-sm font-bold text-stone-800">Seg a Sáb, 8h às 18h</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-6 mb-8">
+          <h2 class="section-title">Onde ficamos</h2>
+          <div class="mt-3.5 rounded-2xl overflow-hidden ring-1 ring-areia-borda shadow-card">
+            <iframe src="https://maps.google.com/maps?q=Miguel%20Burnier%2C%20MG%2C%20Brasil&z=13&output=embed"
+                    class="w-full h-52 block" style="border:0" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade" title="Mapa de Miguel Burnier - MG"></iframe>
+          </div>
+          <a href="https://www.google.com/maps/search/?api=1&query=Miguel+Burnier,+MG" target="_blank" rel="noopener"
+             class="mt-2.5 text-xs text-verde font-bold inline-flex items-center gap-1">
+            Abrir no Google Maps <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== PÁGINA 4 • O SÍTIO ========== -->
+    <section class="page" id="page-sobre">
+      <div class="px-4 pt-4">
+        <h1 class="section-title">Nossa história</h1>
+        <div class="mt-4 relative bg-white rounded-3xl ring-1 ring-areia-borda shadow-card p-5 overflow-hidden">
+          <svg class="absolute right-3 top-3 w-16 h-16 text-verde/5"><use href="#bunny"/></svg>
+          <p class="relative text-[13px] text-stone-600 leading-relaxed">
+            Tudo começou em <b class="text-stone-800">2015</b>, num quintal aqui de <b class="text-stone-800">Miguel Burnier</b>, quando um casal de Mini Lops chegou de presente do vizinho da fazenda. A ideia era ter só dois bichinhos — hoje são mais de <b class="text-stone-800">40 coelhos</b> num cercado de 800 m² com sol da manhã, sombra e grama fresca.
+          </p>
+          <p class="relative mt-3 text-[13px] text-stone-600 leading-relaxed">
+            Cada filhote nasce e cresce aqui dentro, com ração de primeira, feno de tifton e muito colo. Por isso chegam ao novo lar tão <b class="text-stone-800">mansos e acostumados com gente</b>.
+          </p>
+          <p class="relative mt-3.5 text-xs font-bold text-verde">— Antônio, Sítio Esperança • desde 2015</p>
+        </div>
+
+        <div class="mt-7">
+          <h2 class="section-title">O criadouro</h2>
+          <div class="mt-3.5 grid grid-cols-2 gap-3">
+            <figure class="relative rounded-2xl overflow-hidden ring-1 ring-areia-borda shadow-card">
+              <img src="https://picsum.photos/seed/criadouro-cercado/400/300.jpg" alt="Cercado ao ar livre" loading="lazy" draggable="false" data-zoom
+                   data-src="https://picsum.photos/seed/criadouro-cercado/1200/900.jpg" data-title="Cercado ao ar livre" data-sub="Sítio Esperança"
+                   class="h-28 w-full object-cover cursor-zoom-in">
+              <figcaption class="absolute bottom-0 inset-x-0 bg-stone-950/55 text-white text-[10px] font-semibold px-2.5 py-1.5 backdrop-blur-[2px] pointer-events-none">Cercado ao ar livre</figcaption>
+            </figure>
+            <figure class="relative rounded-2xl overflow-hidden ring-1 ring-areia-borda shadow-card">
+              <img src="https://picsum.photos/seed/criadouro-feno/400/300.jpg" alt="Feno fresco" loading="lazy" draggable="false" data-zoom
+                   data-src="https://picsum.photos/seed/criadouro-feno/1200/900.jpg" data-title="Feno fresco todo dia" data-sub="Sítio Esperança"
+                   class="h-28 w-full object-cover cursor-zoom-in">
+              <figcaption class="absolute bottom-0 inset-x-0 bg-stone-950/55 text-white text-[10px] font-semibold px-2.5 py-1.5 backdrop-blur-[2px] pointer-events-none">Feno fresco todo dia</figcaption>
+            </figure>
+            <figure class="relative rounded-2xl overflow-hidden ring-1 ring-areia-borda shadow-card">
+              <img src="https://picsum.photos/seed/criadouro-cria/400/300.jpg" alt="Maternidade" loading="lazy" draggable="false" data-zoom
+                   data-src="https://picsum.photos/seed/criadouro-cria/1200/900.jpg" data-title="Maternidade separada" data-sub="Sítio Esperança"
+                   class="h-28 w-full object-cover cursor-zoom-in">
+              <figcaption class="absolute bottom-0 inset-x-0 bg-stone-950/55 text-white text-[10px] font-semibold px-2.5 py-1.5 backdrop-blur-[2px] pointer-events-none">Maternidade separada</figcaption>
+            </figure>
+            <figure class="relative rounded-2xl overflow-hidden ring-1 ring-areia-borda shadow-card">
+              <img src="https://picsum.photos/seed/criadouro-sol/400/300.jpg" alt="Sol da manhã" loading="lazy" draggable="false" data-zoom
+                   data-src="https://picsum.photos/seed/criadouro-sol/1200/900.jpg" data-title="Sol da manhã e sombra" data-sub="Sítio Esperança"
+                   class="h-28 w-full object-cover cursor-zoom-in">
+              <figcaption class="absolute bottom-0 inset-x-0 bg-stone-950/55 text-white text-[10px] font-semibold px-2.5 py-1.5 backdrop-blur-[2px] pointer-events-none">Sol da manhã e sombra</figcaption>
+            </figure>
+          </div>
+        </div>
+
+        <div class="mt-7">
+          <h2 class="section-title">Cuidados com cada filhote</h2>
+          <ul class="mt-3.5 space-y-2.5">
+            <li class="flex gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
+              <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="syringe" class="w-5 h-5"></i></span>
+              <div>
+                <p class="text-sm font-bold text-stone-800">Vacinados e vermifugados</p>
+                <p class="text-xs text-stone-500 mt-0.5 leading-relaxed">Aplicação acompanhada por veterinário; carteirinha de saúde na entrega.</p>
+              </div>
+            </li>
+            <li class="flex gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
+              <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="carrot" class="w-5 h-5"></i></span>
+              <div>
+                <p class="text-sm font-bold text-stone-800">Alimentação de qualidade</p>
+                <p class="text-xs text-stone-500 mt-0.5 leading-relaxed">Ração premium, feno de tifton fresco e água trocada duas vezes ao dia.</p>
+              </div>
+            </li>
+            <li class="flex gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
+              <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="warehouse" class="w-5 h-5"></i></span>
+              <div>
+                <p class="text-sm font-bold text-stone-800">Espaço de verdade para viver</p>
+                <p class="text-xs text-stone-500 mt-0.5 leading-relaxed">Nenhum coelho vive preso em gaiola apertada: aqui é cercado, sol e grama.</p>
+              </div>
+            </li>
+            <li class="flex gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
+              <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="heart-handshake" class="w-5 h-5"></i></span>
+              <div>
+                <p class="text-sm font-bold text-stone-800">Manuseio diário (muitos mimos)</p>
+                <p class="text-xs text-stone-500 mt-0.5 leading-relaxed">Pegamos no colo desde os 15 dias — chegam mansos e acostumados com criança.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="mt-7">
+          <h2 class="section-title">Políticas do sítio</h2>
+          <div class="mt-3.5 space-y-2.5">
+            <div class="pol bg-white rounded-2xl ring-1 ring-areia-borda shadow-card overflow-hidden">
+              <button type="button" class="pol-h w-full flex items-center gap-3 p-4 text-left">
+                <span class="w-9 h-9 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="hand-coins" class="w-[18px] h-[18px]"></i></span>
+                <span class="text-sm font-bold text-stone-800 flex-1">Reserva com 30% de sinal</span>
+                <i data-lucide="chevron-down" class="chev w-4 h-4 text-stone-400 shrink-0"></i>
+              </button>
+              <div class="body"><div class="px-4 pb-4 pl-[64px] text-[12.5px] text-stone-600 leading-relaxed">
+                Reserve com <b>30% do valor via PIX</b> (chave: telefone <b class="tnum">31982517147</b>) e pague o restante na entrega ou retirada. O sinal garante o filhote com o seu nome por até <b>15 dias</b> — tempo de completar o desmame ideal (45 dias).
+              </div></div>
+            </div>
+
+            <div class="pol bg-white rounded-2xl ring-1 ring-areia-borda shadow-card overflow-hidden">
+              <button type="button" class="pol-h w-full flex items-center gap-3 p-4 text-left">
+                <span class="w-9 h-9 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="truck" class="w-[18px] h-[18px]"></i></span>
+                <span class="text-sm font-bold text-stone-800 flex-1">Entrega na sua cidade</span>
+                <i data-lucide="chevron-down" class="chev w-4 h-4 text-stone-400 shrink-0"></i>
+              </button>
+              <div class="body"><div class="px-4 pb-4 pl-[64px] text-[12.5px] text-stone-600 leading-relaxed">
+                Entrega <b>sem custo</b> em Miguel Burnier. Para cidades até <b>100 km</b> (Ouro Preto, Mariana, Ouro Branco, Conselheiro Lafaiete e região), consulte a taxa pelo WhatsApp. Transporte em caixa apropriada, com feno e água.
+              </div></div>
+            </div>
+
+            <div class="pol bg-white rounded-2xl ring-1 ring-areia-borda shadow-card overflow-hidden">
+              <button type="button" class="pol-h w-full flex items-center gap-3 p-4 text-left">
+                <span class="w-9 h-9 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="refresh-ccw" class="w-[18px] h-[18px]"></i></span>
+                <span class="text-sm font-bold text-stone-800 flex-1">Troca e garantia de 7 dias</span>
+                <i data-lucide="chevron-down" class="chev w-4 h-4 text-stone-400 shrink-0"></i>
+              </button>
+              <div class="body"><div class="px-4 pb-4 pl-[64px] text-[12.5px] text-stone-600 leading-relaxed">
+                <b>Garantia de saúde de 7 dias:</b> se o filhote apresentar qualquer problema comprovado por veterinário nesse período, fazemos a <b>troca por outro da mesma linhagem</b> ou o reembolso.
+              </div></div>
+            </div>
+          </div>
+        </div>
+
+        <footer class="mt-8 mb-10 text-center">
+          <svg class="mx-auto w-8 h-8 text-verde/40"><use href="#bunny"/></svg>
+          <p class="mt-2 text-[11px] text-stone-400 font-semibold">Sítio Esperança • Miguel Burnier – MG</p>
+          <p class="mt-0.5 text-[10px] text-stone-400">© <span id="ano">2025</span> • Feito com feno e carinho</p>
+        </footer>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= ZOOM ================= -->
+  <div id="zoomer" role="dialog" aria-modal="true" aria-label="Visualização ampliada da foto">
+    <button id="zoomClose" type="button" aria-label="Fechar zoom"
+            class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 ring-1 ring-white/20 grid place-items-center text-white active:scale-90 transition">
+      <i data-lucide="x" class="w-5 h-5"></i>
+    </button>
+    <div id="zoomStage"><img id="zoomImg" alt="" draggable="false"></div>
+    <p id="zoomHint" class="absolute bottom-[96px] left-1/2 -translate-x-1/2 bg-white/10 text-white/85 text-[10.5px] font-semibold px-3.5 py-1.5 rounded-full backdrop-blur pointer-events-none whitespace-nowrap">
+      Pinça para ampliar • Toque 2× para zoom
+    </p>
+    <div class="relative z-10 p-4 pt-2 flex items-center gap-3">
+      <div class="min-w-0 flex-1 text-white">
+        <p id="zoomTitle" class="text-sm font-bold truncate"></p>
+        <p id="zoomSub" class="text-[11px] text-white/60 truncate"></p>
+      </div>
+      <a id="zoomWa" href="#" target="_blank" rel="noopener"
+         class="hidden shrink-0 inline-flex items-center gap-1.5 bg-verde hover:bg-verde-esc text-white text-[11.5px] font-bold rounded-full px-4 py-2.5 active:scale-95 transition">
+        <svg class="w-3.5 h-3.5 fill-current"><use href="#wa"/></svg> Reservar
+      </a>
+    </div>
+  </div>
+
+  <!-- ================= FAB WHATSAPP ================= -->
+  <a id="fab" href="https://wa.me/5531982517147?text=Ol%C3%A1!%20Vim%20pelo%20site%20do%20S%C3%ADtio%20Esperan%C3%A7a%20e%20quero%20saber%20mais%20sobre%20os%20filhotes%20dispon%C3%ADveis."
+     target="_blank" rel="noopener" aria-label="Conversar no WhatsApp"
+     class="pulsa absolute right-4 z-50 w-14 h-14 rounded-full bg-verde hover:bg-verde-esc text-white grid place-items-center shadow-xl shadow-verde/40 active:scale-90 transition"
+     style="bottom:calc(86px + env(safe-area-inset-bottom))">
+    <svg class="w-7 h-7 fill-current"><use href="#wa"/></svg>
+  </a>
+
+  <!-- ================= NAV FLUTUANTE ================= -->
+  <nav class="shrink-0 relative z-40 px-3" style="padding-bottom:calc(10px + env(safe-area-inset-bottom))" aria-label="Navegação principal">
+    <div class="grid grid-cols-4 bg-white/90 backdrop-blur-md border border-areia-borda rounded-[22px] shadow-[0_6px_24px_rgba(27,94,32,.14)] overflow-hidden">
+      <button type="button" data-page="0" class="navbtn active"><span class="ic"><i data-lucide="home" class="w-5 h-5"></i></span>Início</button>
+      <button type="button" data-page="1" class="navbtn"><span class="ic"><i data-lucide="paw-print" class="w-5 h-5"></i></span>Catálogo</button>
+      <button type="button" data-page="2" class="navbtn"><span class="ic"><i data-lucide="phone" class="w-5 h-5"></i></span>Contato</button>
+      <button type="button" data-page="3" class="navbtn"><span class="ic"><i data-lucide="sprout" class="w-5 h-5"></i></span>O Sítio</button>
+    </div>
+  </nav>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+</div>
+
+</body>
+</html>
