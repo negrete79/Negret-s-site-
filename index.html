@@ -134,6 +134,14 @@ tailwind.config = {
   .tgl::after{ content:''; position:absolute; top:3px; left:3px; width:18px; height:18px; border-radius:50%; background:#fff; transition:.2s; box-shadow:0 1px 3px rgba(0,0,0,.25); }
   .tgl.on{ background:#2E7D32; }
   .tgl.on::after{ transform:translateX(20px); }
+
+  /* Campo de senha com olho */
+  .pwd-wrap{ position:relative; }
+  .pwd-wrap .adm-inp{ padding-right:44px; }
+  .pwd-eye{ position:absolute; right:6px; top:50%; transform:translateY(-50%);
+    width:34px; height:34px; border-radius:10px; border:0; background:transparent;
+    color:#78716C; display:grid; place-items:center; cursor:pointer; }
+  .pwd-eye:active{ transform:translateY(-50%) scale(.88); }
 </style>
 </head>
 
@@ -192,6 +200,10 @@ tailwind.config = {
   <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-up" viewBox="0 0 24 24"><path d="M12 19V5"/><path d="m6 11 6-6 6 6"/></symbol>
   <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></symbol>
+  <symbol id="i-eyeoff" viewBox="0 0 24 24"><path d="M10.7 5.1A10.9 10.9 0 0 1 12 5c6.5 0 10 7 10 7a17.6 17.6 0 0 1-3.2 4.2M6.6 6.6A16.6 16.6 0 0 0 2 12s3.5 7 10 7a10 10 0 0 0 5.4-1.6"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/><path d="M3 3l18 18"/></symbol>
+  <symbol id="i-load" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-6.2-8.56"/></symbol>
+  <symbol id="i-gh" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.55v-2.15c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.75 2.69 1.25 3.34.95.1-.74.4-1.25.72-1.53-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.28 1.19-3.08-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.16-1.18 3.16-1.18.63 1.59.24 2.77.12 3.06.74.8 1.18 1.83 1.18 3.08 0 4.41-2.69 5.38-5.25 5.67.41.35.77 1.04.77 2.1v3.12c0 .3.21.67.8.55A11.51 11.51 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5z"/></symbol>
 </svg>
 
 <div id="app" class="relative mx-auto w-full max-w-[480px] flex flex-col select-none">
@@ -640,7 +652,7 @@ tailwind.config = {
       <div class="absolute inset-0 pattern"></div>
       <div class="relative flex items-center gap-2.5 px-4 py-3">
         <span class="w-9 h-9 grid place-items-center rounded-full bg-white/15 ring-1 ring-white/25">
-          <svg class="ic w-4.5 h-4.5" style="width:18px;height:18px"><use href="#i-lock"/></svg>
+          <svg class="ic" style="width:18px;height:18px"><use href="#i-lock"/></svg>
         </span>
         <div class="leading-tight flex-1 min-w-0">
           <p class="font-extrabold text-[14px] tracking-tight">Painel do Administrador</p>
@@ -657,18 +669,18 @@ tailwind.config = {
   <div id="toast" role="status" aria-live="polite"></div>
 </div>
 
-<!-- Dados publicados (gerado pelo painel). Se ainda não existe, o 404 no console é normal. -->
+<!-- Dados publicados (gerado automaticamente pelo painel). 404 no console é normal até a 1ª publicação. -->
 <script src="dados.js"></script>
 
 <script>
 /* =========================================================
    SÍTIO ESPERANÇA • app + painel administrativo
+   Publicação automática via API do GitHub
    ========================================================= */
 
 /* ---------- Helpers ---------- */
 const $ = id => document.getElementById(id);
 const esc = s => String(s ?? '').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-const clone = o => JSON.parse(JSON.stringify(o));
 const clampN = (v,a,b) => Math.min(b, Math.max(a, v));
 const fmt = v => (v||0).toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
 function fmtFone(w){
@@ -677,10 +689,23 @@ function fmtFone(w){
   if (n.length === 10) return `(${n.slice(0,2)}) ${n.slice(2,6)}-${n.slice(6)}`;
   return w;
 }
+const b64 = s => btoa(unescape(encodeURIComponent(s)));
+
+/* Campo de senha com olho 👁️ */
+function ligarOlho(inpId, btnId){
+  const inp = $(inpId), btn = $(btnId);
+  if (!inp || !btn) return;
+  btn.addEventListener('click', () => {
+    const ver = inp.type === 'password';
+    inp.type = ver ? 'text' : 'password';
+    btn.innerHTML = `<svg class="ic w-[18px] h-[18px]"><use href="#${ver ? 'i-eyeoff' : 'i-eye'}"/></svg>`;
+    btn.setAttribute('aria-label', ver ? 'Ocultar senha' : 'Mostrar senha');
+  });
+}
 
 /* ---------- Dados padrão ---------- */
 const PADRAO = {
-  pin: '1234',
+  senha: "Negret's2026",
   atualizado: '',
   config: {
     whatsapp: '5531982517147',
@@ -699,7 +724,7 @@ const PADRAO = {
     { id:7,  nome:'Açaí',    raca:'Rex',       dias:50, sexo:'M', cor:'Azulado',        preco:160, desconto:0, descricao:'', foto:'', disponivel:true },
     { id:8,  nome:'Cacau',   raca:'Rex',       dias:70, sexo:'F', cor:'Marrom cacau',   preco:130, desconto:0, descricao:'', foto:'', disponivel:true },
     { id:9,  nome:'Nuvem',   raca:'Angorá',    dias:60, sexo:'F', cor:'Branca',         preco:180, desconto:0, descricao:'Pelagem longa — escovação 3x por semana.', foto:'', disponivel:true },
-    { id:10, nome:'Bela',   raca:'Mini Lop',  dias:75, sexo:'F', cor:'Chinchila',      preco:200, desconto:0, descricao:'', foto:'', disponivel:true },
+    { id:10, nome:'Bela',    raca:'Mini Lop',  dias:75, sexo:'F', cor:'Chinchila',      preco:200, desconto:0, descricao:'', foto:'', disponivel:true },
   ],
   slides: [
     { id:'s1', foto:'', paleta:0, kicker:'Filhotes disponíveis agora', titulo:'COELHOS À VENDA A PARTIR DE R$ 80',
@@ -718,7 +743,7 @@ function normalizar(o){
   const padC = { id:0, nome:'', raca:'', dias:45, sexo:'M', cor:'', preco:0, desconto:0, descricao:'', foto:'', disponivel:true };
   const padS = { id:'', foto:'', paleta:0, kicker:'', titulo:'', sub:'', ctaLabel:'VER CATÁLOGO', ctaAcao:'catalogo', ativa:true };
   return {
-    pin: String(o.pin || PADRAO.pin),
+    senha: String(o.senha || PADRAO.senha),
     atualizado: o.atualizado || '',
     config: { ...PADRAO.config, ...(o.config || {}) },
     coelhos: (Array.isArray(o.coelhos) && o.coelhos.length ? o.coelhos : PADRAO.coelhos).map(c => ({ ...padC, ...c })),
@@ -727,7 +752,6 @@ function normalizar(o){
 }
 function fontePublica(){ return normalizar(window.DADOS); }
 
-/* DADOS = publicado (dados.js) sobrescrito pelo rascunho local, se existir */
 let DADOS = fontePublica();
 try {
   const d = JSON.parse(localStorage.getItem('se_draft') || 'null');
@@ -817,13 +841,13 @@ navbtns.forEach(b => b.addEventListener('click', () => go(+b.dataset.page)));
 
 /* ---------- Carrossel ---------- */
 let carI = 0, carTimer = null;
+const slidesAtivas = () => { const l = DADOS.slides.filter(s => s.ativa); return l.length ? l : PADRAO.slides; };
 function montarCarousel(){
   const track = $('carTrack'), dots = $('carDots');
   if (!track || !dots) return;
-  let lista = DADOS.slides.filter(s => s.ativa);
-  if (!lista.length) lista = PADRAO.slides;
+  const lista = slidesAtivas();
 
-  track.innerHTML = lista.map((s, i) => `
+  track.innerHTML = lista.map((s) => `
     <div class="relative w-full h-full shrink-0">
       <img src="${s.foto || arte(s.paleta, 800, 500, 470)}" alt="${esc(s.titulo)}" draggable="false"
            class="absolute inset-0 w-full h-full object-cover">
@@ -852,7 +876,7 @@ function carPaint(){
     d.style.background = j === carI ? '#fff' : 'rgba(255,255,255,.45)';
   });
 }
-function carNav(i, user){ carI = (i + DADOS.slides.filter(s=>s.ativa).length) % Math.max(1, DADOS.slides.filter(s=>s.ativa).length); carPaint(); if (user) carStart(); }
+function carNav(i, user){ const n = slidesAtivas().length; carI = ((i % n) + n) % n; carPaint(); if (user) carStart(); }
 function carStop(){ if (carTimer) clearInterval(carTimer); carTimer = null; }
 function carStart(){ carStop(); carTimer = setInterval(() => carNav(carI + 1), 5000); }
 
@@ -1185,7 +1209,7 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 /* =========================================================
    PAINEL ADMINISTRATIVO
    ========================================================= */
-const adm = { tela:'login', editTipo:null, editId:null };
+const adm = { tela:'login', editId:null };
 const admBody = $('admBody');
 
 function comprimirImagem(file, maxLado = 900, qualidade = 0.82){
@@ -1193,9 +1217,9 @@ function comprimirImagem(file, maxLado = 900, qualidade = 0.82){
     const img = new Image();
     const url = URL.createObjectURL(file);
     img.onload = () => {
-      const esc2 = Math.min(1, maxLado / Math.max(img.width, img.height));
+      const k = Math.min(1, maxLado / Math.max(img.width, img.height));
       const c = document.createElement('canvas');
-      c.width = Math.round(img.width * esc2); c.height = Math.round(img.height * esc2);
+      c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
       c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
       URL.revokeObjectURL(url);
       resolve(c.toDataURL('image/jpeg', qualidade));
@@ -1230,44 +1254,92 @@ function admRender(){
         <div class="adm-card p-6 w-full max-w-[320px] text-center">
           <span class="mx-auto w-14 h-14 rounded-full bg-verde-claro text-verde grid place-items-center"><svg class="ic w-7 h-7"><use href="#i-lock"/></svg></span>
           <h2 class="mt-3 font-extrabold text-stone-900">Área do Administrador</h2>
-          <p class="text-xs text-stone-500 mt-1">Digite o PIN para gerenciar o site</p>
-          <input id="admPin" type="password" inputmode="numeric" placeholder="PIN" maxlength="8"
-                 class="adm-inp mt-4 text-center text-lg tracking-[.4em] font-bold">
-          <p id="admPinErr" class="text-[11px] text-promo font-bold mt-1.5 hidden">PIN incorreto, tente de novo</p>
+          <p class="text-xs text-stone-500 mt-1">Digite a senha para gerenciar o site</p>
+          <div class="pwd-wrap mt-4">
+            <input id="admSenha" type="password" placeholder="Senha" maxlength="24" autocomplete="current-password"
+                   class="adm-inp text-center font-bold">
+            <button id="admEye" type="button" class="pwd-eye" aria-label="Mostrar senha">
+              <svg class="ic w-[18px] h-[18px]"><use href="#i-eye"/></svg>
+            </button>
+          </div>
+          <p id="admSenhaErr" class="text-[11px] text-promo font-bold mt-1.5 hidden">Senha incorreta, tente de novo</p>
           <button id="admEntrar" type="button" class="adm-btn bg-verde text-white w-full mt-3 !py-3">ENTRAR</button>
           <button id="admVoltar" type="button" class="adm-btn bg-areia text-stone-600 w-full mt-2 border border-areia-borda">Voltar ao site</button>
         </div>
       </div>`;
-    $('admEntrar').onclick = () => {
-      if ($('admPin').value === DADOS.pin){
+    ligarOlho('admSenha', 'admEye');
+    const entrar = () => {
+      if ($('admSenha').value === DADOS.senha){
         sessionStorage.setItem('se_adm', '1');
         adm.tela = 'painel'; admRender();
-      } else $('admPinErr').classList.remove('hidden');
+      } else $('admSenhaErr').classList.remove('hidden');
     };
-    $('admPin').addEventListener('keydown', e => { if (e.key === 'Enter') $('admEntrar').click(); });
+    $('admEntrar').onclick = entrar;
+    $('admSenha').addEventListener('keydown', e => { if (e.key === 'Enter') entrar(); });
     $('admVoltar').onclick = fecharAdmin;
     return;
   }
 
   if (adm.tela === 'formCoelho') return admFormCoelho();
   if (adm.tela === 'formSlide')  return admFormSlide();
+  if (adm.tela === 'token')      return admToken();
+  if (adm.tela === 'manual')     return admComoPublicar();
+  if (adm.tela === 'publicado')  return admPublicado();
 
   /* ---- painel principal ---- */
   const rasc = temRascunho();
+  const gh   = githubInfo();
+  const temToken = !!ghToken();
+
   b.innerHTML = `
     ${rasc ? `
     <div class="rounded-2xl bg-amber-50 border border-amber-200 p-3.5 flex items-start gap-2.5">
       <svg class="ic w-4 h-4 text-amber-600 mt-0.5"><use href="#i-clock"/></svg>
       <div class="flex-1 text-[12px] text-amber-800 leading-snug">
-        <b>Alterações não publicadas.</b> Elas já aparecem neste aparelho — para todos os visitantes verem, toque em <b>Publicar</b> lá embaixo e suba o arquivo no GitHub.
+        <b>Alterações não publicadas.</b> Use o botão <b>Publicar</b> abaixo para enviá-las ao site.
       </div>
     </div>` : `
     <div class="rounded-2xl bg-verde-claro border border-verde/15 p-3.5 text-[12px] text-verde-esc font-semibold flex items-center gap-2.5">
       <svg class="ic w-4 h-4"><use href="#i-check"/></svg> Tudo sincronizado com o site publicado.
     </div>`}
 
-    <!-- Configurações -->
+    <!-- Publicação -->
     <section class="mt-4">
+      <h3 class="text-[11px] uppercase tracking-wider text-stone-400 font-extrabold px-1">Publicar no site</h3>
+      <div class="adm-card p-4 mt-2 space-y-3">
+        <div class="flex items-center gap-2.5 bg-areia rounded-xl px-3.5 py-3">
+          <svg class="w-5 h-5 text-stone-700"><use href="#i-gh"/></svg>
+          <div class="min-w-0 flex-1 leading-tight">
+            <p class="text-[12px] font-bold text-stone-800 truncate">${gh ? esc(gh.owner + '/' + gh.repo) : 'Repositório não detectado'}</p>
+            <p class="text-[10.5px] ${temToken ? 'text-verde font-bold' : 'text-stone-400'}">${temToken ? '● Conectado — publicação automática ativa' : '○ Não conectado'}</p>
+          </div>
+          <button id="btnToken" type="button" class="adm-btn ${temToken ? 'bg-areia text-stone-600 border border-areia-borda' : 'bg-verde text-white'} !py-2 !px-3 text-[11px]">
+            ${temToken ? 'Gerenciar' : 'Conectar'}
+          </button>
+        </div>
+        <button id="pubBtn" type="button" class="adm-btn bg-verde text-white w-full !py-3.5 !text-[14px]">
+          <svg class="ic" style="width:18px;height:18px"><use href="#i-up"/></svg> PUBLICAR ALTERAÇÕES
+        </button>
+        <p id="pubStatus" class="text-[11px] text-stone-500 leading-snug px-1 hidden"></p>
+        <p class="text-[11px] text-stone-500 leading-snug px-1">${DADOS.atualizado ? `Última publicação: <b>${new Date(DADOS.atualizado).toLocaleString('pt-BR')}</b>.` : 'Ainda não há publicação.'}</p>
+        <details class="px-1">
+          <summary class="text-[11px] font-bold text-stone-500 cursor-pointer">Opções manuais (backup)</summary>
+          <div class="grid grid-cols-2 gap-2.5 mt-2.5">
+            <button id="dlBtn" type="button" class="adm-btn bg-areia text-stone-700 border border-areia-borda">
+              <svg class="ic w-4 h-4"><use href="#i-down"/></svg> Baixar dados.js</button>
+            <button id="impBtn" type="button" class="adm-btn bg-areia text-stone-700 border border-areia-borda">
+              <svg class="ic w-4 h-4"><use href="#i-up"/></svg> Importar dados.js</button>
+          </div>
+          <input id="impFile" type="file" accept=".js,.json,.txt" class="hidden">
+        </details>
+        <button id="descBtn" type="button" class="adm-btn bg-red-50 text-promo w-full ${rasc ? '' : 'opacity-40 pointer-events-none'}">
+          <svg class="ic w-4 h-4"><use href="#i-trash"/></svg> Descartar rascunho (voltar à versão publicada)
+        </button>
+      </div>
+    </section>
+
+    <!-- Configurações -->
+    <section class="mt-6">
       <h3 class="text-[11px] uppercase tracking-wider text-stone-400 font-extrabold px-1">Configurações do site</h3>
       <div class="adm-card p-4 mt-2 space-y-3">
         <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">WhatsApp (com 55 + DDD)</span>
@@ -1282,8 +1354,16 @@ function admRender(){
           <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Horário</span>
             <input id="cf-hor" class="adm-inp mt-1" value="${esc(DADOS.config.horario)}"></label>
         </div>
-        <label class="block"><span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">PIN do painel</span>
-          <input id="cf-pin" class="adm-inp mt-1 tnum" maxlength="8" value="${esc(DADOS.pin)}"></label>
+        <label class="block">
+          <span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Senha do painel</span>
+          <div class="pwd-wrap mt-1">
+            <input id="cf-senha" type="password" maxlength="24" class="adm-inp">
+            <button id="cfSenhaEye" type="button" class="pwd-eye" aria-label="Mostrar senha">
+              <svg class="ic w-[18px] h-[18px]"><use href="#i-eye"/></svg>
+            </button>
+          </div>
+        </label>
+        <p class="text-[10.5px] text-stone-400 leading-snug -mt-1 px-1">⚠️ A senha fica salva no código do site — use uma senha exclusiva do painel, não reutilize senhas pessoais importantes.</p>
       </div>
     </section>
 
@@ -1336,35 +1416,31 @@ function admRender(){
         </div>`).join('')}
       </div>
     </section>
-
-    <!-- Publicar -->
-    <section class="mt-6">
-      <h3 class="text-[11px] uppercase tracking-wider text-stone-400 font-extrabold px-1">Publicar para os visitantes</h3>
-      <div class="adm-card p-4 mt-2 space-y-2.5">
-        <button id="pubBtn" type="button" class="adm-btn bg-verde text-white w-full !py-3.5 !text-[14px]">
-          <svg class="ic w-4.5 h-4.5" style="width:18px;height:18px"><use href="#i-up"/></svg> PUBLICAR NO SITE (baixar dados.js)
-        </button>
-        <p class="text-[11px] text-stone-500 leading-snug px-1">Depois de baixar, suba o arquivo <b>dados.js</b> na raiz do repositório no GitHub. ${DADOS.atualizado ? `Última publicação: <b>${new Date(DADOS.atualizado).toLocaleString('pt-BR')}</b>.` : 'Ainda não há publicação.'}</p>
-        <div class="grid grid-cols-2 gap-2.5">
-          <button id="impBtn" type="button" class="adm-btn bg-areia text-stone-700 border border-areia-borda">
-            <svg class="ic w-4 h-4"><use href="#i-down"/></svg> Importar dados.js</button>
-          <button id="descBtn" type="button" class="adm-btn bg-red-50 text-promo ${rasc ? '' : 'opacity-40 pointer-events-none'}">
-            <svg class="ic w-4 h-4"><use href="#i-trash"/></svg> Descartar rascunho</button>
-        </div>
-        <input id="impFile" type="file" accept=".js,.json,.txt" class="hidden">
-      </div>
-    </section>
     <div class="h-6"></div>`;
 
-  /* --- ligações do painel --- */
+  /* --- ligações --- */
+  $('cf-senha').value = DADOS.senha;
+  ligarOlho('cf-senha', 'cfSenhaEye');
+
   const cf = { 'cf-wa':'whatsapp', 'cf-pix':'pix', 'cf-end':'endereco', 'cf-cid':'cidade', 'cf-hor':'horario' };
   Object.entries(cf).forEach(([id, k]) => {
     $(id).addEventListener('input', e => { DADOS.config[k] = e.target.value.trim(); saveDraft(); });
   });
-  $('cf-pin').addEventListener('input', e => { DADOS.pin = e.target.value.trim() || '1234'; saveDraft(); });
+  $('cf-senha').addEventListener('input', e => { DADOS.senha = e.target.value.trim() || PADRAO.senha; saveDraft(); });
 
-  $('addSlide').onclick  = () => { DADOS.slides.push({ id:'s' + Date.now(), foto:'', paleta:DADOS.slides.length, kicker:'', titulo:'', sub:'', ctaLabel:'VER CATÁLOGO', ctaAcao:'catalogo', ativa:true }); saveDraft(); adm.tela = 'formSlide'; adm.editId = DADOS.slides[DADOS.slides.length - 1].id; admRender(); };
-  $('addCoelho').onclick = () => { DADOS.coelhos.push({ id:Date.now(), nome:'', raca:'Mini Lop', dias:45, sexo:'M', cor:'', preco:100, desconto:0, descricao:'', foto:'', disponivel:true }); saveDraft(); adm.tela = 'formCoelho'; adm.editId = DADOS.coelhos[DADOS.coelhos.length - 1].id; admRender(); };
+  $('btnToken').onclick = () => { adm.tela = 'token'; admRender(); };
+  $('pubBtn').onclick   = publicar;
+  $('dlBtn').onclick    = baixarDados;
+  $('impBtn').onclick   = () => $('impFile').click();
+  $('impFile').onchange = importar;
+  $('descBtn').onclick  = () => excluirConfirm($('descBtn'), () => {
+    try { localStorage.removeItem('se_draft'); } catch(e) {}
+    DADOS = fontePublica();
+    admRender(); aplicarDados(); toast('Rascunho descartado', 'i-check');
+  });
+
+  $('addSlide').onclick  = () => { DADOS.slides.push({ id:'s' + Date.now(), foto:'', paleta:DADOS.slides.length, kicker:'', titulo:'', sub:'', ctaLabel:'VER CATÁLOGO', ctaAcao:'catalogo', ativa:true }); saveDraft(); adm.editId = DADOS.slides[DADOS.slides.length - 1].id; adm.tela = 'formSlide'; admRender(); };
+  $('addCoelho').onclick = () => { DADOS.coelhos.push({ id:Date.now(), nome:'', raca:'Mini Lop', dias:45, sexo:'M', cor:'', preco:100, desconto:0, descricao:'', foto:'', disponivel:true }); saveDraft(); adm.editId = DADOS.coelhos[DADOS.coelhos.length - 1].id; adm.tela = 'formCoelho'; admRender(); };
 
   b.querySelectorAll('[data-tgl-slide]').forEach(btn => btn.onclick = () => {
     const s = DADOS.slides[+btn.dataset.tglSlide]; s.ativa = !s.ativa; saveDraft(); admRender();
@@ -1372,8 +1448,8 @@ function admRender(){
   b.querySelectorAll('[data-tgl-coelho]').forEach(btn => btn.onclick = () => {
     const c = DADOS.coelhos[+btn.dataset.tglCoelho]; c.disponivel = c.disponivel === false ? true : false; saveDraft(); admRender();
   });
-  b.querySelectorAll('[data-ed-slide]').forEach(btn => btn.onclick = () => { adm.editTipo = 'slide'; adm.editId = DADOS.slides[+btn.dataset.edSlide].id; adm.tela = 'formSlide'; admRender(); });
-  b.querySelectorAll('[data-ed-coelho]').forEach(btn => btn.onclick = () => { adm.editTipo = 'coelho'; adm.editId = DADOS.coelhos[+btn.dataset.edCoelho].id; adm.tela = 'formCoelho'; admRender(); });
+  b.querySelectorAll('[data-ed-slide]').forEach(btn => btn.onclick = () => { adm.editId = DADOS.slides[+btn.dataset.edSlide].id; adm.tela = 'formSlide'; admRender(); });
+  b.querySelectorAll('[data-ed-coelho]').forEach(btn => btn.onclick = () => { adm.editId = DADOS.coelhos[+btn.dataset.edCoelho].id; adm.tela = 'formCoelho'; admRender(); });
 
   b.querySelectorAll('[data-del-slide]').forEach(btn => btn.onclick = () => excluirConfirm(btn, () => {
     DADOS.slides.splice(+btn.dataset.delSlide, 1); saveDraft(); admRender(); toast('Slide excluído', 'i-trash');
@@ -1381,15 +1457,6 @@ function admRender(){
   b.querySelectorAll('[data-del-coelho]').forEach(btn => btn.onclick = () => excluirConfirm(btn, () => {
     DADOS.coelhos.splice(+btn.dataset.delCoelho, 1); saveDraft(); admRender(); toast('Produto excluído', 'i-trash');
   }));
-
-  $('pubBtn').onclick = publicar;
-  $('impBtn').onclick = () => $('impFile').click();
-  $('impFile').onchange = importar;
-  $('descBtn').onclick = () => excluirConfirm($('descBtn'), () => {
-    try { localStorage.removeItem('se_draft'); } catch(e) {}
-    DADOS = fontePublica();
-    admRender(); aplicarDados(); toast('Rascunho descartado', 'i-check');
-  });
 }
 
 function excluirConfirm(btn, fn){
@@ -1553,43 +1620,204 @@ function admFormSlide(){
   };
 }
 
-/* ---- publicar / importar ---- */
-function publicar(){
+/* =========================================================
+   PUBLICAÇÃO AUTOMÁTICA — API do GitHub
+   ========================================================= */
+function githubInfo(){
+  const host = location.hostname.toLowerCase();
+  if (!host.endsWith('github.io')) return null;
+  const owner = host.split('.')[0];
+  const seg = location.pathname.split('/').filter(Boolean);
+  const repo = seg.length ? seg[0] : owner + '.github.io';
+  return { owner, repo };
+}
+const ghToken = () => { try { return localStorage.getItem('se_gh_token') || ''; } catch(e) { return ''; } };
+
+async function ghApi(path, opts){
+  const res = await fetch(`https://api.github.com${path}`, {
+    ...opts,
+    headers: {
+      'Accept': 'application/vnd.github+json',
+      'Authorization': `Bearer ${ghToken()}`,
+      'Content-Type': 'application/json'
+    }
+  });
+  if (!res.ok){
+    let msg = `Erro ${res.status}`;
+    try { const j = await res.json(); if (j.message) msg += `: ${j.message}`; } catch(e) {}
+    throw new Error(msg);
+  }
+  return res.json();
+}
+
+function gerarDadosJS(){
   DADOS.atualizado = new Date().toISOString();
   saveDraft();
-  const conteudo = '// Sítio Esperança — dados gerados pelo painel em ' + new Date().toLocaleString('pt-BR') +
-                   '\nwindow.DADOS = ' + JSON.stringify(DADOS, null, 2) + ';\n';
-  const blob = new Blob([conteudo], { type:'text/javascript' });
+  return '// Sítio Esperança — dados gerados pelo painel em ' + new Date().toLocaleString('pt-BR') +
+         '\nwindow.DADOS = ' + JSON.stringify(DADOS, null, 2) + ';\n';
+}
+
+function setPubStatus(txt, spin){
+  const el = $('pubStatus');
+  el.classList.remove('hidden');
+  el.innerHTML = spin
+    ? `<svg class="ic w-3.5 h-3.5 inline animate-spin align-[-2px] mr-1"><use href="#i-load"/></svg>${txt}`
+    : txt;
+}
+
+async function publicar(){
+  const btn = $('pubBtn');
+  const conteudo = gerarDadosJS();
+  const gh = githubInfo();
+
+  if (!gh){ setPubStatus('Não estou rodando no GitHub Pages — use o backup manual (baixar dados.js).'); return; }
+  if (!ghToken()){ adm.tela = 'token'; admRender(); return; }
+
+  btn.disabled = true;
+  btn.style.opacity = '.6';
+  btn.innerHTML = `<svg class="ic w-4 h-4 animate-spin"><use href="#i-load"/></svg> PUBLICANDO…`;
+
+  try {
+    setPubStatus('Conectando ao GitHub…', true);
+    const repo = await ghApi(`/repos/${gh.owner}/${gh.repo}`);
+    const branch = repo.default_branch || 'main';
+
+    setPubStatus('Verificando arquivo atual…', true);
+    let sha;
+    try {
+      const f = await ghApi(`/repos/${gh.owner}/${gh.repo}/contents/dados.js?ref=${branch}`);
+      sha = f.sha;
+    } catch(e) { /* arquivo ainda não existe — 1ª publicação */ }
+
+    setPubStatus('Enviando alterações…', true);
+    await ghApi(`/repos/${gh.owner}/${gh.repo}/contents/dados.js`, {
+      method: 'PUT',
+      body: JSON.stringify({
+        message: 'Atualização do site pelo painel — ' + new Date().toLocaleString('pt-BR'),
+        content: b64(conteudo),
+        branch,
+        ...(sha ? { sha } : {})
+      })
+    });
+
+    adm.tela = 'publicado'; admRender();
+  } catch(err){
+    setPubStatus(`❌ Não deu certo: ${esc(err.message)}. Se o token expirou, toque em <b>Gerenciar</b> e conecte de novo. Ou use o backup manual.`);
+    toast('Falha ao publicar', 'i-x');
+  } finally {
+    btn.disabled = false;
+    btn.style.opacity = '';
+    btn.innerHTML = `<svg class="ic" style="width:18px;height:18px"><use href="#i-up"/></svg> PUBLICAR ALTERAÇÕES`;
+  }
+}
+
+/* ---- tela: conectar token ---- */
+function admToken(){
+  const gh = githubInfo();
+  const tem = ghToken();
+  admBody.innerHTML = `
+    <div class="adm-card p-5">
+      <h3 class="font-extrabold text-stone-900">Conexão com o GitHub</h3>
+      <p class="text-xs text-stone-500 mt-1">Repositório detectado: <b>${gh ? esc(gh.owner + '/' + gh.repo) : '— (abra o site hospedado no GitHub Pages)'}</b></p>
+
+      ${tem ? `
+      <div class="mt-4 flex items-center gap-2.5 bg-verde-claro rounded-xl px-3.5 py-3">
+        <svg class="ic w-4 h-4 text-verde"><use href="#i-check"/></svg>
+        <p class="text-[12px] font-bold text-verde-esc flex-1">Conectado! Publicação automática ativa neste aparelho.</p>
+      </div>
+      <button id="tokRm" type="button" class="adm-btn bg-red-50 text-promo w-full mt-3">Desconectar (apagar token deste aparelho)</button>
+      ` : `
+      <div class="mt-4 bg-areia rounded-xl p-3.5 text-[11.5px] text-stone-600 leading-relaxed">
+        <p class="font-bold text-stone-800 mb-1.5">Crie o token (só uma vez, ~2 min):</p>
+        <ol class="space-y-1.5">
+          <li><b>1.</b> No GitHub: <b>Settings → Developer settings</b></li>
+          <li><b>2.</b> <b>Personal access tokens → Fine-grained tokens → Generate new token</b></li>
+          <li><b>3.</b> Em <b>Repository access</b>: "Only select repositories" → escolha <b>${gh ? esc(gh.repo) : 'seu repositório'}</b></li>
+          <li><b>4.</b> Em <b>Permissions → Contents</b>: marque <b>Read and write</b></li>
+          <li><b>5.</b> Gere e copie o código (começa com <b>github_pat_…</b>)</li>
+        </ol>
+      </div>
+      <label class="block mt-3">
+        <span class="text-[10px] uppercase tracking-wider text-stone-400 font-bold">Cole o token aqui</span>
+        <div class="pwd-wrap mt-1">
+          <input id="tokInp" type="password" class="adm-inp tnum" placeholder="github_pat_…" autocomplete="off">
+          <button id="tokEye" type="button" class="pwd-eye" aria-label="Mostrar token">
+            <svg class="ic w-[18px] h-[18px]"><use href="#i-eye"/></svg>
+          </button>
+        </div>
+      </label>
+      <p class="text-[10.5px] text-stone-400 mt-1.5 leading-snug">O token fica salvo <b>somente neste aparelho</b> e serve só para publicar as suas alterações.</p>
+      <button id="tokSave" type="button" class="adm-btn bg-verde text-white w-full mt-3 !py-3">CONECTAR</button>
+      `}
+
+      <button id="tokBack" type="button" class="adm-btn bg-areia text-stone-600 w-full mt-2 border border-areia-borda">Voltar</button>
+    </div>`;
+
+  ligarOlho('tokInp', 'tokEye');
+  const sv = $('tokSave');
+  if (sv) sv.onclick = () => {
+    const v = $('tokInp').value.trim();
+    if (v.length < 20){ toast('Token parece incompleto', 'i-x'); return; }
+    try { localStorage.setItem('se_gh_token', v); } catch(e) {}
+    toast('GitHub conectado!', 'i-check');
+    adm.tela = 'painel'; admRender();
+  };
+  const rm = $('tokRm');
+  if (rm) rm.onclick = () => excluirConfirm(rm, () => {
+    try { localStorage.removeItem('se_gh_token'); } catch(e) {}
+    toast('Token apagado', 'i-trash');
+    admRender();
+  });
+  $('tokBack').onclick = () => { adm.tela = 'painel'; admRender(); };
+}
+
+/* ---- tela: sucesso da publicação ---- */
+function admPublicado(){
+  admBody.innerHTML = `
+    <div class="adm-card p-6 text-center">
+      <span class="mx-auto w-16 h-16 rounded-full bg-verde-claro text-verde grid place-items-center">
+        <svg class="ic w-8 h-8"><use href="#i-check"/></svg></span>
+      <h3 class="mt-3 font-extrabold text-stone-900 text-lg">Enviado ao GitHub! 🎉</h3>
+      <p class="mt-1.5 text-[12.5px] text-stone-600 leading-relaxed">
+        As alterações já estão no repositório. O GitHub Pages leva<br><b>~1 minuto</b> para atualizar o site para todos.
+      </p>
+      <a href="${esc(location.origin + location.pathname)}" target="_blank" rel="noopener"
+         class="adm-btn bg-verde text-white w-full mt-4 !py-3">ABRIR O SITE</a>
+      <button id="pubOk" type="button" class="adm-btn bg-areia text-stone-600 w-full mt-2 border border-areia-borda">Voltar ao painel</button>
+    </div>`;
+  $('pubOk').onclick = () => { adm.tela = 'painel'; admRender(); };
+}
+
+/* ---- backup manual ---- */
+function baixarDados(){
+  const blob = new Blob([gerarDadosJS()], { type:'text/javascript' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
   a.download = 'dados.js';
   a.click();
   setTimeout(() => URL.revokeObjectURL(a.href), 4000);
-  admComoPublicar();
+  toast('dados.js baixado (backup)', 'i-down');
 }
 
 function admComoPublicar(){
   admBody.innerHTML = `
     <div class="adm-card p-5">
-      <span class="mx-auto w-14 h-14 rounded-full bg-verde-claro text-verde grid place-items-center">
-        <svg class="ic w-7 h-7"><use href="#i-up"/></svg></span>
-      <h3 class="mt-3 text-center font-extrabold text-stone-900">Falta só 1 passo!</h3>
-      <p class="mt-1 text-center text-xs text-stone-500">O arquivo <b>dados.js</b> foi baixado no seu celular. Agora suba ele no GitHub:</p>
+      <h3 class="text-center font-extrabold text-stone-900">Publicação manual (backup)</h3>
+      <p class="mt-1 text-center text-xs text-stone-500">O arquivo <b>dados.js</b> foi baixado. Suba no GitHub:</p>
       <ol class="mt-4 space-y-3">
         <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-verde text-white grid place-items-center text-[11px] font-bold shrink-0">1</span>
-          <p class="text-[12.5px] text-stone-600 leading-snug">Abra <b class="tnum">github.com/negrete79/negrete79.github.io</b> e faça login.</p></li>
+          <p class="text-[12.5px] text-stone-600 leading-snug">Abra o repositório no GitHub e faça login.</p></li>
         <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-verde text-white grid place-items-center text-[11px] font-bold shrink-0">2</span>
-          <p class="text-[12.5px] text-stone-600 leading-snug">Toque em <b>Add file → Upload files</b>.</p></li>
+          <p class="text-[12.5px] text-stone-600 leading-snug"><b>Add file → Upload files</b>.</p></li>
         <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-verde text-white grid place-items-center text-[11px] font-bold shrink-0">3</span>
-          <p class="text-[12.5px] text-stone-600 leading-snug">Arraste o arquivo <b>dados.js</b> baixado (fica na pasta Downloads).</p></li>
+          <p class="text-[12.5px] text-stone-600 leading-snug">Arraste o <b>dados.js</b> da pasta Downloads (substitui o existente).</p></li>
         <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-verde text-white grid place-items-center text-[11px] font-bold shrink-0">4</span>
-          <p class="text-[12.5px] text-stone-600 leading-snug">Se já existir um dados.js, ele será <b>substituído</b> — é isso mesmo.</p></li>
-        <li class="flex gap-3"><span class="w-6 h-6 rounded-full bg-verde text-white grid place-items-center text-[11px] font-bold shrink-0">5</span>
-          <p class="text-[12.5px] text-stone-600 leading-snug">Toque em <b>Commit changes</b>. Espere 1 minutinho e recarregue o site. Pronto! 🎉</p></li>
+          <p class="text-[12.5px] text-stone-600 leading-snug"><b>Commit changes</b>. Em 1 minuto o site atualiza.</p></li>
       </ol>
-      <button id="howOk" type="button" class="adm-btn bg-verde text-white w-full mt-5 !py-3">JÁ SUBI O ARQUIVO</button>
+      <p class="mt-3 text-[11px] text-stone-400 text-center">Dica: conecte o token na opção <b>Conectar</b> para nunca mais precisar disso.</p>
+      <button id="howOk" type="button" class="adm-btn bg-verde text-white w-full mt-4 !py-3">ENTENDI</button>
     </div>`;
-  $('howOk').onclick = () => { adm.tela = 'painel'; admRender(); toast('Publicação registrada!', 'i-check'); };
+  $('howOk').onclick = () => { adm.tela = 'painel'; admRender(); };
 }
 
 async function importar(e){
@@ -1618,10 +1846,9 @@ async function importar(e){
    ========================================================= */
 function aplicarDados(){
   const c = DADOS.config;
-  const wa = n => `https://wa.me/${c.whatsapp}?text=${encodeURIComponent(n)}`;
 
   document.querySelectorAll('.wa-link').forEach(a => {
-    a.href = wa(a.dataset.wamsg || 'Olá! Vim pelo site do Sítio Esperança.');
+    a.href = `https://wa.me/${c.whatsapp}?text=${encodeURIComponent(a.dataset.wamsg || 'Olá! Vim pelo site do Sítio Esperança.')}`;
   });
 
   $('cfg-wa').textContent       = fmtFone(c.whatsapp);
