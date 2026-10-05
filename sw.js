@@ -1,11 +1,9 @@
-const VERSION = 'v5';
+const VERSION = 'v7';
 const STATIC_CACHE  = `esperanca-static-${VERSION}`;
 const RUNTIME_CACHE = `esperanca-runtime-${VERSION}`;
 const IMG_CACHE     = `esperanca-img-${VERSION}`;
 const ALL = [STATIC_CACHE, RUNTIME_CACHE, IMG_CACHE];
 
-/* Só pré-cacheia o essencial — e cada item individualmente,
-   para que UM arquivo faltando não quebre a instalação do SW */
 const PRECACHE = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', e => {
@@ -31,7 +29,6 @@ self.addEventListener('fetch', e => {
   try { url = new URL(request.url); } catch(err) { return; }
   if (!url.protocol.startsWith('http')) return;
 
-  /* dados.js: SEMPRE da rede quando possível — publicações aparecem na hora */
   if (/dados\.js(\?.*)?$/.test(url.pathname)) {
     e.respondWith((async () => {
       const cache = await caches.open(STATIC_CACHE);
@@ -46,7 +43,6 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  /* Navegação: rede primeiro, cache como fallback (funciona offline) */
   if (request.mode === 'navigate') {
     e.respondWith((async () => {
       try {
@@ -65,22 +61,9 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  /* Imagens: cache primeiro (velocidade) + atualização em segundo plano */
-  if (request.destination === 'image') {
-    e.respondWith((async () => {
-      const cache  = await caches.open(IMG_CACHE);
-      const cached = await cache.match(request);
-      const rede = fetch(request)
-        .then(res => { if (res.ok || res.type === 'opaque') cache.put(request, res.clone()); return res; })
-        .catch(() => cached);
-      return cached || rede;
-    })());
-    return;
-  }
-
-  /* Restante (Tailwind, fontes): cache com revalidação */
+  const cacheName = request.destination === 'image' ? IMG_CACHE : RUNTIME_CACHE;
   e.respondWith((async () => {
-    const cache  = await caches.open(RUNTIME_CACHE);
+    const cache  = await caches.open(cacheName);
     const cached = await cache.match(request);
     const rede = fetch(request)
       .then(res => { if (res.ok || res.type === 'opaque') cache.put(request, res.clone()); return res; })
