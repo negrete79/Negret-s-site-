@@ -1,22 +1,10 @@
-/* =========================================================
-   SÍTIO ESPERANÇA • sw.js — Service Worker (offline)
-   A cada atualização do site, aumente a VERSION (v2, v3…)
-   ========================================================= */
-const VERSION = 'v1';
+const VERSION = 'v2';
 const STATIC_CACHE  = `esperanca-static-${VERSION}`;
 const RUNTIME_CACHE = `esperanca-runtime-${VERSION}`;
 const IMG_CACHE     = `esperanca-img-${VERSION}`;
 const ALL = [STATIC_CACHE, RUNTIME_CACHE, IMG_CACHE];
 
-/* App shell pré-cacheado na instalação */
-const PRECACHE = [
-  './',
-  './index.html',
-  './app.js',
-  './manifest.json',
-  './icons/icon.svg',
-  './icons/icon-maskable.svg'
-];
+const PRECACHE = ['./', './index.html', './manifest.json', './icons/icon.svg', './icons/icon-maskable.svg'];
 
 self.addEventListener('install', e => {
   e.waitUntil((async () => {
@@ -37,11 +25,9 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const { request } = e;
   if (request.method !== 'GET') return;
-
   const url = new URL(request.url);
   if (!url.protocol.startsWith('http')) return;
 
-  /* Navegação: rede primeiro, cache como fallback (funciona offline) */
   if (request.mode === 'navigate') {
     e.respondWith((async () => {
       try {
@@ -57,22 +43,11 @@ self.addEventListener('fetch', e => {
     return;
   }
 
-  /* Imagens (inclui o picsum): cache-first + atualização em background */
-  if (request.destination === 'image' || /picsum\.photos/.test(url.hostname)) {
-    e.respondWith((async () => {
-      const cache  = await caches.open(IMG_CACHE);
-      const cached = await cache.match(request);
-      const rede = fetch(request)
-        .then(res => { if (res.ok || res.type === 'opaque') cache.put(request, res.clone()); return res; })
-        .catch(() => cached);
-      return cached || rede;
-    })());
-    return;
-  }
+  const isImg = request.destination === 'image' || /picsum\.photos/.test(url.hostname);
+  const cacheName = isImg ? IMG_CACHE : RUNTIME_CACHE;
 
-  /* Demais assets (Tailwind, fontes, ícones…): idem */
   e.respondWith((async () => {
-    const cache  = await caches.open(RUNTIME_CACHE);
+    const cache  = await caches.open(cacheName);
     const cached = await cache.match(request);
     const rede = fetch(request)
       .then(res => { if (res.ok || res.type === 'opaque') cache.put(request, res.clone()); return res; })
