@@ -1,0 +1,27 @@
+{
+  "name": "Sítio Esperança — Coelhos em Miguel Burnier/MG",
+  "short_name": "Sítio Esperança",
+  "description": "Filhotes de coelhos à venda a partir de R$ 80. Vacinados, vermifugados e com garantia de saúde. Entrega em Miguel Burnier - MG e região até 100 km.",
+  "id": "./",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "lang": "pt-BR",
+  "dir": "ltr",
+  "background_color": "#FFF8E1",
+  "theme_color": "#2E7D32",
+  "categories": ["shopping", "lifestyle"],
+  "icons": [
+    { "src": "icons/icon.svg",              "sizes": "any",      "type": "image/svg+xml", "purpose": "any" },
+    { "src": "icons/icon-192.png",          "sizes": "192x192",  "type": "image/png" },
+    { "src": "icons/icon-512.png",          "sizes": "512x512",  "type": "image/png" },
+    { "src": "icons/icon-maskable.svg",     "sizes": "any",      "type": "image/svg+xml", "purpose": "maskable" },
+    { "src": "icons/icon-maskable-192.png", "sizes": "192x192",  "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512",  "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Ver catálogo",      "url": "./index.html#catalogo", "icons": [{ "src": "icons/icon.svg", "sizes": "any" }] },
+    { "name": "Falar no WhatsApp", "url": "./index.html#contato",  "icons": [{ "src": "icons/icon.svg", "sizes": "any" }] }
+  ]
+}
