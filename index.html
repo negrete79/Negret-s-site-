@@ -31,7 +31,7 @@
 <link rel="apple-touch-icon" href="icons/icon-192.png">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%232E7D32'/%3E%3Cellipse cx='24' cy='18' rx='6' ry='11' transform='rotate(-14 24 18)' fill='%23FFF8E1'/%3E%3Cellipse cx='40' cy='18' rx='6' ry='11' transform='rotate(14 40 18)' fill='%23FFF8E1'/%3E%3Ccircle cx='32' cy='41' r='15' fill='%23FFF8E1'/%3E%3Ccircle cx='26.5' cy='40' r='2' fill='%232E7D32'/%3E%3Ccircle cx='37.5' cy='40' r='2' fill='%232E7D32'/%3E%3Cpath d='M29 45.5h6l-3 3.5z' fill='%232E7D32'/%3E%3C/svg%3E">
 
-<!-- ===== FONTES / TAILWIND / LUCIDE / APP ===== -->
+<!-- Única dependência externa: Tailwind + fonte (ambas carregaram no seu teste) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -48,8 +48,6 @@ tailwind.config = {
   }}
 }
 </script>
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
-<script src="app.js" defer></script>
 
 <style>
   *{ -webkit-tap-highlight-color: transparent; }
@@ -61,6 +59,9 @@ tailwind.config = {
   .no-scrollbar::-webkit-scrollbar{ display:none; }
   .no-scrollbar{ scrollbar-width:none; }
 
+  /* Ícones: sprite SVG interno — traço herdado do CSS (não depende de CDN) */
+  .ic{ fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; flex-shrink:0; }
+
   #app{
     height:100vh; height:100dvh;
     background-color:#FFF8E1;
@@ -69,7 +70,7 @@ tailwind.config = {
   @media (min-width:520px){ #app{ box-shadow:0 0 60px rgba(27,94,32,.28); } }
   .pattern{ background-image:repeating-linear-gradient(45deg, rgba(255,255,255,.06) 0 2px, transparent 2px 16px); }
 
-  /* ===== Páginas (slide) ===== */
+  /* Páginas (slide) */
   .page{
     position:absolute; inset:0;
     overflow-y:auto; -webkit-overflow-scrolling:touch; overscroll-behavior:contain;
@@ -80,24 +81,22 @@ tailwind.config = {
   }
   .page.active{ opacity:1; pointer-events:auto; transform:translateX(0); }
 
-  /* ===== Bottom nav flutuante (pill) ===== */
+  /* Bottom nav flutuante */
   .navbtn{ display:flex; flex-direction:column; align-items:center; gap:3px; padding:9px 0 10px;
     font-size:10.5px; font-weight:600; color:#78716C; transition:color .2s; width:100%; }
-  .navbtn .ic{ display:grid; place-items:center; width:48px; height:28px; border-radius:999px; transition:background .25s, transform .25s; }
+  .navbtn .pill{ display:grid; place-items:center; width:48px; height:28px; border-radius:999px; transition:background .25s, transform .25s; }
   .navbtn.active{ color:#2E7D32; }
-  .navbtn.active .ic{ background:#E8F1E4; transform:translateY(-1px); }
+  .navbtn.active .pill{ background:#E8F1E4; transform:translateY(-1px); }
 
-  /* ===== Chips ===== */
   .chip{ white-space:nowrap; display:inline-flex; align-items:center; gap:6px;
     padding:7px 14px; border-radius:999px; font-size:12px; font-weight:600;
     background:#fff; border:1px solid #E7DDC0; color:#57534E; transition:.2s; }
   .chip:active{ transform:scale(.95); }
   .chip-on{ background:#2E7D32; border-color:#2E7D32; color:#fff; }
 
-  /* ===== Favoritos ===== */
   .favbtn{ color:#A8A29E; transition:color .2s; }
   .favbtn.fav-on{ color:#2E7D32; }
-  .fav-on svg{ fill:currentColor; }
+  .fav-on .ic{ fill:currentColor; }
   @keyframes pop{ 0%{transform:scale(1)} 40%{transform:scale(1.35)} 100%{transform:scale(1)} }
   .pop{ animation:pop .35s ease; }
 
@@ -113,14 +112,13 @@ tailwind.config = {
   .section-title{ position:relative; font-weight:800; font-size:1.05rem; color:#1C1917; line-height:1.2; }
   .section-title::after{ content:""; display:block; width:34px; height:3px; border-radius:2px; background:#2E7D32; margin-top:5px; }
 
-  /* ===== Acordeões ===== */
   .pol .body{ display:grid; grid-template-rows:0fr; transition:grid-template-rows .35s ease; }
   .pol.open .body{ grid-template-rows:1fr; }
   .pol .body>div{ overflow:hidden; }
   .pol .chev{ transition:transform .35s; }
   .pol.open .chev{ transform:rotate(180deg); }
 
-  /* ===== Zoom ===== */
+  /* Zoom */
   @keyframes fadeZoom{ from{opacity:0} to{opacity:1} }
   #zoomer{ position:absolute; inset:0; z-index:70; display:none; flex-direction:column; background:rgba(28,25,23,.96); }
   #zoomer.open{ display:flex; animation:fadeZoom .22s ease; }
@@ -130,8 +128,7 @@ tailwind.config = {
   #zoomImg.anim{ transition:transform .28s cubic-bezier(.22,.9,.3,1), opacity .3s ease; }
   #zoomHint{ transition:opacity .6s ease; }
 
-  /* ===== Toast ===== */
-  #toast{ position:absolute; left:50%; bottom:158px; z-index:60;
+  #toast{ position:absolute; left:50%; bottom:170px; z-index:60;
     transform:translate(-50%,16px); opacity:0; pointer-events:none;
     transition:opacity .3s, transform .3s;
     display:flex; align-items:center; gap:8px;
@@ -144,7 +141,7 @@ tailwind.config = {
 
 <body>
 
-<!-- Símbolos SVG reutilizáveis -->
+<!-- ============ SPRITE DE ÍCONES (interno — sempre funciona) ============ -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="bunny" viewBox="0 0 64 64">
     <ellipse cx="24" cy="18" rx="6.2" ry="11.5" transform="rotate(-14 24 18)" fill="currentColor"/>
@@ -159,6 +156,38 @@ tailwind.config = {
   <symbol id="wa" viewBox="0 0 448 512">
     <path fill="currentColor" d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
   </symbol>
+
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10.5 9-7.5 9 7.5"/><path d="M5 9.5V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9.5"/><path d="M9 21v-6h6v6"/></symbol>
+  <symbol id="i-paw" viewBox="0 0 24 24"><circle cx="7.5" cy="6.5" r="1.8"/><circle cx="16.5" cy="6.5" r="1.8"/><circle cx="3.8" cy="11.5" r="1.7"/><circle cx="20.2" cy="11.5" r="1.7"/><path d="M12 10.5c-3.2 0-5.8 2.5-5.8 5.2 0 1.9 1.5 3.3 3.3 3.3.9 0 1.7-.4 2.5-.4s1.6.4 2.5.4c1.8 0 3.3-1.4 3.3-3.3 0-2.7-2.6-5.2-5.8-5.2z"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.4 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2z"/></symbol>
+  <symbol id="i-sprout" viewBox="0 0 24 24"><path d="M7 20h10"/><path d="M12 20v-7.5"/><path d="M12 12.5C12 8 8.5 5.5 4 5.5c0 4.5 3 7 8 7z"/><path d="M12 12.5c0-3.5 2.5-5.5 8-5.5 0 4-3 5.5-8 5.5z"/></symbol>
+  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 11.5 2 2 4-4.5"/></symbol>
+  <symbol id="i-pill" viewBox="0 0 24 24"><path d="m10.5 20.5-7-7a4.95 4.95 0 1 1 7-7l7 7a4.95 4.95 0 1 1-7 7Z"/><path d="m8.5 8.5 7 7"/></symbol>
+  <symbol id="i-gar" viewBox="0 0 24 24"><path d="M19.5 13.6c1.6-1.6 2.5-3.2 2.5-4.9A5.4 5.4 0 0 0 12 5.2 5.4 5.4 0 0 0 2 8.7c0 1.7.9 3.3 2.5 4.9L12 21z"/><path d="m9 11.5 2 2 4-4"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9L12 17.8 5.8 21l1.2-6.9-5-4.9 6.9-1z"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></symbol>
+  <symbol id="i-heartoff" viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/><path d="M3.5 3.5 20.5 20.5"/></symbol>
+  <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4-4"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3" y="4.5" width="18" height="17" rx="2"/><path d="M8 2.5v4M16 2.5v4M3 10h18"/></symbol>
+  <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4.5 12h15"/><path d="m13.5 6 6 6-6 6"/></symbol>
+  <symbol id="i-chevd" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-chevr" viewBox="0 0 24 24"><path d="m9 5.5 6.5 6.5L9 18.5"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+  <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3z"/><path d="M20.5 14v3M14 20.5h3M18.5 18.5l2.5 2.5"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.5 2"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-zoom" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20.5 20.5-4-4"/><path d="M11 8v6M8 11h6"/></symbol>
+  <symbol id="i-syr" viewBox="0 0 24 24"><path d="m18 2 4 4"/><path d="m17 7 3-3"/><path d="M19 9 8.7 19.3a2.4 2.4 0 0 1-3.4 0l-.6-.6a2.4 2.4 0 0 1 0-3.4L15 5"/><path d="m9 11 4 4"/><path d="m5 19-3 3"/><path d="m14 4 6 6"/></symbol>
+  <symbol id="i-carrot" viewBox="0 0 24 24"><path d="M3.5 20.5C7 21.5 12.5 19.5 15.5 15L9 8.5C4.5 11.5 2.5 16.5 3.5 20.5Z"/><path d="m9 8.5 1.5 1.5"/><path d="M15 9c2-2 2.2-3.8 4.5-5"/><path d="M15 9c-2-2-3.8-2.2-5-4.5"/></symbol>
+  <symbol id="i-ware" viewBox="0 0 24 24"><path d="M22 8.5V20a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V8.5a2 2 0 0 1 1.3-1.9l8-3a2 2 0 0 1 1.4 0l8 3A2 2 0 0 1 22 8.5Z"/><path d="M6 21v-7h12v7"/><path d="M6 17h12"/></symbol>
+  <symbol id="i-refr" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.7 9.7 0 0 0-6.7 2.7L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="i-pag" viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/><path d="M5.5 12h.01M18.5 12h.01"/></symbol>
+  <symbol id="i-truck" viewBox="0 0 24 24"><path d="M14 17V7a2 2 0 0 0-2-2H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h1"/><path d="M14 8h3.4a1 1 0 0 1 .8.4l2.6 3.4a1 1 0 0 1 .2.6V16a1 1 0 0 1-1 1h-1.2"/><path d="M9.5 18H14"/><circle cx="7.5" cy="18" r="1.8"/><circle cx="16.8" cy="18" r="1.8"/></symbol>
+  <symbol id="i-venus" viewBox="0 0 24 24"><circle cx="12" cy="7.5" r="4.5"/><path d="M12 12v9M8.5 17.5h7"/></symbol>
+  <symbol id="i-mars" viewBox="0 0 24 24"><circle cx="10" cy="14" r="4.5"/><path d="M13.6 10.4 20 4"/><path d="M20 9V4h-5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="m4.5 12.5 5 5 10-11"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M12 3.5v11"/><path d="m7.5 10 4.5 4.5L16.5 10"/><path d="M4.5 20.5h15"/></symbol>
 </svg>
 
 <div id="app" class="relative mx-auto w-full max-w-[480px] flex flex-col select-none">
@@ -173,14 +202,20 @@ tailwind.config = {
       <div class="leading-tight">
         <p class="font-extrabold text-[15px] tracking-tight">Sítio Esperança</p>
         <p class="text-[11px] text-areia/85 flex items-center gap-1 font-medium">
-          <i data-lucide="map-pin" class="w-3 h-3"></i> Miguel Burnier • MG
+          <svg class="ic w-3 h-3"><use href="#i-pin"/></svg> Miguel Burnier • MG
         </p>
       </div>
-      <a href="https://wa.me/5531982517147?text=Ol%C3%A1!%20Vim%20pelo%20site%20do%20S%C3%ADtio%20Esperan%C3%A7a%20e%20quero%20saber%20mais%20sobre%20os%20filhotes%20dispon%C3%ADveis."
-         target="_blank" rel="noopener" aria-label="Falar no WhatsApp"
-         class="ml-auto w-9 h-9 grid place-items-center rounded-full bg-white/15 ring-1 ring-white/25 active:scale-90 transition">
-        <svg class="w-[18px] h-[18px] fill-current"><use href="#wa"/></svg>
-      </a>
+      <div class="ml-auto flex items-center gap-2">
+        <button id="btnInstall" type="button" style="display:none"
+                class="inline-flex items-center gap-1.5 rounded-full bg-white/15 ring-1 ring-white/25 px-3 py-1.5 text-[11px] font-bold active:scale-95 transition">
+          <svg class="ic w-3.5 h-3.5"><use href="#i-down"/></svg> Instalar
+        </button>
+        <a href="https://wa.me/5531982517147?text=Ol%C3%A1!%20Vim%20pelo%20site%20do%20S%C3%ADtio%20Esperan%C3%A7a%20e%20quero%20saber%20mais%20sobre%20os%20filhotes%20dispon%C3%ADveis."
+           target="_blank" rel="noopener" aria-label="Falar no WhatsApp"
+           class="w-9 h-9 grid place-items-center rounded-full bg-white/15 ring-1 ring-white/25 active:scale-90 transition">
+          <svg class="w-[18px] h-[18px]"><use href="#wa"/></svg>
+        </a>
+      </div>
     </div>
     <svg class="absolute -bottom-[1px] left-0 w-full h-3 text-areia" viewBox="0 0 120 10" preserveAspectRatio="none" aria-hidden="true">
       <path d="M0 10 V5 Q3.75 0 7.5 5 T15 5 T22.5 5 T30 5 T37.5 5 T45 5 T52.5 5 T60 5 T67.5 5 T75 5 T82.5 5 T90 5 T97.5 5 T105 5 T112.5 5 T120 5 V10 Z" fill="currentColor"/>
@@ -189,20 +224,20 @@ tailwind.config = {
 
   <!-- ================= PÁGINAS ================= -->
   <main class="flex-1 relative overflow-hidden">
+    <noscript><p style="padding:24px;text-align:center">Ative o JavaScript para usar o catálogo.</p></noscript>
 
-    <!-- ========== PÁGINA 1 • INÍCIO ========== -->
+    <!-- ========== 1 • INÍCIO ========== -->
     <section class="page active" id="page-home">
       <div class="px-4 pt-4">
 
-        <!-- ===== CARROSSEL HERO ===== -->
+        <!-- Carrossel -->
         <div id="carWrap" class="relative rounded-3xl overflow-hidden shadow-card ring-1 ring-verde/10">
-          <div id="carTrack" class="flex h-64 will-change-transform transition-transform duration-500 ease-[cubic-bezier(.22,.9,.3,1)]"></div>
+          <div id="carTrack" class="flex h-64 will-change-transform transition-transform duration-500 ease-out"></div>
 
           <span class="absolute top-3 left-3 inline-flex items-center gap-1.5 bg-areia text-verde-esc text-[10px] font-bold uppercase tracking-wider px-2.5 py-1.5 rounded-full shadow z-10">
-            <i data-lucide="map-pin" class="w-3 h-3"></i> Miguel Burnier • MG
+            <svg class="ic w-3 h-3"><use href="#i-pin"/></svg> Miguel Burnier • MG
           </span>
 
-          <!-- Selo girante -->
           <div class="absolute top-3 right-3 w-[80px] h-[80px] pointer-events-none z-10">
             <div class="absolute inset-0 rounded-full bg-areia shadow-lg ring-1 ring-verde/20"></div>
             <svg class="absolute inset-0 w-full h-full spin-slow" viewBox="0 0 100 100" aria-hidden="true">
@@ -214,17 +249,14 @@ tailwind.config = {
             <svg class="absolute inset-0 m-auto w-8 h-8 text-verde"><use href="#bunny"/></svg>
           </div>
 
-          <!-- Dots -->
           <div id="carDots" class="absolute bottom-2.5 inset-x-0 flex justify-center items-center gap-1.5 z-10"></div>
         </div>
 
-        <!-- CTA principal -->
         <button data-go="1" type="button"
                 class="mt-4 w-full inline-flex items-center justify-center gap-2 rounded-2xl bg-verde hover:bg-verde-esc text-white font-extrabold text-[15px] tracking-wide py-4 shadow-lg shadow-verde/30 active:scale-[.98] transition">
-          VER CATÁLOGO COMPLETO <i data-lucide="arrow-right" class="w-5 h-5"></i>
+          VER CATÁLOGO COMPLETO <svg class="ic w-5 h-5"><use href="#i-arrow"/></svg>
         </button>
 
-        <!-- Contador vivo -->
         <p class="mt-3 flex items-center justify-center gap-2 text-xs text-stone-500">
           <span class="relative flex h-2 w-2">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-verde opacity-60"></span>
@@ -234,25 +266,23 @@ tailwind.config = {
         </p>
       </div>
 
-      <!-- Selos -->
       <div class="px-4 mt-6">
         <div class="grid grid-cols-3 gap-2.5">
           <div class="bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3 text-center">
-            <span class="mx-auto w-10 h-10 rounded-full bg-verde-claro text-verde grid place-items-center"><i data-lucide="shield-check" class="w-5 h-5"></i></span>
+            <span class="mx-auto w-10 h-10 rounded-full bg-verde-claro text-verde grid place-items-center"><svg class="ic w-5 h-5"><use href="#i-shield"/></svg></span>
             <p class="mt-2 text-[11px] font-bold leading-tight text-stone-700">Vacinado</p>
           </div>
           <div class="bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3 text-center">
-            <span class="mx-auto w-10 h-10 rounded-full bg-verde-claro text-verde grid place-items-center"><i data-lucide="pill" class="w-5 h-5"></i></span>
+            <span class="mx-auto w-10 h-10 rounded-full bg-verde-claro text-verde grid place-items-center"><svg class="ic w-5 h-5"><use href="#i-pill"/></svg></span>
             <p class="mt-2 text-[11px] font-bold leading-tight text-stone-700">Vermifugado</p>
           </div>
           <div class="bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3 text-center">
-            <span class="mx-auto w-10 h-10 rounded-full bg-verde-claro text-verde grid place-items-center"><i data-lucide="heart-handshake" class="w-5 h-5"></i></span>
+            <span class="mx-auto w-10 h-10 rounded-full bg-verde-claro text-verde grid place-items-center"><svg class="ic w-5 h-5"><use href="#i-gar"/></svg></span>
             <p class="mt-2 text-[11px] font-bold leading-tight text-stone-700">Garantia 7 dias</p>
           </div>
         </div>
       </div>
 
-      <!-- Como funciona -->
       <div class="px-4 mt-8">
         <h2 class="section-title">Como funciona</h2>
         <ol class="mt-5">
@@ -286,79 +316,51 @@ tailwind.config = {
         </ol>
       </div>
 
-      <!-- Depoimentos -->
       <div class="mt-6">
         <h2 class="section-title px-4">Quem já levou um coelhinho</h2>
         <div class="mt-4 flex gap-3 overflow-x-auto no-scrollbar snap-x snap-mandatory px-4 pb-2">
-
           <figure class="snap-start shrink-0 w-[268px] bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-4">
             <div class="flex items-center gap-2.5">
               <span class="w-9 h-9 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs">JC</span>
-              <div class="leading-tight">
-                <p class="text-[13px] font-bold text-stone-800">Juliana C.</p>
-                <p class="text-[10.5px] text-stone-400">Ouro Preto • MG</p>
-              </div>
-              <span class="ml-auto flex gap-0.5 text-amber-400">
-                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
-              </span>
+              <div class="leading-tight"><p class="text-[13px] font-bold text-stone-800">Juliana C.</p><p class="text-[10.5px] text-stone-400">Ouro Preto • MG</p></div>
+              <span class="ml-auto flex gap-0.5 text-amber-400"><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg></span>
             </div>
             <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"Levei a Mel há 3 semanas, veio super mansinha e já com o vermífugo em dia. Explicaram tudo com muita paciência."</blockquote>
           </figure>
-
           <figure class="snap-start shrink-0 w-[268px] bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-4">
             <div class="flex items-center gap-2.5">
               <span class="w-9 h-9 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs">MP</span>
-              <div class="leading-tight">
-                <p class="text-[13px] font-bold text-stone-800">Marcos P.</p>
-                <p class="text-[10.5px] text-stone-400">Mariana • MG</p>
-              </div>
-              <span class="ml-auto flex gap-0.5 text-amber-400">
-                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
-              </span>
+              <div class="leading-tight"><p class="text-[13px] font-bold text-stone-800">Marcos P.</p><p class="text-[10.5px] text-stone-400">Mariana • MG</p></div>
+              <span class="ml-auto flex gap-0.5 text-amber-400"><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg></span>
             </div>
             <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"Comprei um Mini Lop de presente pra minha filha. Lindo, saudável, e ainda ganharam um potinho de ração de brinde."</blockquote>
           </figure>
-
           <figure class="snap-start shrink-0 w-[268px] bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-4">
             <div class="flex items-center gap-2.5">
               <span class="w-9 h-9 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs">CM</span>
-              <div class="leading-tight">
-                <p class="text-[13px] font-bold text-stone-800">Carla M.</p>
-                <p class="text-[10.5px] text-stone-400">Ouro Branco • MG</p>
-              </div>
-              <span class="ml-auto flex gap-0.5 text-amber-400">
-                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
-              </span>
+              <div class="leading-tight"><p class="text-[13px] font-bold text-stone-800">Carla M.</p><p class="text-[10.5px] text-stone-400">Ouro Branco • MG</p></div>
+              <span class="ml-auto flex gap-0.5 text-amber-400"><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg></span>
             </div>
             <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"A entrega chegou no horário certinho, com a carteirinha de saúde e toda a orientação. Recomendo demais!"</blockquote>
           </figure>
-
           <figure class="snap-start shrink-0 w-[268px] bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-4">
             <div class="flex items-center gap-2.5">
               <span class="w-9 h-9 rounded-full bg-verde-claro text-verde grid place-items-center font-bold text-xs">RT</span>
-              <div class="leading-tight">
-                <p class="text-[13px] font-bold text-stone-800">Rafael T.</p>
-                <p class="text-[10.5px] text-stone-400">Miguel Burnier</p>
-              </div>
-              <span class="ml-auto flex gap-0.5 text-amber-400">
-                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i><i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
-              </span>
+              <div class="leading-tight"><p class="text-[13px] font-bold text-stone-800">Rafael T.</p><p class="text-[10.5px] text-stone-400">Miguel Burnier</p></div>
+              <span class="ml-auto flex gap-0.5 text-amber-400"><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg><svg class="w-3.5 h-3.5"><use href="#i-star"/></svg></span>
             </div>
             <blockquote class="mt-3 text-[12.5px] text-stone-600 leading-relaxed">"Terceiro coelho que compro no sítio. Dá pra ver o cuidado: cercado limpo, feno fresco, tudo no ponto."</blockquote>
           </figure>
-
-          <button data-go="1" type="button"
-                  class="snap-start shrink-0 w-[150px] rounded-2xl bg-verde text-white p-4 flex flex-col justify-between gap-4 text-left active:scale-[.97] transition">
-            <i data-lucide="paw-print" class="w-6 h-6 text-areia"></i>
+          <button data-go="1" type="button" class="snap-start shrink-0 w-[150px] rounded-2xl bg-verde text-white p-4 flex flex-col justify-between gap-4 text-left active:scale-[.97] transition">
+            <svg class="ic w-6 h-6 text-areia"><use href="#i-paw"/></svg>
             <div>
               <p class="font-bold text-sm leading-tight">Quero conhecer os filhotes</p>
-              <p class="text-[11px] text-areia/85 mt-1 inline-flex items-center gap-1 font-semibold">Ver catálogo <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i></p>
+              <p class="text-[11px] text-areia/85 mt-1 inline-flex items-center gap-1 font-semibold">Ver catálogo <svg class="ic w-3.5 h-3.5"><use href="#i-arrow"/></svg></p>
             </div>
           </button>
         </div>
       </div>
 
-      <!-- Faixa final -->
       <div class="px-4 mt-6 mb-8">
         <div class="relative overflow-hidden rounded-3xl bg-verde text-white p-5 text-center ring-1 ring-verde-esc">
           <div class="absolute inset-0 pattern"></div>
@@ -368,14 +370,14 @@ tailwind.config = {
             <a href="https://wa.me/5531982517147?text=Ol%C3%A1!%20Vim%20pelo%20site%20e%20tenho%20uma%20d%C3%BAvida%20sobre%20os%20coelhinhos."
                target="_blank" rel="noopener"
                class="mt-3.5 inline-flex items-center gap-2 bg-white text-verde font-bold text-sm rounded-full px-5 py-2.5 active:scale-95 transition">
-              <svg class="w-4 h-4 fill-current"><use href="#wa"/></svg> Chamar no WhatsApp
+              <svg class="w-4 h-4"><use href="#wa"/></svg> Chamar no WhatsApp
             </a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ========== PÁGINA 2 • CATÁLOGO ========== -->
+    <!-- ========== 2 • CATÁLOGO ========== -->
     <section class="page" id="page-catalogo">
       <div class="px-4 pt-4">
         <div class="flex items-end justify-between gap-3">
@@ -386,17 +388,14 @@ tailwind.config = {
           <span id="count" class="shrink-0 text-xs font-bold text-verde bg-verde-claro rounded-full px-3 py-1.5 tnum"></span>
         </div>
 
-        <!-- Busca -->
         <div class="mt-4 relative">
-          <i data-lucide="search" class="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none"></i>
+          <svg class="ic w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none"><use href="#i-search"/></svg>
           <input id="searchInput" type="search" placeholder="Buscar por nome, raça ou cor…"
                  class="w-full bg-white border border-areia-borda rounded-full py-2.5 pl-10 pr-4 text-xs font-medium text-stone-700 placeholder:text-stone-400 focus:outline-none focus:ring-2 focus:ring-verde/30">
         </div>
 
-        <!-- Filtro por raça -->
         <div id="raceChips" class="mt-2.5 flex gap-2 overflow-x-auto no-scrollbar -mx-4 px-4 pb-1"></div>
 
-        <!-- Ordenação + favoritos -->
         <div class="mt-2.5 flex gap-2 items-center">
           <label class="relative flex-1 min-w-0">
             <select id="sortSel" aria-label="Ordenar catálogo"
@@ -407,10 +406,10 @@ tailwind.config = {
               <option value="age-asc">Idade: filhotes mais novos</option>
               <option value="age-desc">Idade: filhotes mais velhos</option>
             </select>
-            <i data-lucide="chevron-down" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none"></i>
+            <svg class="ic w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 pointer-events-none"><use href="#i-chevd"/></svg>
           </label>
           <button id="favFilter" type="button" class="chip" aria-pressed="false">
-            <i data-lucide="heart" class="w-3.5 h-3.5"></i> Favoritos
+            <svg class="ic w-3.5 h-3.5"><use href="#i-heart"/></svg> Favoritos
             <span id="favN" class="hidden min-w-[18px] h-[18px] grid place-items-center rounded-full bg-verde text-white text-[10px] font-bold px-1 tnum">0</span>
           </button>
         </div>
@@ -419,58 +418,55 @@ tailwind.config = {
       </div>
     </section>
 
-    <!-- ========== PÁGINA 3 • CONTATO ========== -->
+    <!-- ========== 3 • CONTATO ========== -->
     <section class="page" id="page-contato">
       <div class="px-4 pt-4">
         <h1 class="section-title">Fale com a gente</h1>
 
         <div class="mt-4 bg-white rounded-3xl ring-1 ring-areia-borda shadow-card p-5 text-center">
-          <img src="https://picsum.photos/seed/criador-antonio/300/300.jpg" alt="Antônio, criador do Sítio Esperança"
-               draggable="false" data-zoom
-               data-src="https://picsum.photos/seed/criador-antonio/900/900.jpg"
-               data-title="Antônio" data-sub="Criador • Sítio Esperança"
-               class="w-24 h-24 rounded-full object-cover mx-auto ring-4 ring-verde-claro cursor-zoom-in">
+          <span class="w-24 h-24 rounded-full bg-verde-claro grid place-items-center mx-auto ring-4 ring-verde-claro/40">
+            <svg class="w-14 h-14 text-verde"><use href="#bunny"/></svg>
+          </span>
           <h2 class="mt-3 font-extrabold text-lg text-stone-900 tracking-tight">Antônio</h2>
           <p class="text-[11.5px] text-stone-500 font-medium">Criador no Sítio Esperança há 10 anos • Miguel Burnier</p>
           <p class="mt-2.5 inline-flex items-center gap-1.5 bg-areia ring-1 ring-areia-borda text-stone-600 text-[11px] font-bold rounded-full px-3 py-1.5">
-            <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-current"></i> 4,9 • 127 conversas atendidas
+            <svg class="w-3.5 h-3.5 text-amber-400"><use href="#i-star"/></svg> 4,9 • 127 conversas atendidas
           </p>
           <div class="mt-2.5 flex justify-center">
             <span id="lojaStatus" class="inline-flex items-center gap-2 bg-verde-claro text-verde-esc text-[11px] font-bold rounded-full px-3.5 py-1.5"></span>
           </div>
-
           <a href="https://wa.me/5531982517147?text=Ol%C3%A1%2C%20Ant%C3%B4nio!%20Quero%20saber%20mais%20sobre%20os%20coelhinhos%20%C3%A0%20venda."
              target="_blank" rel="noopener"
              class="pulsa mt-4 w-full inline-flex items-center justify-center gap-2.5 rounded-2xl bg-verde hover:bg-verde-esc text-white font-extrabold text-[15px] tracking-wide py-4 active:scale-[.98] transition">
-            <svg class="w-5 h-5 fill-current"><use href="#wa"/></svg> FALAR NO WHATSAPP AGORA
+            <svg class="w-5 h-5"><use href="#wa"/></svg> FALAR NO WHATSAPP AGORA
           </a>
         </div>
 
         <div class="mt-5 space-y-2.5">
           <a href="https://wa.me/5531982517147" target="_blank" rel="noopener"
              class="flex items-center gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5 active:scale-[.98] transition">
-            <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="phone" class="w-5 h-5"></i></span>
+            <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><svg class="ic w-5 h-5"><use href="#i-phone"/></svg></span>
             <div class="min-w-0">
               <p class="text-[10.5px] uppercase tracking-wider text-stone-400 font-bold">WhatsApp</p>
               <p class="text-sm font-bold text-stone-800 tnum">(31) 98251-7147</p>
             </div>
-            <i data-lucide="chevron-right" class="w-4 h-4 text-stone-300 ml-auto"></i>
+            <svg class="ic w-4 h-4 text-stone-300 ml-auto"><use href="#i-chevr"/></svg>
           </a>
 
           <div class="flex items-center gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
-            <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="qr-code" class="w-5 h-5"></i></span>
+            <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><svg class="ic w-5 h-5"><use href="#i-qr"/></svg></span>
             <div class="min-w-0">
               <p class="text-[10.5px] uppercase tracking-wider text-stone-400 font-bold">Chave PIX (telefone) • igual ao WhatsApp</p>
               <p class="text-sm font-bold text-stone-800 tnum">31982517147</p>
             </div>
             <button id="copyPix" type="button" aria-label="Copiar chave PIX"
                     class="ml-auto shrink-0 inline-flex items-center gap-1.5 bg-verde text-white text-[11px] font-bold rounded-full px-3.5 py-2 active:scale-90 transition">
-              <i data-lucide="copy" class="w-3.5 h-3.5"></i> Copiar
+              <svg class="ic w-3.5 h-3.5"><use href="#i-copy"/></svg> Copiar
             </button>
           </div>
 
           <div class="flex items-center gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
-            <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="map-pin" class="w-5 h-5"></i></span>
+            <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><svg class="ic w-5 h-5"><use href="#i-pin"/></svg></span>
             <div class="min-w-0">
               <p class="text-[10.5px] uppercase tracking-wider text-stone-400 font-bold">Endereço</p>
               <p class="text-sm font-bold text-stone-800 leading-snug">Sítio Esperança, Zona Rural<br>Miguel Burnier – MG</p>
@@ -478,7 +474,7 @@ tailwind.config = {
           </div>
 
           <div class="flex items-center gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
-            <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="clock" class="w-5 h-5"></i></span>
+            <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><svg class="ic w-5 h-5"><use href="#i-clock"/></svg></span>
             <div class="min-w-0">
               <p class="text-[10.5px] uppercase tracking-wider text-stone-400 font-bold">Horário</p>
               <p class="text-sm font-bold text-stone-800">Seg a Sáb, 8h às 18h</p>
@@ -495,13 +491,13 @@ tailwind.config = {
           </div>
           <a href="https://www.google.com/maps/search/?api=1&query=Miguel+Burnier,+MG" target="_blank" rel="noopener"
              class="mt-2.5 text-xs text-verde font-bold inline-flex items-center gap-1">
-            Abrir no Google Maps <i data-lucide="chevron-right" class="w-3.5 h-3.5"></i>
+            Abrir no Google Maps <svg class="ic w-3.5 h-3.5"><use href="#i-chevr"/></svg>
           </a>
         </div>
       </div>
     </section>
 
-    <!-- ========== PÁGINA 4 • O SÍTIO ========== -->
+    <!-- ========== 4 • O SÍTIO ========== -->
     <section class="page" id="page-sobre">
       <div class="px-4 pt-4">
         <h1 class="section-title">Nossa história</h1>
@@ -518,60 +514,35 @@ tailwind.config = {
 
         <div class="mt-7">
           <h2 class="section-title">O criadouro</h2>
-          <div class="mt-3.5 grid grid-cols-2 gap-3">
-            <figure class="relative rounded-2xl overflow-hidden ring-1 ring-areia-borda shadow-card">
-              <img src="https://picsum.photos/seed/criadouro-cercado/400/300.jpg" alt="Cercado ao ar livre" loading="lazy" draggable="false" data-zoom
-                   data-src="https://picsum.photos/seed/criadouro-cercado/1200/900.jpg" data-title="Cercado ao ar livre" data-sub="Sítio Esperança"
-                   class="h-28 w-full object-cover cursor-zoom-in">
-              <figcaption class="absolute bottom-0 inset-x-0 bg-stone-950/55 text-white text-[10px] font-semibold px-2.5 py-1.5 backdrop-blur-[2px] pointer-events-none">Cercado ao ar livre</figcaption>
-            </figure>
-            <figure class="relative rounded-2xl overflow-hidden ring-1 ring-areia-borda shadow-card">
-              <img src="https://picsum.photos/seed/criadouro-feno/400/300.jpg" alt="Feno fresco" loading="lazy" draggable="false" data-zoom
-                   data-src="https://picsum.photos/seed/criadouro-feno/1200/900.jpg" data-title="Feno fresco todo dia" data-sub="Sítio Esperança"
-                   class="h-28 w-full object-cover cursor-zoom-in">
-              <figcaption class="absolute bottom-0 inset-x-0 bg-stone-950/55 text-white text-[10px] font-semibold px-2.5 py-1.5 backdrop-blur-[2px] pointer-events-none">Feno fresco todo dia</figcaption>
-            </figure>
-            <figure class="relative rounded-2xl overflow-hidden ring-1 ring-areia-borda shadow-card">
-              <img src="https://picsum.photos/seed/criadouro-cria/400/300.jpg" alt="Maternidade" loading="lazy" draggable="false" data-zoom
-                   data-src="https://picsum.photos/seed/criadouro-cria/1200/900.jpg" data-title="Maternidade separada" data-sub="Sítio Esperança"
-                   class="h-28 w-full object-cover cursor-zoom-in">
-              <figcaption class="absolute bottom-0 inset-x-0 bg-stone-950/55 text-white text-[10px] font-semibold px-2.5 py-1.5 backdrop-blur-[2px] pointer-events-none">Maternidade separada</figcaption>
-            </figure>
-            <figure class="relative rounded-2xl overflow-hidden ring-1 ring-areia-borda shadow-card">
-              <img src="https://picsum.photos/seed/criadouro-sol/400/300.jpg" alt="Sol da manhã" loading="lazy" draggable="false" data-zoom
-                   data-src="https://picsum.photos/seed/criadouro-sol/1200/900.jpg" data-title="Sol da manhã e sombra" data-sub="Sítio Esperança"
-                   class="h-28 w-full object-cover cursor-zoom-in">
-              <figcaption class="absolute bottom-0 inset-x-0 bg-stone-950/55 text-white text-[10px] font-semibold px-2.5 py-1.5 backdrop-blur-[2px] pointer-events-none">Sol da manhã e sombra</figcaption>
-            </figure>
-          </div>
+          <div id="galeria" class="mt-3.5 grid grid-cols-2 gap-3"></div>
         </div>
 
         <div class="mt-7">
           <h2 class="section-title">Cuidados com cada filhote</h2>
           <ul class="mt-3.5 space-y-2.5">
             <li class="flex gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
-              <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="syringe" class="w-5 h-5"></i></span>
+              <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><svg class="ic w-5 h-5"><use href="#i-syr"/></svg></span>
               <div>
                 <p class="text-sm font-bold text-stone-800">Vacinados e vermifugados</p>
                 <p class="text-xs text-stone-500 mt-0.5 leading-relaxed">Aplicação acompanhada por veterinário; carteirinha de saúde na entrega.</p>
               </div>
             </li>
             <li class="flex gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
-              <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="carrot" class="w-5 h-5"></i></span>
+              <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><svg class="ic w-5 h-5"><use href="#i-carrot"/></svg></span>
               <div>
                 <p class="text-sm font-bold text-stone-800">Alimentação de qualidade</p>
                 <p class="text-xs text-stone-500 mt-0.5 leading-relaxed">Ração premium, feno de tifton fresco e água trocada duas vezes ao dia.</p>
               </div>
             </li>
             <li class="flex gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
-              <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="warehouse" class="w-5 h-5"></i></span>
+              <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><svg class="ic w-5 h-5"><use href="#i-ware"/></svg></span>
               <div>
                 <p class="text-sm font-bold text-stone-800">Espaço de verdade para viver</p>
                 <p class="text-xs text-stone-500 mt-0.5 leading-relaxed">Nenhum coelho vive preso em gaiola apertada: aqui é cercado, sol e grama.</p>
               </div>
             </li>
             <li class="flex gap-3 bg-white rounded-2xl ring-1 ring-areia-borda shadow-card p-3.5">
-              <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="heart-handshake" class="w-5 h-5"></i></span>
+              <span class="w-10 h-10 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><svg class="ic w-5 h-5"><use href="#i-gar"/></svg></span>
               <div>
                 <p class="text-sm font-bold text-stone-800">Manuseio diário (muitos mimos)</p>
                 <p class="text-xs text-stone-500 mt-0.5 leading-relaxed">Pegamos no colo desde os 15 dias — chegam mansos e acostumados com criança.</p>
@@ -585,9 +556,9 @@ tailwind.config = {
           <div class="mt-3.5 space-y-2.5">
             <div class="pol bg-white rounded-2xl ring-1 ring-areia-borda shadow-card overflow-hidden">
               <button type="button" class="pol-h w-full flex items-center gap-3 p-4 text-left">
-                <span class="w-9 h-9 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="hand-coins" class="w-[18px] h-[18px]"></i></span>
+                <span class="w-9 h-9 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><svg class="ic w-[18px] h-[18px]"><use href="#i-pag"/></svg></span>
                 <span class="text-sm font-bold text-stone-800 flex-1">Reserva com 30% de sinal</span>
-                <i data-lucide="chevron-down" class="chev w-4 h-4 text-stone-400 shrink-0"></i>
+                <svg class="ic chev w-4 h-4 text-stone-400 shrink-0"><use href="#i-chevd"/></svg>
               </button>
               <div class="body"><div class="px-4 pb-4 pl-[64px] text-[12.5px] text-stone-600 leading-relaxed">
                 Reserve com <b>30% do valor via PIX</b> (chave: telefone <b class="tnum">31982517147</b>) e pague o restante na entrega ou retirada. O sinal garante o filhote com o seu nome por até <b>15 dias</b> — tempo de completar o desmame ideal (45 dias).
@@ -596,9 +567,9 @@ tailwind.config = {
 
             <div class="pol bg-white rounded-2xl ring-1 ring-areia-borda shadow-card overflow-hidden">
               <button type="button" class="pol-h w-full flex items-center gap-3 p-4 text-left">
-                <span class="w-9 h-9 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="truck" class="w-[18px] h-[18px]"></i></span>
+                <span class="w-9 h-9 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><svg class="ic w-[18px] h-[18px]"><use href="#i-truck"/></svg></span>
                 <span class="text-sm font-bold text-stone-800 flex-1">Entrega na sua cidade</span>
-                <i data-lucide="chevron-down" class="chev w-4 h-4 text-stone-400 shrink-0"></i>
+                <svg class="ic chev w-4 h-4 text-stone-400 shrink-0"><use href="#i-chevd"/></svg>
               </button>
               <div class="body"><div class="px-4 pb-4 pl-[64px] text-[12.5px] text-stone-600 leading-relaxed">
                 Entrega <b>sem custo</b> em Miguel Burnier. Para cidades até <b>100 km</b> (Ouro Preto, Mariana, Ouro Branco, Conselheiro Lafaiete e região), consulte a taxa pelo WhatsApp. Transporte em caixa apropriada, com feno e água.
@@ -607,9 +578,9 @@ tailwind.config = {
 
             <div class="pol bg-white rounded-2xl ring-1 ring-areia-borda shadow-card overflow-hidden">
               <button type="button" class="pol-h w-full flex items-center gap-3 p-4 text-left">
-                <span class="w-9 h-9 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><i data-lucide="refresh-ccw" class="w-[18px] h-[18px]"></i></span>
+                <span class="w-9 h-9 rounded-xl bg-verde-claro text-verde grid place-items-center shrink-0"><svg class="ic w-[18px] h-[18px]"><use href="#i-refr"/></svg></span>
                 <span class="text-sm font-bold text-stone-800 flex-1">Troca e garantia de 7 dias</span>
-                <i data-lucide="chevron-down" class="chev w-4 h-4 text-stone-400 shrink-0"></i>
+                <svg class="ic chev w-4 h-4 text-stone-400 shrink-0"><use href="#i-chevd"/></svg>
               </button>
               <div class="body"><div class="px-4 pb-4 pl-[64px] text-[12.5px] text-stone-600 leading-relaxed">
                 <b>Garantia de saúde de 7 dias:</b> se o filhote apresentar qualquer problema comprovado por veterinário nesse período, fazemos a <b>troca por outro da mesma linhagem</b> ou o reembolso.
@@ -631,7 +602,7 @@ tailwind.config = {
   <div id="zoomer" role="dialog" aria-modal="true" aria-label="Visualização ampliada da foto">
     <button id="zoomClose" type="button" aria-label="Fechar zoom"
             class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 ring-1 ring-white/20 grid place-items-center text-white active:scale-90 transition">
-      <i data-lucide="x" class="w-5 h-5"></i>
+      <svg class="ic w-5 h-5"><use href="#i-x"/></svg>
     </button>
     <div id="zoomStage"><img id="zoomImg" alt="" draggable="false"></div>
     <p id="zoomHint" class="absolute bottom-[96px] left-1/2 -translate-x-1/2 bg-white/10 text-white/85 text-[10.5px] font-semibold px-3.5 py-1.5 rounded-full backdrop-blur pointer-events-none whitespace-nowrap">
@@ -644,31 +615,627 @@ tailwind.config = {
       </div>
       <a id="zoomWa" href="#" target="_blank" rel="noopener"
          class="hidden shrink-0 inline-flex items-center gap-1.5 bg-verde hover:bg-verde-esc text-white text-[11.5px] font-bold rounded-full px-4 py-2.5 active:scale-95 transition">
-        <svg class="w-3.5 h-3.5 fill-current"><use href="#wa"/></svg> Reservar
+        <svg class="w-3.5 h-3.5"><use href="#wa"/></svg> Reservar
       </a>
     </div>
   </div>
 
-  <!-- ================= FAB WHATSAPP ================= -->
+  <!-- ================= FAB ================= -->
   <a id="fab" href="https://wa.me/5531982517147?text=Ol%C3%A1!%20Vim%20pelo%20site%20do%20S%C3%ADtio%20Esperan%C3%A7a%20e%20quero%20saber%20mais%20sobre%20os%20filhotes%20dispon%C3%ADveis."
      target="_blank" rel="noopener" aria-label="Conversar no WhatsApp"
      class="pulsa absolute right-4 z-50 w-14 h-14 rounded-full bg-verde hover:bg-verde-esc text-white grid place-items-center shadow-xl shadow-verde/40 active:scale-90 transition"
-     style="bottom:calc(86px + env(safe-area-inset-bottom))">
-    <svg class="w-7 h-7 fill-current"><use href="#wa"/></svg>
+     style="bottom:calc(92px + env(safe-area-inset-bottom))">
+    <svg class="w-7 h-7"><use href="#wa"/></svg>
   </a>
 
-  <!-- ================= NAV FLUTUANTE ================= -->
+  <!-- ================= NAV ================= -->
   <nav class="shrink-0 relative z-40 px-3" style="padding-bottom:calc(10px + env(safe-area-inset-bottom))" aria-label="Navegação principal">
     <div class="grid grid-cols-4 bg-white/90 backdrop-blur-md border border-areia-borda rounded-[22px] shadow-[0_6px_24px_rgba(27,94,32,.14)] overflow-hidden">
-      <button type="button" data-page="0" class="navbtn active"><span class="ic"><i data-lucide="home" class="w-5 h-5"></i></span>Início</button>
-      <button type="button" data-page="1" class="navbtn"><span class="ic"><i data-lucide="paw-print" class="w-5 h-5"></i></span>Catálogo</button>
-      <button type="button" data-page="2" class="navbtn"><span class="ic"><i data-lucide="phone" class="w-5 h-5"></i></span>Contato</button>
-      <button type="button" data-page="3" class="navbtn"><span class="ic"><i data-lucide="sprout" class="w-5 h-5"></i></span>O Sítio</button>
+      <button type="button" data-page="0" class="navbtn active"><span class="pill"><svg class="ic w-5 h-5"><use href="#i-home"/></svg></span>Início</button>
+      <button type="button" data-page="1" class="navbtn"><span class="pill"><svg class="ic w-5 h-5"><use href="#i-paw"/></svg></span>Catálogo</button>
+      <button type="button" data-page="2" class="navbtn"><span class="pill"><svg class="ic w-5 h-5"><use href="#i-phone"/></svg></span>Contato</button>
+      <button type="button" data-page="3" class="navbtn"><span class="pill"><svg class="ic w-5 h-5"><use href="#i-sprout"/></svg></span>O Sítio</button>
     </div>
   </nav>
 
   <div id="toast" role="status" aria-live="polite"></div>
 </div>
 
+<script>
+/* =========================================================
+   SÍTIO ESPERANÇA • app embutido (sem dependências externas)
+   ========================================================= */
+
+/* ---------- Configuração ---------- */
+const WA  = '5531982517147';
+const PIX = '31982517147';
+
+const waGeral = `https://wa.me/${WA}?text=${encodeURIComponent(
+  'Olá! Vim pelo site do Sítio Esperança e quero saber mais sobre os filhotes disponíveis.'
+)}`;
+
+/* ---------- Dados ----------
+   Para usar FOTOS REAIS depois, basta preencher:
+   foto:'fotos/pingo.jpg'  → o app mostra a foto; se falhar, volta pra ilustração. */
+const coelhos = [
+  { id:1,  nome:'Pingo',   raca:'Holandês',   dias:60, sexo:'M', cor:'Preto e branco', preco:80,  foto:'' },
+  { id:2,  nome:'Tico',    raca:'Fuzzy Lop',  dias:55, sexo:'M', cor:'Creme',          preco:90,  foto:'' },
+  { id:3,  nome:'Botão',   raca:'Lion',       dias:45, sexo:'M', cor:'Caramelo',       preco:120, foto:'' },
+  { id:4,  nome:'Canjica', raca:'Lion',       dias:50, sexo:'F', cor:'Bege',           preco:120, foto:'' },
+  { id:5,  nome:'Pipoca',  raca:'Mini Lop',   dias:50, sexo:'F', cor:'Cinza claro',    preco:140, foto:'' },
+  { id:6,  nome:'Mel',     raca:'Mini Lop',   dias:55, sexo:'F', cor:'Marrom mel',     preco:150, foto:'' },
+  { id:7,  nome:'Açaí',    raca:'Rex',        dias:50, sexo:'M', cor:'Azulado',        preco:160, foto:'' },
+  { id:8,  nome:'Cacau',   raca:'Rex',        dias:70, sexo:'F', cor:'Marrom cacau',   preco:130, foto:'' },
+  { id:9,  nome:'Nuvem',   raca:'Angorá',     dias:60, sexo:'F', cor:'Branca',         preco:180, foto:'' },
+  { id:10, nome:'Bela',    raca:'Mini Lop',   dias:75, sexo:'F', cor:'Chinchila',      preco:200, foto:'' },
+];
+
+const slides = [
+  { p:0, kicker:'Filhotes disponíveis agora',
+    title:'COELHOS À VENDA<br>A PARTIR DE <span class="text-areia">R$ 80</span>',
+    sub:'Filhotes saudáveis, vacinados e cheios de colo',
+    cta:{ label:'VER CATÁLOGO', go:1 } },
+  { p:1, kicker:'Entregas',
+    title:'ENTREGAMOS ATÉ 100 KM',
+    sub:'Miguel Burnier, Ouro Preto, Mariana e região',
+    cta:{ label:'PEDIR NO WHATSAPP', wa:true } },
+  { p:2, kicker:'Reserva',
+    title:'RESERVE COM 30% DE SINAL',
+    sub:'Chave PIX = WhatsApp (31) 98251-7147',
+    cta:{ label:'COMO FUNCIONA', go:3 } },
+  { p:3, kicker:'Saúde',
+    title:'VACINADOS & VERMIFUGADOS',
+    sub:'Carteirinha de saúde + garantia de 7 dias',
+    cta:{ label:'FALE COM A GENTE', wa:true } },
+];
+
+const criadouroFotos = [
+  { t:'Cercado ao ar livre',    p:0 },
+  { t:'Feno fresco todo dia',   p:1 },
+  { t:'Maternidade separada',   p:2 },
+  { t:'Sol da manhã e sombra',  p:4 },
+];
+
+/* ---------- Ilustrações vetoriais (funcionam offline, sempre) ---------- */
+const PALETAS = [
+  ['#E7F2E4','#2E7D32'], ['#FDEBD3','#8D6E63'], ['#E3EEF8','#54708C'],
+  ['#FBE4E1','#B4574E'], ['#EFEAF8','#6B5B95'], ['#FFF4D6','#A98B2D'],
+];
+
+function arte(pi, w = 400, h = 400, ox = null){
+  const [bg, fg] = PALETAS[pi % PALETAS.length];
+  const tx = (ox == null ? (w - 400) / 2 : ox);
+  const ty = (h - 400) / 2;
+  const svg =
+    `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 ${w} ${h}'>` +
+    `<rect width='${w}' height='${h}' fill='${bg}'/>` +
+    `<circle cx='${w*0.16}' cy='${h*0.2}' r='${Math.min(w,h)*0.28}' fill='#ffffff' opacity='.45'/>` +
+    `<circle cx='${w*0.86}' cy='${h*0.9}' r='${Math.min(w,h)*0.3}' fill='${fg}' opacity='.10'/>` +
+    `<g transform='translate(${tx} ${ty})'>` +
+      `<g fill='${fg}'>` +
+        `<ellipse cx='163' cy='140' rx='30' ry='62' transform='rotate(-12 163 140)'/>` +
+        `<ellipse cx='237' cy='140' rx='30' ry='62' transform='rotate(12 237 140)'/>` +
+      `</g>` +
+      `<g fill='#ffffff' opacity='.85'>` +
+        `<ellipse cx='167' cy='145' rx='12' ry='36' transform='rotate(-12 167 145)'/>` +
+        `<ellipse cx='233' cy='145' rx='12' ry='36' transform='rotate(12 233 145)'/>` +
+      `</g>` +
+      `<circle cx='200' cy='252' r='84' fill='${fg}'/>` +
+      `<circle cx='172' cy='242' r='10' fill='#ffffff'/><circle cx='228' cy='242' r='10' fill='#ffffff'/>` +
+      `<circle cx='172' cy='242' r='4.5' fill='${fg}'/><circle cx='228' cy='242' r='4.5' fill='${fg}'/>` +
+      `<path d='M191 266h18l-9 11z' fill='#ffffff'/>` +
+      `<ellipse cx='200' cy='352' rx='70' ry='44' fill='${fg}'/>` +
+    `</g></svg>`;
+  return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+}
+
+const fmt = v => v.toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+const waLink = c => `https://wa.me/${WA}?text=${encodeURIComponent(
+  `Olá! Quero reservar o coelhinho ${c.nome} (${c.raca}, ${c.dias} dias) de ${fmt(c.preco)}. Ainda está disponível?`
+)}`;
+
+/* ---------- Favoritos ---------- */
+let favs = [];
+try { favs = JSON.parse(localStorage.getItem('se_favs') || '[]'); } catch(e) {}
+const saveFavs = () => { try { localStorage.setItem('se_favs', JSON.stringify(favs)); } catch(e) {} };
+
+/* ---------- Estado ---------- */
+const state = { raca:'Todas', sort:'', favOnly:false, q:'' };
+let swipedAt = 0;
+
+/* ---------- Toast ---------- */
+let toastT;
+function toast(msg, icon){
+  const t = document.getElementById('toast');
+  t.innerHTML = `<svg class="ic w-4 h-4 shrink-0"><use href="#${icon || 'i-check'}"/></svg><span>${msg}</span>`;
+  t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+/* ---------- Navegação ---------- */
+const HASHES = ['#inicio', '#catalogo', '#contato', '#sobre'];
+const pages   = [...document.querySelectorAll('.page')];
+const navbtns = [...document.querySelectorAll('.navbtn')];
+let cur = 0;
+
+function go(i, fromHash){
+  if (i === cur || i < 0 || i >= pages.length) return;
+  const dir = i > cur ? 1 : -1, oldEl = pages[cur], newEl = pages[i];
+
+  newEl.style.transition = 'none';
+  newEl.style.transform  = `translateX(${dir * 36}px)`;
+  void newEl.offsetWidth;
+  newEl.style.transition = '';
+  newEl.style.transform  = '';
+  newEl.classList.add('active');
+
+  oldEl.classList.remove('active');
+  oldEl.style.transform = `translateX(${-dir * 28}px)`;
+  setTimeout(() => { if (!oldEl.classList.contains('active')) oldEl.style.transform = ''; }, 420);
+
+  cur = i;
+  navbtns.forEach((b, j) => b.classList.toggle('active', j === i));
+  try { if (!fromHash) history.replaceState(null, '', HASHES[i]); } catch(e) {}
+}
+navbtns.forEach(b => b.addEventListener('click', () => go(+b.dataset.page)));
+
+/* ---------- Carrossel ---------- */
+function initCarousel(){
+  const wrap  = document.getElementById('carWrap');
+  const track = document.getElementById('carTrack');
+  const dots  = document.getElementById('carDots');
+  if (!wrap || !track || !dots) return;
+
+  track.innerHTML = slides.map((s, i) => `
+    <div class="relative w-full h-full shrink-0">
+      <img src="${arte(s.p, 800, 500, 470)}" alt="" draggable="false"
+           class="absolute inset-0 w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-t from-stone-950/90 via-stone-950/25 to-transparent pointer-events-none"></div>
+      <div class="absolute inset-x-0 bottom-0 p-5 text-white pointer-events-none">
+        <p class="text-[10px] font-bold uppercase tracking-[.14em] text-areia/90">${s.kicker}</p>
+        <h2 class="mt-1 font-extrabold text-[23px] leading-[1.1] tracking-tight">${s.title}</h2>
+        <p class="mt-1.5 text-[12px] text-white/85 font-medium max-w-[290px]">${s.sub}</p>
+        <button type="button" data-cta="${i}"
+                class="pointer-events-auto mt-3 inline-flex items-center gap-1.5 bg-white text-verde-esc font-extrabold text-[12px] rounded-full px-5 py-2.5 active:scale-95 transition">
+          ${s.cta.label} <svg class="ic w-3.5 h-3.5"><use href="#i-arrow"/></svg>
+        </button>
+      </div>
+    </div>`).join('');
+
+  dots.innerHTML = slides.map((_, i) =>
+    `<button type="button" data-dot="${i}" aria-label="Ir para o slide ${i + 1}" class="h-1.5 rounded-full transition-all duration-300"></button>`
+  ).join('');
+
+  let carI = 0, timer = null;
+  const DOTS = [...dots.children];
+
+  const paint = () => {
+    track.style.transform = `translateX(-${carI * 100}%)`;
+    DOTS.forEach((d, j) => {
+      d.style.width      = j === carI ? '20px' : '6px';
+      d.style.background = j === carI ? '#fff' : 'rgba(255,255,255,.45)';
+    });
+  };
+  const stop  = () => { if (timer) clearInterval(timer); timer = null; };
+  const start = () => { stop(); timer = setInterval(() => nav(carI + 1), 5000); };
+  const nav   = (i, user) => { carI = (i + slides.length) % slides.length; paint(); if (user) start(); };
+
+  DOTS.forEach((d, i) => d.addEventListener('click', () => nav(i, true)));
+
+  let sw = null;
+  wrap.addEventListener('pointerdown', e => { sw = { x: e.clientX }; stop(); });
+  wrap.addEventListener('pointerup', e => {
+    if (!sw) return;
+    const dx = e.clientX - sw.x;
+    if (Math.abs(dx) > 40){ swipedAt = Date.now(); nav(carI + (dx < 0 ? 1 : -1), true); }
+    else start();
+    sw = null;
+  });
+  wrap.addEventListener('pointercancel', () => { sw = null; start(); });
+  wrap.addEventListener('mouseenter', stop);
+  wrap.addEventListener('mouseleave', start);
+
+  paint(); start();
+}
+
+/* ---------- Catálogo ---------- */
+const grid    = document.getElementById('grid');
+const countEl = document.getElementById('count');
+const favNEl  = document.getElementById('favN');
+const favBtn  = document.getElementById('favFilter');
+
+function listaFiltrada(){
+  const q = state.q.trim().toLowerCase();
+  let l = coelhos.filter(c =>
+    (state.raca === 'Todas' || c.raca === state.raca) &&
+    (!state.favOnly || favs.includes(c.id)) &&
+    (!q || `${c.nome} ${c.raca} ${c.cor}`.toLowerCase().includes(q))
+  );
+  const ord = {
+    'price-asc' : (a,b) => a.preco - b.preco,
+    'price-desc': (a,b) => b.preco - a.preco,
+    'age-asc'   : (a,b) => a.dias - b.dias,
+    'age-desc'  : (a,b) => b.dias - a.dias,
+  };
+  if (state.sort && ord[state.sort]) l = [...l].sort(ord[state.sort]);
+  return l;
+}
+
+function renderGrid(){
+  const l = listaFiltrada();
+  countEl.textContent = `${l.length} filhote${l.length !== 1 ? 's' : ''}`;
+
+  if (!l.length){
+    grid.innerHTML = `
+      <div class="col-span-2 text-center py-14">
+        <span class="mx-auto w-14 h-14 rounded-full bg-verde-claro text-verde grid place-items-center">
+          <svg class="ic w-7 h-7"><use href="#${state.favOnly ? 'i-heartoff' : 'i-search'}"/></svg>
+        </span>
+        <p class="mt-3 font-bold text-sm text-stone-700">${state.favOnly ? 'Nenhum favorito ainda' : 'Nada encontrado'}</p>
+        <p class="mt-1 text-xs text-stone-500 max-w-[230px] mx-auto leading-relaxed">${
+          state.favOnly ? 'Toque no coraçãozinho dos filhotes para salvá-los aqui.'
+                        : 'Tente outra busca, raça ou ordenação.'
+        }</p>
+      </div>`;
+    return;
+  }
+
+  grid.innerHTML = l.map((c, i) => {
+    const pi   = c.id - 1;
+    const img  = c.foto || arte(pi);
+    const zoom = c.foto || arte(pi);
+    const sub  = `${c.dias} dias • ${c.cor} • ${fmt(c.preco)}`;
+    return `
+    <article class="card-in bg-white rounded-2xl ring-1 ring-areia-borda shadow-card overflow-hidden flex flex-col" style="animation-delay:${i * 45}ms">
+      <div class="relative">
+        <img src="${img}" alt="Coelho ${c.nome}, raça ${c.raca}, ${c.dias} dias"
+             loading="lazy" draggable="false" data-zoom
+             data-src="${zoom}" data-fb="${arte(pi)}"
+             data-title="${c.nome} • ${c.raca}" data-sub="${sub}" data-wa="${waLink(c)}"
+             onerror="this.onerror=null;this.src=this.dataset.fb"
+             class="w-full aspect-square object-cover cursor-zoom-in">
+        <span class="absolute top-2 left-2 inline-flex items-center gap-1.5 bg-white/95 text-verde-esc text-[9px] font-bold uppercase tracking-wide pl-1.5 pr-2 py-1 rounded-full shadow-sm">
+          <span class="relative flex h-1.5 w-1.5">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-verde opacity-60"></span>
+            <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-verde"></span>
+          </span>
+          Disponível
+        </span>
+        <button type="button" data-fav="${c.id}" aria-label="Favoritar ${c.nome}"
+                class="favbtn absolute top-1.5 right-1.5 w-8 h-8 rounded-full bg-white/95 shadow-sm grid place-items-center active:scale-90 transition ${favs.includes(c.id) ? 'fav-on' : ''}">
+          <svg class="ic w-4 h-4"><use href="#i-heart"/></svg>
+        </button>
+        <button type="button" data-zoom
+                data-src="${zoom}" data-title="${c.nome} • ${c.raca}" data-sub="${sub}" data-wa="${waLink(c)}"
+                aria-label="Ampliar foto de ${c.nome}"
+                class="absolute bottom-2 right-2 w-8 h-8 rounded-full bg-white/90 shadow grid place-items-center text-verde-esc active:scale-90 transition">
+          <svg class="ic w-4 h-4"><use href="#i-zoom"/></svg>
+        </button>
+      </div>
+      <div class="p-2.5 flex flex-col flex-1">
+        <div class="flex items-center gap-1.5">
+          <span class="text-[9px] font-bold uppercase tracking-wider text-verde bg-verde-claro rounded px-1.5 py-0.5">${c.raca}</span>
+          <span class="ml-auto inline-flex items-center gap-1 text-[10px] font-semibold text-stone-500">
+            <svg class="ic w-3 h-3"><use href="#${c.sexo === 'F' ? 'i-venus' : 'i-mars'}"/></svg>${c.sexo === 'F' ? 'Fêmea' : 'Macho'}
+          </span>
+        </div>
+        <h3 class="mt-1.5 font-bold text-[15px] leading-none text-stone-900">${c.nome}</h3>
+        <p class="mt-1.5 text-[10.5px] text-stone-500 inline-flex items-center gap-1 leading-tight">
+          <svg class="ic w-3 h-3 shrink-0"><use href="#i-cal"/></svg>${c.dias} dias • ${c.cor}
+        </p>
+        <div class="mt-auto pt-2.5">
+          <p class="text-lg font-extrabold text-verde tnum leading-none">${fmt(c.preco)}</p>
+          <a href="${waLink(c)}" target="_blank" rel="noopener"
+             class="mt-2 w-full inline-flex flex-wrap items-center justify-center gap-1.5 bg-verde hover:bg-verde-esc text-white text-[11px] font-bold rounded-xl py-2.5 px-1 active:scale-95 transition text-center">
+            <svg class="w-3.5 h-3.5"><use href="#wa"/></svg> Reservar no WhatsApp
+          </a>
+        </div>
+      </div>
+    </article>`;
+  }).join('');
+}
+
+/* ---------- Filtros ---------- */
+const chipsEl = document.getElementById('raceChips');
+function renderChips(){
+  const racas = ['Todas', ...new Set(coelhos.map(c => c.raca))];
+  chipsEl.innerHTML = racas.map(r =>
+    `<button type="button" data-raca="${r}" class="chip ${r === state.raca ? 'chip-on' : ''}">${r}</button>`
+  ).join('');
+}
+chipsEl.addEventListener('click', e => {
+  const b = e.target.closest('[data-raca]');
+  if (!b) return;
+  state.raca = b.dataset.raca;
+  renderChips(); renderGrid();
+});
+
+document.getElementById('sortSel').addEventListener('change', e => { state.sort = e.target.value; renderGrid(); });
+document.getElementById('searchInput').addEventListener('input', e => { state.q = e.target.value; renderGrid(); });
+
+favBtn.addEventListener('click', () => {
+  state.favOnly = !state.favOnly;
+  favBtn.classList.toggle('chip-on', state.favOnly);
+  favBtn.setAttribute('aria-pressed', state.favOnly);
+  renderGrid();
+});
+
+function updateFavBadge(){
+  favNEl.textContent = favs.length;
+  favNEl.classList.toggle('hidden', favs.length === 0);
+  favNEl.classList.toggle('grid', favs.length > 0);
+}
+
+grid.addEventListener('click', e => {
+  const f = e.target.closest('[data-fav]');
+  if (!f) return;
+  const id = +f.dataset.fav, c = coelhos.find(x => x.id === id), i = favs.indexOf(id);
+  if (i > -1){
+    favs.splice(i, 1);
+    f.classList.remove('fav-on');
+    toast(`${c.nome} saiu dos favoritos`, 'i-heartoff');
+  } else {
+    favs.push(id);
+    f.classList.add('fav-on');
+    f.classList.remove('pop'); void f.offsetWidth; f.classList.add('pop');
+    toast(`${c.nome} salvo nos favoritos`, 'i-heart');
+  }
+  saveFavs(); updateFavBadge();
+  if (state.favOnly) renderGrid();
+});
+
+/* ---------- Galeria do criadouro ---------- */
+function buildGaleria(){
+  const g = document.getElementById('galeria');
+  if (!g) return;
+  g.innerHTML = criadouroFotos.map(f => `
+    <figure class="relative rounded-2xl overflow-hidden ring-1 ring-areia-borda shadow-card">
+      <img src="${arte(f.p, 400, 300, 60)}" alt="${f.t}" loading="lazy" draggable="false" data-zoom
+           data-src="${arte(f.p, 400, 300, 60)}" data-title="${f.t}" data-sub="Sítio Esperança"
+           class="h-28 w-full object-cover cursor-zoom-in">
+      <figcaption class="absolute bottom-0 inset-x-0 bg-stone-950/55 text-white text-[10px] font-semibold px-2.5 py-1.5 backdrop-blur-[2px] pointer-events-none">${f.t}</figcaption>
+    </figure>`).join('');
+}
+
+/* ---------- Zoom ---------- */
+const zoomer = document.getElementById('zoomer');
+const zStage = document.getElementById('zoomStage');
+const zImg   = document.getElementById('zoomImg');
+const zTitle = document.getElementById('zoomTitle');
+const zSub   = document.getElementById('zoomSub');
+const zWa    = document.getElementById('zoomWa');
+const zHint  = document.getElementById('zoomHint');
+
+const clampN = (v, a, b) => Math.min(b, Math.max(a, v));
+let Z = { s:1, x:0, y:0 };
+const pts = new Map();
+let pinch = null, drag = null;
+let lastTapT = 0, lastTapX = 0, lastTapY = 0, hintT;
+
+const zApply = () => { zImg.style.transform = `translate3d(${Z.x}px, ${Z.y}px, 0) scale(${Z.s})`; };
+
+function zClamp(){
+  const r = zStage.getBoundingClientRect();
+  const maxX = Math.max(0, (zImg.offsetWidth  * Z.s - r.width)  / 2);
+  const maxY = Math.max(0, (zImg.offsetHeight * Z.s - r.height) / 2);
+  Z.x = clampN(Z.x, -maxX, maxX);
+  Z.y = clampN(Z.y, -maxY, maxY);
+}
+
+function zAt(px, py, f, anim){
+  const r  = zStage.getBoundingClientRect();
+  const cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  const s0 = Z.s;
+  Z.s = clampN(s0 * f, 1, 4);
+  const k = Z.s / s0;
+  Z.x = px - cx - (px - cx - Z.x) * k;
+  Z.y = py - cy - (py - cy - Z.y) * k;
+  zClamp();
+  if (anim){ zImg.classList.add('anim'); zApply(); setTimeout(() => zImg.classList.remove('anim'), 300); }
+  else zApply();
+}
+
+function zReset(anim){
+  Z = { s:1, x:0, y:0 };
+  if (anim){ zImg.classList.add('anim'); zApply(); setTimeout(() => zImg.classList.remove('anim'), 300); }
+  else zApply();
+}
+
+function openZoom(src, alt, title, sub, waHref){
+  zImg.classList.remove('anim');
+  zImg.onload = () => { zImg.style.opacity = '1'; };
+  zImg.style.opacity = '0';
+  zImg.alt = alt || 'Foto do Sítio Esperança';
+  zImg.src = src;
+  if (zImg.complete) zImg.style.opacity = '1';
+
+  zTitle.textContent = title || '';
+  zSub.textContent   = sub || '';
+  if (waHref){ zWa.href = waHref; zWa.classList.remove('hidden'); }
+  else zWa.classList.add('hidden');
+
+  zoomer.style.background = '';
+  zoomer.classList.add('open');
+  zReset(false);
+
+  zHint.style.opacity = '1';
+  clearTimeout(hintT);
+  hintT = setTimeout(() => { zHint.style.opacity = '0'; }, 2600);
+}
+
+function closeZoom(){
+  zoomer.classList.remove('open');
+  zoomer.style.background = '';
+  zImg.style.opacity = '0';
+}
+
+zStage.addEventListener('pointerdown', e => {
+  e.preventDefault();
+  zStage.setPointerCapture(e.pointerId);
+  pts.set(e.pointerId, { x:e.clientX, y:e.clientY });
+
+  if (pts.size === 1){
+    const now = Date.now();
+    if (now - lastTapT < 320 && Math.hypot(e.clientX - lastTapX, e.clientY - lastTapY) < 40){
+      lastTapT = 0; pts.clear(); drag = null; pinch = null;
+      if (Z.s > 1.05) zReset(true); else zAt(e.clientX, e.clientY, 2.5, true);
+      return;
+    }
+    lastTapT = now; lastTapX = e.clientX; lastTapY = e.clientY;
+    drag = { sx:e.clientX, sy:e.clientY, ox:Z.x, oy:Z.y };
+
+  } else if (pts.size === 2){
+    drag = null;
+    const [a, b] = [...pts.values()];
+    pinch = { d: Math.hypot(a.x - b.x, a.y - b.y) || 1, mx:(a.x + b.x) / 2, my:(a.y + b.y) / 2 };
+  }
+});
+
+zStage.addEventListener('pointermove', e => {
+  if (!pts.has(e.pointerId)) return;
+  pts.set(e.pointerId, { x:e.clientX, y:e.clientY });
+
+  if (pts.size === 2 && pinch){
+    const [a, b] = [...pts.values()];
+    const d  = Math.hypot(a.x - b.x, a.y - b.y) || 1;
+    const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2;
+    Z.x += mx - pinch.mx; Z.y += my - pinch.my;
+    zAt(mx, my, d / pinch.d);
+    pinch = { d, mx, my };
+
+  } else if (drag && pts.size === 1){
+    if (Z.s > 1.02){
+      Z.x = drag.ox + (e.clientX - drag.sx);
+      Z.y = drag.oy + (e.clientY - drag.sy);
+      zClamp(); zApply();
+    } else {
+      const dy = e.clientY - drag.sy;
+      if (dy > 0){
+        zImg.style.transform = `translate3d(0, ${dy}px, 0)`;
+        zoomer.style.background = `rgba(28,25,23,${Math.max(.55, .96 - dy / 600)})`;
+      }
+    }
+  }
+});
+
+const zUp = e => {
+  if (!pts.has(e.pointerId)) return;
+  pts.delete(e.pointerId);
+
+  if (pts.size === 1){
+    const p = [...pts.values()][0];
+    drag = { sx:p.x, sy:p.y, ox:Z.x, oy:Z.y };
+    pinch = null;
+
+  } else if (pts.size === 0){
+    if (Z.s <= 1.02 && drag){
+      const dy = e.clientY - drag.sy;
+      if (dy > 90){ closeZoom(); drag = null; return; }
+      zImg.classList.add('anim'); zApply();
+      zoomer.style.background = '';
+      setTimeout(() => zImg.classList.remove('anim'), 300);
+    }
+    drag = null; pinch = null;
+  }
+};
+zStage.addEventListener('pointerup', zUp);
+zStage.addEventListener('pointercancel', zUp);
+
+zStage.addEventListener('wheel', e => {
+  e.preventDefault();
+  zAt(e.clientX, e.clientY, e.deltaY < 0 ? 1.25 : 0.8);
+}, { passive:false });
+
+document.getElementById('zoomClose').addEventListener('click', closeZoom);
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && zoomer.classList.contains('open')) closeZoom();
+});
+
+/* ---------- Delegação global ---------- */
+document.addEventListener('click', e => {
+  if (Date.now() - swipedAt < 350) return;
+
+  const cta = e.target.closest('[data-cta]');
+  if (cta){
+    const s = slides[+cta.dataset.cta];
+    if (s.cta.go != null) go(s.cta.go);
+    else window.open(waGeral, '_blank');
+    return;
+  }
+  const z = e.target.closest('[data-zoom]');
+  if (z){
+    openZoom(z.dataset.src || z.src, z.alt, z.dataset.title, z.dataset.sub, z.dataset.wa);
+    return;
+  }
+  const g = e.target.closest('[data-go]');
+  if (g) go(+g.dataset.go);
+});
+
+/* ---------- Acordeões ---------- */
+document.querySelectorAll('.pol-h').forEach(h => h.addEventListener('click', () => {
+  const pol = h.parentElement, wasOpen = pol.classList.contains('open');
+  document.querySelectorAll('.pol.open').forEach(p => p.classList.remove('open'));
+  if (!wasOpen) pol.classList.add('open');
+}));
+
+/* ---------- Copiar PIX ---------- */
+document.getElementById('copyPix').addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(PIX); }
+  catch (err) {
+    const ta = document.createElement('textarea');
+    ta.value = PIX; ta.style.position = 'fixed'; ta.style.opacity = '0';
+    document.body.appendChild(ta); ta.select();
+    document.execCommand('copy'); ta.remove();
+  }
+  toast('Chave PIX copiada!', 'i-check');
+});
+
+/* ---------- Status "aberto agora" ---------- */
+(function lojaStatus(){
+  const el = document.getElementById('lojaStatus');
+  if (!el) return;
+  const n = new Date(), dia = n.getDay(), h = n.getHours();
+  const aberto = dia >= 1 && dia <= 6 && h >= 8 && h < 18;
+  el.innerHTML = aberto
+    ? `<span class="relative flex h-2 w-2"><span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-verde opacity-60"></span><span class="relative inline-flex rounded-full h-2 w-2 bg-verde"></span></span> Aberto agora · até 18h`
+    : `Fechado agora · Seg a Sáb, 8h às 18h`;
+})();
+
+/* ---------- Botão "Instalar app" (PWA) ---------- */
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('btnInstall').style.display = 'inline-flex';
+});
+document.getElementById('btnInstall').addEventListener('click', async () => {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  await deferredPrompt.userChoice;
+  deferredPrompt = null;
+  document.getElementById('btnInstall').style.display = 'none';
+});
+
+/* ---------- Service Worker (só quando hospedado) ---------- */
+if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost')) {
+  window.addEventListener('load', () =>
+    navigator.serviceWorker.register('./sw.js').catch(() => {})
+  );
+}
+
+/* ---------- Init ---------- */
+document.getElementById('qtd').textContent = `${coelhos.length} filhotes`;
+document.getElementById('ano').textContent = new Date().getFullYear();
+
+renderChips();
+renderGrid();
+updateFavBadge();
+buildGaleria();
+initCarousel();
+
+const hi = HASHES.indexOf(location.hash);
+if (hi > 0) go(hi, true);
+</script>
 </body>
 </html>
