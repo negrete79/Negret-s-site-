@@ -1,13 +1,18 @@
-// Sítio Esperança — dados gerados pelo painel em 05/10/2026, 19:38:00
+// Sítio Esperança — dados gerados pelo painel em 05/10/2026, 20:16:46
 window.DADOS = {
   "senha": "Negret's2026",
-  "atualizado": "2026-10-05T22:38:00.678Z",
+  "atualizado": "2026-10-05T23:16:46.744Z",
   "config": {
     "whatsapp": "5531982517147",
     "pix": "31982517147",
     "endereco": "Sítio Esperança, Zona Rural",
     "cidade": "Miguel Burnier – MG",
     "horario": "Seg a Sáb, 8h às 18h"
+  },
+  "contato": {
+    "nome": "Elias",
+    "sub": "Criador no Sítio Esperança há 10 anos • Miguel Burnier",
+    "avaliacao": "4,9 • 127 conversas atendidas"
   },
   "coelhos": [
     {
