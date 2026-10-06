@@ -1,4 +1,4 @@
-const VERSION = 'v8';
+const VERSION = 'v10';
 const STATIC_CACHE  = `esperanca-static-${VERSION}`;
 const RUNTIME_CACHE = `esperanca-runtime-${VERSION}`;
 const IMG_CACHE     = `esperanca-img-${VERSION}`;
