@@ -1,7 +1,7 @@
-// Sítio Esperança — dados gerados pelo painel em 05/10/2026, 21:56:18
+// Sítio Esperança — dados gerados pelo painel em 05/10/2026, 22:00:14
 window.DADOS = {
   "senha": "Negret's2026",
-  "atualizado": "2026-10-06T00:56:18.948Z",
+  "atualizado": "2026-10-06T01:00:14.931Z",
   "config": {
     "whatsapp": "5531982517147",
     "pix": "onegretth@gmail.com",
@@ -201,7 +201,7 @@ window.DADOS = {
       "paleta": 2,
       "kicker": "Reserva",
       "titulo": "RESERVE COM 30% DE SINAL",
-      "sub": "Chave PIX = WhatsApp (31) 98251-7147",
+      "sub": "Chave PIX = onegretth@gmail.com",
       "ctaLabel": "COMO FUNCIONA",
       "ctaAcao": "sobre",
       "ativa": true
