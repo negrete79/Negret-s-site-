@@ -1,10 +1,10 @@
-// Sítio Esperança — dados gerados pelo painel em 05/10/2026, 20:46:15
+// Sítio Esperança — dados gerados pelo painel em 05/10/2026, 21:34:05
 window.DADOS = {
   "senha": "Negret's2026",
-  "atualizado": "2026-10-05T23:46:15.785Z",
+  "atualizado": "2026-10-06T00:34:04.988Z",
   "config": {
     "whatsapp": "5531982517147",
-    "pix": "31982517147",
+    "pix": "onegretth@gmail.com",
     "endereco": "Sítio Esperança, Zona Rural",
     "cidade": "Miguel Burnier – MG",
     "horario": "Seg a Sáb, 8h às 18h"
@@ -140,6 +140,19 @@ window.DADOS = {
       "sexo": "F",
       "cor": "Chinchila",
       "preco": 200,
+      "desconto": 0,
+      "descricao": "",
+      "foto": "",
+      "disponivel": true
+    },
+    {
+      "id": 1791246831959,
+      "nome": "",
+      "raca": "Mini Lop",
+      "dias": 45,
+      "sexo": "M",
+      "cor": "",
+      "preco": 100,
       "desconto": 0,
       "descricao": "",
       "foto": "",
