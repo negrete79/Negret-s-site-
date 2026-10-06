@@ -1,7 +1,7 @@
-// Sítio Esperança — dados gerados pelo painel em 05/10/2026, 21:34:05
+// Sítio Esperança — dados gerados pelo painel em 05/10/2026, 21:55:53
 window.DADOS = {
   "senha": "Negret's2026",
-  "atualizado": "2026-10-06T00:34:04.988Z",
+  "atualizado": "2026-10-06T00:55:53.904Z",
   "config": {
     "whatsapp": "5531982517147",
     "pix": "onegretth@gmail.com",
@@ -153,6 +153,19 @@ window.DADOS = {
       "sexo": "M",
       "cor": "",
       "preco": 100,
+      "desconto": 0,
+      "descricao": "",
+      "foto": "",
+      "disponivel": true
+    },
+    {
+      "id": 1791248099427,
+      "nome": "Lege",
+      "raca": "Nova Zelândia",
+      "dias": 45,
+      "sexo": "F",
+      "cor": "Preto",
+      "preco": 150,
       "desconto": 0,
       "descricao": "",
       "foto": "",
