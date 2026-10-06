@@ -1,7 +1,7 @@
-// Sítio Esperança — dados gerados pelo painel em 05/10/2026, 21:55:53
+// Sítio Esperança — dados gerados pelo painel em 05/10/2026, 21:56:18
 window.DADOS = {
   "senha": "Negret's2026",
-  "atualizado": "2026-10-06T00:55:53.904Z",
+  "atualizado": "2026-10-06T00:56:18.948Z",
   "config": {
     "whatsapp": "5531982517147",
     "pix": "onegretth@gmail.com",
